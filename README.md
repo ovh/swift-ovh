@@ -1,4 +1,4 @@
-[![Swift Wrapper for OVH APIs](https://github.com/ovh/swift-ovh/blob/master/img/logo.png)]
+![Swift Wrapper for OVH APIs](https://github.com/ovh/swift-ovh/blob/master/img/logo.png)
 
 This Swift package is a lightweight wrapper for OVH APIs. That's the easiest way to use OVH.com APIs in your Swift applications.
 
@@ -40,7 +40,7 @@ github "ovh/swift-ovh"
 
 - Drag the files `Carthage/Build/[platform]/*.framework` into your Xcode project.
 
-[![Drag frameworks](https://github.com/ovh/swift-ovh/blob/master/img/installation-carthage-addframework.png)]
+![Drag frameworks](https://github.com/ovh/swift-ovh/blob/master/img/installation-carthage-addframework.png)
 
 - Go to the "Build Phases" panel, create a Run Script with the following contents:
 
@@ -56,7 +56,7 @@ $(SRCROOT)/Carthage/Build/iOS/Alamofire.framework
 $(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework
 ```
 
-[![Build phases](https://github.com/ovh/swift-ovh/blob/master/img/installation-carthage-buildphases.png)]
+![Build phases](https://github.com/ovh/swift-ovh/blob/master/img/installation-carthage-buildphases.png)
 
 ### Manually (embedded framework)
 
@@ -75,19 +75,19 @@ $ git submodule update --init --recursive
 
 - Drag the file `swift-ovh/OVHAPIWrapper.xcodeproj` into the Project Navigator of your application's Xcode project.
 
-[![Add dependent project](https://github.com/ovh/swift-ovh/blob/master/img/installation-manually-addproject.png)]
+![Add dependent project](https://github.com/ovh/swift-ovh/blob/master/img/installation-manually-addproject.png)
 
 - Go to the "General" panel and for each target of your project, add the corresponding `OVHAPIWrapper.framework` as an "Embedding Binaries".
 
-[![Add framework](https://github.com/ovh/swift-ovh/blob/master/img/installation-manually-addframework.png)]
+![Add framework](https://github.com/ovh/swift-ovh/blob/master/img/installation-manually-addframework.png)
 
 - The framework must appear under the sections "Embedding Binaries" and "Linked Frameworks and Libraries".
 
-[![Embed framework](https://github.com/ovh/swift-ovh/blob/master/img/installation-manually-embedframework.png)]
+![Embed framework](https://github.com/ovh/swift-ovh/blob/master/img/installation-manually-embedframework.png)
 
 - Go to the "Build Phases" panel, the framework must appear under the sections "Target dependencies" and "Embed Frameworks".
 
-[![Build phases](https://github.com/ovh/swift-ovh/blob/master/img/installation-manually-buildphases.png)]
+![Build phases](https://github.com/ovh/swift-ovh/blob/master/img/installation-manually-buildphases.png)
 
 - Done! Now you can compile your project with Swift-OVH as a dependency.
 
