@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Examples/OVHAPIWrapper-Example-OSX/OVHAPIWrapper-Example-OSX.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Examples/OVHAPIWrapper-Example-iOS/OVHAPIWrapper-Example-iOS.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:OVHAPIWrapper.xcodeproj">
+   </FileRef>
+</Workspace>

@@ -1,0 +1,486 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F168B4BD1C635DA200A56FA2 /* OVHAPIWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1E55CCA1C5A77D000C569E9 /* OVHAPIWrapper.framework */; };
+		F168B4BE1C635DA200A56FA2 /* OVHAPIWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F1E55CCA1C5A77D000C569E9 /* OVHAPIWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F1F8E9A41C5A2B5E00AEF3F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F8E9A31C5A2B5E00AEF3F3 /* AppDelegate.swift */; };
+		F1F8E9A61C5A2B5E00AEF3F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F8E9A51C5A2B5E00AEF3F3 /* ViewController.swift */; };
+		F1F8E9A91C5A2B5E00AEF3F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F8E9A71C5A2B5E00AEF3F3 /* Main.storyboard */; };
+		F1F8E9AB1C5A2B5E00AEF3F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1F8E9AA1C5A2B5E00AEF3F3 /* Assets.xcassets */; };
+		F1F8E9AE1C5A2B5E00AEF3F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F8E9AC1C5A2B5E00AEF3F3 /* LaunchScreen.storyboard */; };
+		F1F8E9D31C5A4A0700AEF3F3 /* Credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1F8E9D11C5A4A0700AEF3F3 /* Credentials.plist */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F168B4BA1C635D7500A56FA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1E55CBF1C5A77CF00C569E9 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F191ED981C58F7D300307421;
+			remoteInfo = "OVHAPIWrapper iOS";
+		};
+		F168B4BF1C635DA200A56FA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1E55CBF1C5A77CF00C569E9 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F191ED981C58F7D300307421;
+			remoteInfo = "OVHAPIWrapper iOS";
+		};
+		F1E55CC91C5A77D000C569E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1E55CBF1C5A77CF00C569E9 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F191ED991C58F7D300307421;
+			remoteInfo = "OVHAPIWrapper iOS";
+		};
+		F1E55CCB1C5A77D000C569E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1E55CBF1C5A77CF00C569E9 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1791CC01C5902A6004901F9;
+			remoteInfo = "OVHAPIWrapper iOS Tests";
+		};
+		F1E55CCD1C5A77D000C569E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1E55CBF1C5A77CF00C569E9 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F191EDA71C58F87E00307421;
+			remoteInfo = "OVHAPIWrapper OSX";
+		};
+		F1E55CCF1C5A77D000C569E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1E55CBF1C5A77CF00C569E9 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1791CCF1C5902D0004901F9;
+			remoteInfo = "OVHAPIWrapper OSX Tests";
+		};
+		F1E55CD11C5A77D000C569E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1E55CBF1C5A77CF00C569E9 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F191EDB41C58F8B800307421;
+			remoteInfo = "OVHAPIWrapper tvOS";
+		};
+		F1E55CD31C5A77D000C569E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1E55CBF1C5A77CF00C569E9 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1791CDE1C5902EC004901F9;
+			remoteInfo = "OVHAPIWrapper tvOS Tests";
+		};
+		F1E55CD51C5A77D000C569E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1E55CBF1C5A77CF00C569E9 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F191EDC11C58F8D800307421;
+			remoteInfo = "OVHAPIWrapper watchOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F168B4C11C635DA200A56FA2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F168B4BE1C635DA200A56FA2 /* OVHAPIWrapper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		F1E55CBF1C5A77CF00C569E9 /* OVHAPIWrapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OVHAPIWrapper.xcodeproj; path = ../../OVHAPIWrapper.xcodeproj; sourceTree = "<group>"; };
+		F1F8E9A01C5A2B5E00AEF3F3 /* OVHAPIWrapper-Example-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OVHAPIWrapper-Example-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1F8E9A31C5A2B5E00AEF3F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F1F8E9A51C5A2B5E00AEF3F3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F1F8E9A81C5A2B5E00AEF3F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F1F8E9AA1C5A2B5E00AEF3F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F1F8E9AD1C5A2B5E00AEF3F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F1F8E9AF1C5A2B5E00AEF3F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1F8E9D11C5A4A0700AEF3F3 /* Credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Credentials.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F1F8E99D1C5A2B5E00AEF3F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F168B4BD1C635DA200A56FA2 /* OVHAPIWrapper.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F1E55CC01C5A77CF00C569E9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F1E55CCA1C5A77D000C569E9 /* OVHAPIWrapper.framework */,
+				F1E55CCC1C5A77D000C569E9 /* OVHAPIWrapper iOS Tests.xctest */,
+				F1E55CCE1C5A77D000C569E9 /* OVHAPIWrapper.framework */,
+				F1E55CD01C5A77D000C569E9 /* OVHAPIWrapper OSX Tests.xctest */,
+				F1E55CD21C5A77D000C569E9 /* OVHAPIWrapper.framework */,
+				F1E55CD41C5A77D000C569E9 /* OVHAPIWrapper tvOS Tests.xctest */,
+				F1E55CD61C5A77D000C569E9 /* OVHAPIWrapper.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F1F8E9971C5A2B5D00AEF3F3 = {
+			isa = PBXGroup;
+			children = (
+				F1E55CBF1C5A77CF00C569E9 /* OVHAPIWrapper.xcodeproj */,
+				F1F8E9A21C5A2B5E00AEF3F3 /* OVHAPIWrapper-Example-iOS */,
+				F1F8E9CF1C5A4A0700AEF3F3 /* Resources */,
+				F1F8E9A11C5A2B5E00AEF3F3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F1F8E9A11C5A2B5E00AEF3F3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F1F8E9A01C5A2B5E00AEF3F3 /* OVHAPIWrapper-Example-iOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F1F8E9A21C5A2B5E00AEF3F3 /* OVHAPIWrapper-Example-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				F1F8E9A31C5A2B5E00AEF3F3 /* AppDelegate.swift */,
+				F1F8E9A51C5A2B5E00AEF3F3 /* ViewController.swift */,
+				F1F8E9A71C5A2B5E00AEF3F3 /* Main.storyboard */,
+				F1F8E9AA1C5A2B5E00AEF3F3 /* Assets.xcassets */,
+				F1F8E9AC1C5A2B5E00AEF3F3 /* LaunchScreen.storyboard */,
+				F1F8E9AF1C5A2B5E00AEF3F3 /* Info.plist */,
+			);
+			path = "OVHAPIWrapper-Example-iOS";
+			sourceTree = "<group>";
+		};
+		F1F8E9CF1C5A4A0700AEF3F3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F1F8E9D11C5A4A0700AEF3F3 /* Credentials.plist */,
+			);
+			name = Resources;
+			path = "OVHAPIWrapper-Example-iOS/Resources";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F1F8E99F1C5A2B5E00AEF3F3 /* OVHAPIWrapper-Example-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F1F8E9B21C5A2B5E00AEF3F3 /* Build configuration list for PBXNativeTarget "OVHAPIWrapper-Example-iOS" */;
+			buildPhases = (
+				F1F8E99C1C5A2B5E00AEF3F3 /* Sources */,
+				F1F8E99D1C5A2B5E00AEF3F3 /* Frameworks */,
+				F1F8E99E1C5A2B5E00AEF3F3 /* Resources */,
+				F168B4C11C635DA200A56FA2 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F168B4BB1C635D7500A56FA2 /* PBXTargetDependency */,
+				F168B4C01C635DA200A56FA2 /* PBXTargetDependency */,
+			);
+			name = "OVHAPIWrapper-Example-iOS";
+			productName = "OVHAPIWrapper-Example-iOS";
+			productReference = F1F8E9A01C5A2B5E00AEF3F3 /* OVHAPIWrapper-Example-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F1F8E9981C5A2B5D00AEF3F3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "OVH SAS";
+				TargetAttributes = {
+					F1F8E99F1C5A2B5E00AEF3F3 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = F1F8E99B1C5A2B5D00AEF3F3 /* Build configuration list for PBXProject "OVHAPIWrapper-Example-iOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F1F8E9971C5A2B5D00AEF3F3;
+			productRefGroup = F1F8E9A11C5A2B5E00AEF3F3 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F1E55CC01C5A77CF00C569E9 /* Products */;
+					ProjectRef = F1E55CBF1C5A77CF00C569E9 /* OVHAPIWrapper.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				F1F8E99F1C5A2B5E00AEF3F3 /* OVHAPIWrapper-Example-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F1E55CCA1C5A77D000C569E9 /* OVHAPIWrapper.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OVHAPIWrapper.framework;
+			remoteRef = F1E55CC91C5A77D000C569E9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F1E55CCC1C5A77D000C569E9 /* OVHAPIWrapper iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "OVHAPIWrapper iOS Tests.xctest";
+			remoteRef = F1E55CCB1C5A77D000C569E9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F1E55CCE1C5A77D000C569E9 /* OVHAPIWrapper.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OVHAPIWrapper.framework;
+			remoteRef = F1E55CCD1C5A77D000C569E9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F1E55CD01C5A77D000C569E9 /* OVHAPIWrapper OSX Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "OVHAPIWrapper OSX Tests.xctest";
+			remoteRef = F1E55CCF1C5A77D000C569E9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F1E55CD21C5A77D000C569E9 /* OVHAPIWrapper.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OVHAPIWrapper.framework;
+			remoteRef = F1E55CD11C5A77D000C569E9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F1E55CD41C5A77D000C569E9 /* OVHAPIWrapper tvOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "OVHAPIWrapper tvOS Tests.xctest";
+			remoteRef = F1E55CD31C5A77D000C569E9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F1E55CD61C5A77D000C569E9 /* OVHAPIWrapper.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OVHAPIWrapper.framework;
+			remoteRef = F1E55CD51C5A77D000C569E9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F1F8E99E1C5A2B5E00AEF3F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1F8E9AE1C5A2B5E00AEF3F3 /* LaunchScreen.storyboard in Resources */,
+				F1F8E9AB1C5A2B5E00AEF3F3 /* Assets.xcassets in Resources */,
+				F1F8E9D31C5A4A0700AEF3F3 /* Credentials.plist in Resources */,
+				F1F8E9A91C5A2B5E00AEF3F3 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F1F8E99C1C5A2B5E00AEF3F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1F8E9A61C5A2B5E00AEF3F3 /* ViewController.swift in Sources */,
+				F1F8E9A41C5A2B5E00AEF3F3 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F168B4BB1C635D7500A56FA2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "OVHAPIWrapper iOS";
+			targetProxy = F168B4BA1C635D7500A56FA2 /* PBXContainerItemProxy */;
+		};
+		F168B4C01C635DA200A56FA2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "OVHAPIWrapper iOS";
+			targetProxy = F168B4BF1C635DA200A56FA2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F1F8E9A71C5A2B5E00AEF3F3 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1F8E9A81C5A2B5E00AEF3F3 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F1F8E9AC1C5A2B5E00AEF3F3 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1F8E9AD1C5A2B5E00AEF3F3 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F1F8E9B01C5A2B5E00AEF3F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F1F8E9B11C5A2B5E00AEF3F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F1F8E9B31C5A2B5E00AEF3F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = "OVHAPIWrapper-Example-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ovh.OVHAPIWrapper-Example-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		F1F8E9B41C5A2B5E00AEF3F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = "OVHAPIWrapper-Example-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ovh.OVHAPIWrapper-Example-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F1F8E99B1C5A2B5D00AEF3F3 /* Build configuration list for PBXProject "OVHAPIWrapper-Example-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F1F8E9B01C5A2B5E00AEF3F3 /* Debug */,
+				F1F8E9B11C5A2B5E00AEF3F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F1F8E9B21C5A2B5E00AEF3F3 /* Build configuration list for PBXNativeTarget "OVHAPIWrapper-Example-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F1F8E9B31C5A2B5E00AEF3F3 /* Debug */,
+				F1F8E9B41C5A2B5E00AEF3F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F1F8E9981C5A2B5D00AEF3F3 /* Project object */;
+}
