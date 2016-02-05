@@ -15,7 +15,7 @@ iOS, OSX, tvOS, watchOS
 
 ### Dependencies
 
-SWift-OVH depends of [Alamofire](https://github.com/Alamofire/Alamofire) and [CryptoSwift](https://github.com/krzyzanowskim/CryptoSwift).
+Swift-OVH depends of [Alamofire](https://github.com/Alamofire/Alamofire) and [CryptoSwift](https://github.com/krzyzanowskim/CryptoSwift).
 
 ## Installation
 
@@ -23,7 +23,7 @@ SWift-OVH depends of [Alamofire](https://github.com/Alamofire/Alamofire) and [Cr
 
 ### Carthage
 
-- You can install [Carthage](https://github.com/Carthage/Carthage) with [Homebrew]:
+- You can install [Carthage](https://github.com/Carthage/Carthage) with [Homebrew](http://brew.sh/):
 
 ```bash
 $ sudo brew update
@@ -81,7 +81,7 @@ $ git submodule update --init --recursive
 
 [![Add framework](https://github.com/ovh/swift-ovh/blob/master/img/installation-manually-addframework.png)]
 
--The framework must appear under the sections "Embedding Binaries" and "Linked Frameworks and Libraries".
+- The framework must appear under the sections "Embedding Binaries" and "Linked Frameworks and Libraries".
 
 [![Embed framework](https://github.com/ovh/swift-ovh/blob/master/img/installation-manually-embedframework.png)]
 
