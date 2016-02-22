@@ -1,5 +1,5 @@
 //
-//  OVHAPIError.swift
+//  VPSRowController.swift
 //
 //  Copyright (c) 2016, OVH SAS.
 //  All rights reserved.
@@ -28,32 +28,33 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+import WatchKit
 
-/**
- All the errors from the package OVHAPIWrapper are in this enum.
- */
-public enum OVHAPIError : ErrorType, CustomStringConvertible {
-    case HttpError(code: Int)
-    case RequestError(code: Int, httpCode: String?, errorCode: String?, message: String?)
-    case InvalidRequestResponse
-    case MissingApplicationKey
-    case MissingApplicationSecret
-    case MissingConsumerKey
+class VPSRowController: NSObject {
+
+    // MARK: - UI elements
     
-    public var description: String {
-        switch self {
-        case .HttpError(let code): return "HTTP error \(code)"
-        case .RequestError(_, _, _, let message):
-            if let message = message {
-                return message
-            } else {
-                return ""
+    @IBOutlet var group: WKInterfaceGroup!
+    @IBOutlet var nameLabel: WKInterfaceLabel!
+    
+    
+    // MARK: - Property
+    var vps : VPS? {
+        didSet {
+            if let vps = vps {
+                nameLabel.setText(vps.displayName)
+                
+                var color = UIColor.grayColor()
+                if vps.state == .running {
+                    color = UIColor.greenColor()
+                } else if vps.state == .stopped {
+                    color = UIColor.blackColor()
+                }
+                
+                group.setBackgroundColor(color)
+                
+                group.setAlpha(vps.busy ? 0.25 : 1.0)
             }
-        case .InvalidRequestResponse: return "Invalid response"
-        case .MissingApplicationKey: return "Application key is missing"
-        case .MissingApplicationSecret: return "Application secret is missing"
-        case .MissingConsumerKey: return "Consumer key is missing"
         }
     }
 }

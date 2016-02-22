@@ -155,37 +155,38 @@ final public class OVHAPIWrapper {
         
         // Execute the request.
         rawCallWithMethod(.POST, path: "/auth/credential", content: ["accessRules": rules, "redirection": redirectionUrl], isAuthenticated: false, completion: { result, error, request, response in
+            // Defer the handler.
+            var consumerKey: String?
+            var validationUrl: String?
+            var err: ErrorType?
+            defer {
+                if let block = completion {
+                    block(consumerKey: consumerKey, validationUrl: validationUrl, error: err, request: request, response: response)
+                }
+            }
+            
             // Handle the request error.
             guard error == nil else {
                 self.log("error while requesting credentials: \(error.debugDescription)")
-                
-                if let block = completion {
-                    block(consumerKey: nil, validationUrl: nil, error: error, request: request, response: response)
-                }
+                err = error
                 return
             }
             
             // Request must return a dictionary object.
             guard result is NSDictionary else {
                 self.log("get invalid response while requesting credentials")
-                
-                if let block = completion {
-                    block(consumerKey: nil, validationUrl: nil, error: OVHAPIError.InvalidRequestResponse, request: request, response: response)
-                }
+                err = OVHAPIError.InvalidRequestResponse
                 return
             }
             
             // The consumer key and the validation url are returned.
             let dictionary = result as! NSDictionary
-            let consumerKey = dictionary["consumerKey"] as? String
-            let validationUrl = dictionary["validationUrl"] as? String
+            consumerKey = dictionary["consumerKey"] as? String
+            validationUrl = dictionary["validationUrl"] as? String
             
             self.log("request credentials done, get consumer key: '\(consumerKey)' and validation url: '\(validationUrl)")
             
             self.consumerKey = consumerKey
-            if let block = completion {
-                block(consumerKey: consumerKey, validationUrl: validationUrl, error: error, request: request, response: response)
-            }
         })
     }
     
@@ -204,29 +205,34 @@ final public class OVHAPIWrapper {
         
         // Request the credentials.
         requestCredentialsWithAccessRules(accessRules, redirectionUrl: redirectionUrl) { (consumerKey, validationUrl, error, request, response) -> Void in
+            // Defer the handler.
+            var credentialsViewController: OVHAPICredentialsViewController?
+            var err: ErrorType?
+            defer {
+                completion(viewController: credentialsViewController, error: err);
+            }
+            
             // Handle the request error.
             guard error == nil else {
-                completion(viewController: nil, error: error)
+                err = error
                 return
             }
             
             // The request must return a validation url.
             guard validationUrl != nil else {
-                completion(viewController: nil, error: OVHAPIError.InvalidRequestResponse)
+                err = OVHAPIError.InvalidRequestResponse
                 return
             }
             
             // Create the view controller to present to the user.
-            let credentialsViewController = NSBundle(forClass: OVHAPICredentialsViewController.self).loadNibNamed("OVHAPICredentialsViewController", owner: nil, options: nil)[0] as! OVHAPICredentialsViewController
-            credentialsViewController.validationUrl = validationUrl!
-            credentialsViewController.redirectionUrl = redirectionUrl
+            credentialsViewController = NSBundle(forClass: OVHAPICredentialsViewController.self).loadNibNamed("OVHAPICredentialsViewController", owner: nil, options: nil)[0] as? OVHAPICredentialsViewController
+            credentialsViewController?.validationUrl = validationUrl!
+            credentialsViewController?.redirectionUrl = redirectionUrl
             
             // If the authentication is canceled by the user, the consumer key is reset.
-            credentialsViewController.cancelCompletion = {
+            credentialsViewController?.cancelCompletion = {
                 self.consumerKey = currentConsumerKey
             }
-            
-            completion(viewController: credentialsViewController, error: nil);
         }
     }
     #endif
@@ -290,11 +296,9 @@ final public class OVHAPIWrapper {
                 var error: ErrorType? = response.result.error
                 
                 if response.result.isSuccess {
-                    if let value = response.result.value {
-                        if let serverTimestamp = NSTimeInterval(value) {
-                            self.deltaTime = serverTimestamp - NSDate().timeIntervalSince1970
-                            self.log("calculate delta time done, get '\(self.deltaTime!)'")
-                        }
+                    if let value = response.result.value, let serverTimestamp = NSTimeInterval(value) {
+                        self.deltaTime = serverTimestamp - NSDate().timeIntervalSince1970
+                        self.log("calculate delta time done, get '\(self.deltaTime!)'")
                     }
                     
                     if self.deltaTime == nil {
@@ -440,15 +444,8 @@ final public class OVHAPIWrapper {
                         do {
                             try result = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
                             
-                            if result is NSDictionary {
-                                let dictionary = result as! NSDictionary
-                                if let errorCode = dictionary["errorCode"] as? String {
-                                    if let httpCode = dictionary["httpCode"] as? String {
-                                        if let message = dictionary["message"] as? String {
-                                            error = OVHAPIError.RequestError(code: httpReponseCode, httpCode: httpCode, errorCode: errorCode, message: message)
-                                        }
-                                    }
-                                }
+                            if let dictionary = result as? NSDictionary, let message = dictionary["message"] as? String {
+                                error = OVHAPIError.RequestError(code: httpReponseCode, httpCode: dictionary["httpCode"] as? String, errorCode: dictionary["errorCode"] as? String, message: message)
                             }
                         } catch {
                             result = String(data: data, encoding: NSUTF8StringEncoding)

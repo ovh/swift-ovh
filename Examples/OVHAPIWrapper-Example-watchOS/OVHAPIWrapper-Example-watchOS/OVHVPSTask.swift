@@ -1,5 +1,5 @@
 //
-//  OVHAPIError.swift
+//  OVHVPSTask.swift
 //
 //  Copyright (c) 2016, OVH SAS.
 //  All rights reserved.
@@ -29,31 +29,25 @@
 //
 
 import Foundation
+import CoreData
 
-/**
- All the errors from the package OVHAPIWrapper are in this enum.
- */
-public enum OVHAPIError : ErrorType, CustomStringConvertible {
-    case HttpError(code: Int)
-    case RequestError(code: Int, httpCode: String?, errorCode: String?, message: String?)
-    case InvalidRequestResponse
-    case MissingApplicationKey
-    case MissingApplicationSecret
-    case MissingConsumerKey
-    
-    public var description: String {
-        switch self {
-        case .HttpError(let code): return "HTTP error \(code)"
-        case .RequestError(_, _, _, let message):
-            if let message = message {
-                return message
-            } else {
-                return ""
-            }
-        case .InvalidRequestResponse: return "Invalid response"
-        case .MissingApplicationKey: return "Application key is missing"
-        case .MissingApplicationSecret: return "Application secret is missing"
-        case .MissingConsumerKey: return "Consumer key is missing"
-        }
+
+class OVHVPSTask: NSManagedObject {
+
+    // Insert code here to add functionality to your managed object subclass
+    func isFinished() -> Bool {
+        return state != OVHVPSTaskState.todo.rawValue && state != OVHVPSTaskState.doing.rawValue && state != OVHVPSTaskState.waitingAck.rawValue && state != OVHVPSTaskState.paused.rawValue
     }
+    
+    func isPaused() -> Bool {
+        return state == OVHVPSTaskState.paused.rawValue
+    }
+}
+
+public enum OVHVPSTaskState : String {
+    case blocked, cancelled, doing, done, error, paused, todo, waitingAck
+}
+
+public enum OVHVPSTaskType : String {
+    case addVeeamBackupJob, changeRootPassword, createSnapshot, deleteSnapshot, deliverVm, internalTask, openConsoleAccess, provisioningAdditionalIp, reOpenVm, rebootVm, reinstallVm, removeVeeamBackup, restoreFullVeeamBackup, restoreVeeamBackup, revertSnapshot, setMonitoring, setNetboot, startVm, stopVm, upgradeVm
 }

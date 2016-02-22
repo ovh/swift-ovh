@@ -1,5 +1,5 @@
 //
-//  OVHAPIError.swift
+//  ExtensionDelegate.swift
 //
 //  Copyright (c) 2016, OVH SAS.
 //  All rights reserved.
@@ -28,32 +28,22 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+import WatchKit
 
-/**
- All the errors from the package OVHAPIWrapper are in this enum.
- */
-public enum OVHAPIError : ErrorType, CustomStringConvertible {
-    case HttpError(code: Int)
-    case RequestError(code: Int, httpCode: String?, errorCode: String?, message: String?)
-    case InvalidRequestResponse
-    case MissingApplicationKey
-    case MissingApplicationSecret
-    case MissingConsumerKey
-    
-    public var description: String {
-        switch self {
-        case .HttpError(let code): return "HTTP error \(code)"
-        case .RequestError(_, _, _, let message):
-            if let message = message {
-                return message
-            } else {
-                return ""
-            }
-        case .InvalidRequestResponse: return "Invalid response"
-        case .MissingApplicationKey: return "Application key is missing"
-        case .MissingApplicationSecret: return "Application secret is missing"
-        case .MissingConsumerKey: return "Consumer key is missing"
-        }
+class ExtensionDelegate: NSObject, WKExtensionDelegate {
+
+    func applicationDidFinishLaunching() {
+        // Perform any final initialization of your application.
+        DataController.sharedController.initializeData()
     }
+
+    func applicationDidBecomeActive() {
+        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    }
+
+    func applicationWillResignActive() {
+        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+        // Use this method to pause ongoing tasks, disable timers, etc.
+    }
+
 }

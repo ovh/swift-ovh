@@ -1,5 +1,5 @@
 //
-//  OVHAPIError.swift
+//  VPS.swift
 //
 //  Copyright (c) 2016, OVH SAS.
 //  All rights reserved.
@@ -30,30 +30,35 @@
 
 import Foundation
 
-/**
- All the errors from the package OVHAPIWrapper are in this enum.
- */
-public enum OVHAPIError : ErrorType, CustomStringConvertible {
-    case HttpError(code: Int)
-    case RequestError(code: Int, httpCode: String?, errorCode: String?, message: String?)
-    case InvalidRequestResponse
-    case MissingApplicationKey
-    case MissingApplicationSecret
-    case MissingConsumerKey
+enum VPSState: String {
+    case running, stopped, unknown
+}
+
+struct VPS {
     
-    public var description: String {
-        switch self {
-        case .HttpError(let code): return "HTTP error \(code)"
-        case .RequestError(_, _, _, let message):
-            if let message = message {
-                return message
-            } else {
-                return ""
-            }
-        case .InvalidRequestResponse: return "Invalid response"
-        case .MissingApplicationKey: return "Application key is missing"
-        case .MissingApplicationSecret: return "Application secret is missing"
-        case .MissingConsumerKey: return "Consumer key is missing"
+    // MARK: - Properties
+    
+    let name: String?
+    let displayName: String?
+    let state: VPSState?
+    var busy: Bool
+    
+    
+    // MARK: - Build a VPS struct
+    static func VPSFromWatchRepresentation(representation: [String:AnyObject]) -> VPS {
+        var vpsName: String?
+        if let name = representation["name"] as? String {
+            vpsName = name
         }
+        
+        var vpsDisplayName: String?
+        if let displayName = representation["displayName"] as? String {
+            vpsDisplayName = displayName
+        }
+        
+        let vpsState = representation["state"] as! String
+        let vpsBusy = representation["busy"] as! Bool
+        
+        return VPS(name: vpsName, displayName: vpsDisplayName, state: VPSState(rawValue: vpsState), busy: vpsBusy)
     }
 }

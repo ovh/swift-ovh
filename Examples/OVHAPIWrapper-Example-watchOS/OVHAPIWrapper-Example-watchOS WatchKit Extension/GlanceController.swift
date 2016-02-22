@@ -1,5 +1,5 @@
 //
-//  OVHAPIError.swift
+//  GlanceController.swift
 //
 //  Copyright (c) 2016, OVH SAS.
 //  All rights reserved.
@@ -28,32 +28,48 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import WatchKit
 import Foundation
 
-/**
- All the errors from the package OVHAPIWrapper are in this enum.
- */
-public enum OVHAPIError : ErrorType, CustomStringConvertible {
-    case HttpError(code: Int)
-    case RequestError(code: Int, httpCode: String?, errorCode: String?, message: String?)
-    case InvalidRequestResponse
-    case MissingApplicationKey
-    case MissingApplicationSecret
-    case MissingConsumerKey
+
+class GlanceController: WKInterfaceController {
+
+    // MARK: - UI elements
     
-    public var description: String {
-        switch self {
-        case .HttpError(let code): return "HTTP error \(code)"
-        case .RequestError(_, _, _, let message):
-            if let message = message {
-                return message
-            } else {
-                return ""
-            }
-        case .InvalidRequestResponse: return "Invalid response"
-        case .MissingApplicationKey: return "Application key is missing"
-        case .MissingApplicationSecret: return "Application secret is missing"
-        case .MissingConsumerKey: return "Consumer key is missing"
+    @IBOutlet var label: WKInterfaceLabel!
+    
+    
+    // MARK: - Private methods
+    
+    @objc private func updateData() {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        if let data = userDefaults.valueForKey("glance") as? [String:Int] {
+            label.setText("Running: \(data["running"]!)\nStopped: \(data["stopped"]!)\nBusy: \(data["busy"]!)\nUnknown: \(data["unknown"]!)")
         }
     }
+    
+    
+    // MARK: - Lifecycle
+    
+    override func awakeWithContext(context: AnyObject?) {
+        super.awakeWithContext(context)
+        
+        // Configure interface objects here.
+        updateData()
+    }
+
+    override func willActivate() {
+        // This method is called when watch view controller is about to be visible to user
+        super.willActivate()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateData", name: NSUserDefaultsDidChangeNotification, object: nil)
+    }
+
+    override func didDeactivate() {
+        // This method is called when watch view controller is no longer visible
+        super.didDeactivate()
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
 }

@@ -1,5 +1,5 @@
 //
-//  OVHAPIError.swift
+//  OVHVPS.swift
 //
 //  Copyright (c) 2016, OVH SAS.
 //  All rights reserved.
@@ -29,31 +29,47 @@
 //
 
 import Foundation
+import CoreData
 
-/**
- All the errors from the package OVHAPIWrapper are in this enum.
- */
-public enum OVHAPIError : ErrorType, CustomStringConvertible {
-    case HttpError(code: Int)
-    case RequestError(code: Int, httpCode: String?, errorCode: String?, message: String?)
-    case InvalidRequestResponse
-    case MissingApplicationKey
-    case MissingApplicationSecret
-    case MissingConsumerKey
-    
-    public var description: String {
-        switch self {
-        case .HttpError(let code): return "HTTP error \(code)"
-        case .RequestError(_, _, _, let message):
-            if let message = message {
-                return message
-            } else {
-                return ""
-            }
-        case .InvalidRequestResponse: return "Invalid response"
-        case .MissingApplicationKey: return "Application key is missing"
-        case .MissingApplicationSecret: return "Application secret is missing"
-        case .MissingConsumerKey: return "Consumer key is missing"
-        }
+
+class OVHVPS: NSManagedObject {
+
+// Insert code here to add functionality to your managed object subclass
+    func isBusy() -> Bool {
+        return (state != OVHVPSState.running.rawValue && state != OVHVPSState.stopped.rawValue) || currentTask != nil //|| waitingTask
     }
+    
+    func isRunning() -> Bool {
+        return state == OVHVPSState.running.rawValue
+    }
+    
+    func isStopped() -> Bool {
+        return state == OVHVPSState.stopped.rawValue
+    }
+    
+    func isStateUnknown() -> Bool {
+        return state == OVHVPSState.unknown.rawValue
+    }
+
+    func watchRepresentation() -> [String:AnyObject] {
+        var representation = [String:AnyObject]()
+        
+        if let name = name {
+            representation["name"] = name
+        }
+        if let displayName = displayName {
+            representation["displayName"] = displayName
+        }
+        if let state = state {
+            representation["state"] = state
+        }
+        
+        representation["busy"] = isBusy()
+        
+        return representation
+    }
+}
+
+public enum OVHVPSState : String {
+    case installing, maintenance, rebooting, running, stopped, stopping, upgrading, unknown
 }
