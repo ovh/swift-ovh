@@ -267,6 +267,14 @@ final class DataController: NSObject, WCSessionDelegate {
         }
     }
     
+    func sessionReachabilityDidChange(session: WCSession) {
+        print("iOS application reachability changed.")
+        
+        if OVHAPI == nil {
+            initializeData()
+        }
+    }
+    
     
     // MARK: - Lifecycle
     

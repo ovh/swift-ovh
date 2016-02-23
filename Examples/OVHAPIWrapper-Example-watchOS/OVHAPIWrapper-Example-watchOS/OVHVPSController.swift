@@ -43,7 +43,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
     
     private struct RunningTask {
         let id: Int64
-        var running: Bool
+        let running: Bool
     }
     
     
@@ -336,11 +336,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
      */
     func reloadVPSTaskWithVPSName(VPSName: String, taskId: Int64, completionBlock: (([String:AnyObject]?, ErrorType?) -> Void)?) {
         // Track this running task.
-        if var task = runningTasks[VPSName] {
-            task.running = true
-        } else {
-            runningTasks[VPSName] = RunningTask(id: taskId, running: true)
-        }
+        runningTasks[VPSName] = RunningTask(id: taskId, running: true)
         
         // Launch the request.
         self.OVHAPI.get("/vps/\(VPSName)/tasks/\(taskId)") { (result, error, request, response) -> Void in
@@ -359,7 +355,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                     }
                     
                     if var task = self.runningTasks[VPSName] {
-                        task.running = false
+                        self.runningTasks[VPSName] = RunningTask(id: taskId, running: false)
                     }
                 }
                 
