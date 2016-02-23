@@ -275,9 +275,11 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
         
         if VPS.isBusy() {
             imageView.alpha = 0.25
+            nameLabel.alpha = 0.25
             loadingView.startAnimating()
         } else {
             imageView.alpha = 1.0
+            nameLabel.alpha = 1.0
             loadingView.stopAnimating()
         }
         
@@ -288,7 +290,7 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
             color = UIColor.blackColor()
         }
         
-        imageView.backgroundColor = color
+        imageView.tintColor = color
     }
     
     private func presentError(error: ErrorType?) {
