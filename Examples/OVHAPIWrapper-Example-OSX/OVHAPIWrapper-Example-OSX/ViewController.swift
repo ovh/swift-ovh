@@ -92,14 +92,14 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         var title: String? = error.debugDescription
         var message: String? = nil
         
-        if error is OVHAPIError {
-            title = (error as! OVHAPIError).description
-            switch error as! OVHAPIError {
+        if let error = error as? OVHAPIError {
+            title = error.description
+            switch error {
             case OVHAPIError.MissingApplicationKey: message = "Please fix the Credentials.plist file."
             case OVHAPIError.MissingApplicationSecret: message = "Please fix the Credentials.plist file."
             case OVHAPIError.MissingConsumerKey: message = "Please authenticate first."
             case OVHAPIError.HttpError(let code): message = "code \(code)"
-            case OVHAPIError.RequestError(_, let httpCode, let errorCode, _): message = "Error \(httpCode!): \(errorCode!)"
+            case OVHAPIError.RequestError(_, let httpCode?, let errorCode?, _): message = "Error \(httpCode): \(errorCode)"
             default: break
             }
         }
