@@ -46,7 +46,7 @@ class VPSRowController: NSObject {
                 
                 var color = UIColor.grayColor()
                 if vps.state == .running {
-                    color = UIColor.greenColor()
+                    color = UIColor(red: 0.0, green: 0.8, blue: 0.2, alpha: 1.0)
                 } else if vps.state == .stopped {
                     color = UIColor.blackColor()
                 }
