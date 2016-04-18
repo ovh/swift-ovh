@@ -177,7 +177,7 @@ final class DataController: NSObject, WCSessionDelegate {
      */
     private func callAPIAction(action: String, onVPS VPSName: String, completionBlock: ((ErrorType?) -> Void)?) {
         // Closure to update the VPS busy state.
-        let updateVPSWithName = { (name: String, setBusy busy: Bool) -> Void in
+        let updateVPSWithName = { (name: String, busy: Bool) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 var found = false
                 for var i = 0; i < self.VPSList.count && !found; i++ {
@@ -193,7 +193,7 @@ final class DataController: NSObject, WCSessionDelegate {
             })
         }
         
-        updateVPSWithName(VPSName, setBusy: true)
+        updateVPSWithName(VPSName, true)
         
         // Launch the request.
         OVHAPI?.post("/vps/\(VPSName)/\(action)") { result, error, request, response in
@@ -202,7 +202,7 @@ final class DataController: NSObject, WCSessionDelegate {
             var completionError: ErrorType?
             defer {
                 if let _ = completionError {
-                    updateVPSWithName(VPSName, setBusy: false)
+                    updateVPSWithName(VPSName, false)
                 }
                 if let block = completionBlock {
                     block(completionError)
