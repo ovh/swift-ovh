@@ -330,7 +330,7 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
         // Do any additional setup after loading the view, typically from a nib.
         
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: "refreshVPS:", forControlEvents: .ValueChanged)
+        refreshControl?.addTarget(self, action: #selector(ProductsViewController.refreshVPS(_:)), forControlEvents: .ValueChanged)
         
         if let refreshControl = refreshControl {
             collectionView?.addSubview(refreshControl)

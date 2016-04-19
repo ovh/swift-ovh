@@ -69,7 +69,7 @@ class ViewController: UITableViewController {
     }
     
     private func loadProductsWithPath(path: String, dataIndex: Int, completion: () -> Void) {
-        numberOfRequestsLaunched++
+        numberOfRequestsLaunched += 1
         
         OVHAPI?.get(path){ (result, error, request, response) -> Void in
             self.presentError(error)
@@ -124,7 +124,7 @@ class ViewController: UITableViewController {
         let completion = { () -> Void in
             self.tableView.reloadData()
             
-            self.numberOfRequestsLaunched--
+            self.numberOfRequestsLaunched -= 1
             if self.numberOfRequestsLaunched <= 0 {
                 sender.endRefreshing()
             }

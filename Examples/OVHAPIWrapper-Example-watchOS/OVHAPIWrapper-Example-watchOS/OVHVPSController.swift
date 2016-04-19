@@ -101,7 +101,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                     if let _ = completionError {
                         fireDateTimeInterval = 30
                     }
-                    self.runningVPSTimer = NSTimer(fireDate: NSDate(timeIntervalSinceNow: fireDateTimeInterval), interval: self.runningTasksTimerTimeInterval, target: self, selector: "refreshVPS", userInfo: nil, repeats: false)
+                    self.runningVPSTimer = NSTimer(fireDate: NSDate(timeIntervalSinceNow: fireDateTimeInterval), interval: self.runningTasksTimerTimeInterval, target: self, selector: #selector(OVHVPSController.refreshVPS), userInfo: nil, repeats: false)
                     if let timer = self.runningVPSTimer {
                         NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
                     }
@@ -138,10 +138,13 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                                 
                                 // Is this VPS already saved?
                                 var found = false
-                                for var i = 0; i < fetchedVPS.count && !found; i++ {
-                                    if fetchedVPS[i].name == VPSName {
-                                        found = true
-                                        fetchedVPS.removeAtIndex(i)
+                                if fetchedVPS.count > 0 {
+                                    for i in 0...fetchedVPS.count {
+                                        if fetchedVPS[i].name == VPSName {
+                                            found = true
+                                            fetchedVPS.removeAtIndex(i)
+                                            break
+                                        }
                                     }
                                 }
                                 
@@ -473,12 +476,12 @@ final class OVHVPSController: WatchSessionManagerDelegate {
     Start the timers.
     */
     private func startTimers() {
-        runningTasksTimer = NSTimer(fireDate: NSDate(timeIntervalSinceNow: runningTasksTimerTimeInterval), interval: runningTasksTimerTimeInterval, target: self, selector: Selector("refreshVPSTasks"), userInfo: nil, repeats: true)
+        runningTasksTimer = NSTimer(fireDate: NSDate(timeIntervalSinceNow: runningTasksTimerTimeInterval), interval: runningTasksTimerTimeInterval, target: self, selector: #selector(OVHVPSController.refreshVPSTasks), userInfo: nil, repeats: true)
         if let timer = runningTasksTimer {
             NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
         }
         
-        runningPropertiesTimer = NSTimer(fireDate: NSDate(timeIntervalSinceNow: runningTasksTimerTimeInterval), interval: runningTasksTimerTimeInterval, target: self, selector: Selector("refreshVPSProperties"), userInfo: nil, repeats: true)
+        runningPropertiesTimer = NSTimer(fireDate: NSDate(timeIntervalSinceNow: runningTasksTimerTimeInterval), interval: runningTasksTimerTimeInterval, target: self, selector: #selector(OVHVPSController.refreshVPSProperties), userInfo: nil, repeats: true)
         if let timer = runningPropertiesTimer {
             NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
         }

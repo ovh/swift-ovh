@@ -62,7 +62,7 @@ class GlanceController: WKInterfaceController {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateData", name: NSUserDefaultsDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(GlanceController.updateData), name: NSUserDefaultsDidChangeNotification, object: nil)
     }
 
     override func didDeactivate() {

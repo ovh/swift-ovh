@@ -64,8 +64,8 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     }
     
     private func loadProductsWithPath(path: String, type: String, completion: () -> Void) {
-        numberOfRequestsLaunched++
-        progressIndicator.maxValue++
+        numberOfRequestsLaunched += 1
+        progressIndicator.maxValue += 1
         
         OVHAPI?.get(path){ (result, error, request, response) -> Void in
             self.presentError(error)
@@ -77,7 +77,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 }
             }
             
-            self.numberOfRequestsDone++
+            self.numberOfRequestsDone += 1
             self.progressIndicator.doubleValue = Double(self.numberOfRequestsDone)
             
             completion()

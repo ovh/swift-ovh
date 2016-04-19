@@ -88,10 +88,12 @@ final public class OVHAPIWrapper {
             requestTimeout = timeout
         }
         
-        let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("com.ovh.apiwrapper.background\(OVHAPIWrapper.requestManagerCount++)")
+        let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("com.ovh.apiwrapper.background\(OVHAPIWrapper.requestManagerCount)")
         configuration.timeoutIntervalForRequest = requestTimeout
         configuration.timeoutIntervalForResource = requestTimeout
         requestManager = Alamofire.Manager(configuration: configuration)
+        
+        OVHAPIWrapper.requestManagerCount += 1
         
         log("API initialized with endpoint \(self.endpoint)")
     }

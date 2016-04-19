@@ -160,10 +160,13 @@ final class DataController: NSObject, WCSessionDelegate {
         let vps = VPS.VPSFromWatchRepresentation(representation)
         
         var index = -1
-        for var i = 0; i < VPSList.count && index == -1; i++ {
-            if VPSList[i].name == vps.name {
-                VPSList[i] = vps
-                index = i
+        if VPSList.count > 0 {
+            for i in 0...VPSList.count {
+                if VPSList[i].name == vps.name {
+                    VPSList[i] = vps
+                    index = i
+                    break
+                }
             }
         }
         
@@ -179,15 +182,16 @@ final class DataController: NSObject, WCSessionDelegate {
         // Closure to update the VPS busy state.
         let updateVPSWithName = { (name: String, busy: Bool) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                var found = false
-                for var i = 0; i < self.VPSList.count && !found; i++ {
-                    var vps = self.VPSList[i]
-                    if vps.name == VPSName {
-                        found = true
-                        vps.busy = busy
-                        self.VPSList[i] = vps
-                        
-                        self.delegate?.VPSUpdated(atIndex: i)
+                if self.VPSList.count > 0 {
+                    for i in 0...self.VPSList.count {
+                        var vps = self.VPSList[i]
+                        if vps.name == VPSName {
+                            vps.busy = busy
+                            self.VPSList[i] = vps
+                            
+                            self.delegate?.VPSUpdated(atIndex: i)
+                            break
+                        }
                     }
                 }
             })

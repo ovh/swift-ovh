@@ -155,6 +155,11 @@ class OVHAPIWrapperTests: XCTestCase {
         
         waitForExpectationsWithTimeout(timeout, handler: nil)
     }
+    #else
+    func testRequestCredentialsWithViewController() {
+        // This method must be redefined for the other OS than iOS
+        // because Xcode crashes if it not present at runtime.
+    }
     #endif
     
     func testCallAPIWithMissingApplicationKeyMustThrowError() {
