@@ -1,0 +1,1121 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F13B0C431C6E43F500AD1C6C /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F13B0C421C6E43F500AD1C6C /* WatchConnectivity.framework */; };
+		F17A6A121C747CE700F26903 /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F18B80811C72321000AB683B /* WatchConnectivity.framework */; };
+		F17A6A331C74890300F26903 /* OVHAPIWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A261C7488D600F26903 /* OVHAPIWrapper.framework */; };
+		F17A6A341C74890300F26903 /* OVHAPIWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A261C7488D600F26903 /* OVHAPIWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F17A6A371C74891B00F26903 /* OVHAPIWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A321C7488D600F26903 /* OVHAPIWrapper.framework */; };
+		F17A6A381C74891B00F26903 /* OVHAPIWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A321C7488D600F26903 /* OVHAPIWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F17A6A651C748A6A00F26903 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A491C748A4600F26903 /* Alamofire.framework */; };
+		F17A6A661C748A6A00F26903 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A491C748A4600F26903 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F17A6A691C748A6A00F26903 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A5C1C748A4600F26903 /* CryptoSwift.framework */; };
+		F17A6A6A1C748A6A00F26903 /* CryptoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A5C1C748A4600F26903 /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F17A6A6D1C748A9F00F26903 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A551C748A4600F26903 /* Alamofire.framework */; };
+		F17A6A6E1C748A9F00F26903 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A551C748A4600F26903 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F17A6A711C748A9F00F26903 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A5E1C748A4600F26903 /* CryptoSwift.framework */; };
+		F17A6A721C748A9F00F26903 /* CryptoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A5E1C748A4600F26903 /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F18B801E1C7204DC00AB683B /* VPSRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18B801D1C7204DC00AB683B /* VPSRowController.swift */; };
+		F18B802C1C72097400AB683B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18B802B1C72097400AB683B /* CoreDataManager.swift */; };
+		F18B807F1C72297D00AB683B /* VPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18B807E1C72297D00AB683B /* VPS.swift */; };
+		F18B80801C72297D00AB683B /* VPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18B807E1C72297D00AB683B /* VPS.swift */; };
+		F1C4CE361C731E4F0018C2AB /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C4CE351C731E4F0018C2AB /* WatchSessionManager.swift */; };
+		F1C4CE3D1C7364630018C2AB /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C4CE3C1C7364630018C2AB /* DataController.swift */; };
+		F1F1EEFB1C6A45DF00827AC5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EEFA1C6A45DF00827AC5 /* AppDelegate.swift */; };
+		F1F1EEFD1C6A45DF00827AC5 /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EEFC1C6A45DF00827AC5 /* ProductsViewController.swift */; };
+		F1F1EF001C6A45DF00827AC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F1EEFE1C6A45DF00827AC5 /* Main.storyboard */; };
+		F1F1EF021C6A45DF00827AC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1F1EF011C6A45DF00827AC5 /* Assets.xcassets */; };
+		F1F1EF051C6A45DF00827AC5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F1EF031C6A45DF00827AC5 /* LaunchScreen.storyboard */; };
+		F1F1EF0A1C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = F1F1EF091C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit App.app */; };
+		F1F1EF101C6A45DF00827AC5 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F1EF0E1C6A45DF00827AC5 /* Interface.storyboard */; };
+		F1F1EF121C6A45DF00827AC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1F1EF111C6A45DF00827AC5 /* Assets.xcassets */; };
+		F1F1EF191C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F1F1EF181C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F1F1EF201C6A45DF00827AC5 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF1F1C6A45DF00827AC5 /* InterfaceController.swift */; };
+		F1F1EF221C6A45DF00827AC5 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF211C6A45DF00827AC5 /* ExtensionDelegate.swift */; };
+		F1F1EF241C6A45DF00827AC5 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF231C6A45DF00827AC5 /* NotificationController.swift */; };
+		F1F1EF261C6A45DF00827AC5 /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF251C6A45DF00827AC5 /* GlanceController.swift */; };
+		F1F1EF281C6A45DF00827AC5 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF271C6A45DF00827AC5 /* ComplicationController.swift */; };
+		F1F1EF2A1C6A45DF00827AC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1F1EF291C6A45DF00827AC5 /* Assets.xcassets */; };
+		F1F1EF3F1C6A479500827AC5 /* OVHVPSModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF3D1C6A479500827AC5 /* OVHVPSModel.xcdatamodeld */; };
+		F1F1EF491C6A497E00827AC5 /* Credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1F1EF471C6A497E00827AC5 /* Credentials.plist */; };
+		F1F1EF4E1C6A4FBF00827AC5 /* OVHVPS+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF4A1C6A4FBF00827AC5 /* OVHVPS+CoreDataProperties.swift */; };
+		F1F1EF4F1C6A4FBF00827AC5 /* OVHVPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF4B1C6A4FBF00827AC5 /* OVHVPS.swift */; };
+		F1F1EF501C6A4FBF00827AC5 /* OVHVPSTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF4C1C6A4FBF00827AC5 /* OVHVPSTask+CoreDataProperties.swift */; };
+		F1F1EF511C6A4FBF00827AC5 /* OVHVPSTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF4D1C6A4FBF00827AC5 /* OVHVPSTask.swift */; };
+		F1F1EF531C6A51F100827AC5 /* OVHVPSController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF521C6A51F100827AC5 /* OVHVPSController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F17A6A251C7488D600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A1B1C7488D600F26903 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F191ED991C58F7D300307421;
+			remoteInfo = "OVHAPIWrapper iOS";
+		};
+		F17A6A271C7488D600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A1B1C7488D600F26903 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1791CC01C5902A6004901F9;
+			remoteInfo = "OVHAPIWrapper iOS Tests";
+		};
+		F17A6A291C7488D600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A1B1C7488D600F26903 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F191EDA71C58F87E00307421;
+			remoteInfo = "OVHAPIWrapper OSX";
+		};
+		F17A6A2B1C7488D600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A1B1C7488D600F26903 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1791CCF1C5902D0004901F9;
+			remoteInfo = "OVHAPIWrapper OSX Tests";
+		};
+		F17A6A2D1C7488D600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A1B1C7488D600F26903 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F191EDB41C58F8B800307421;
+			remoteInfo = "OVHAPIWrapper tvOS";
+		};
+		F17A6A2F1C7488D600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A1B1C7488D600F26903 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1791CDE1C5902EC004901F9;
+			remoteInfo = "OVHAPIWrapper tvOS Tests";
+		};
+		F17A6A311C7488D600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A1B1C7488D600F26903 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F191EDC11C58F8D800307421;
+			remoteInfo = "OVHAPIWrapper watchOS";
+		};
+		F17A6A351C74890300F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A1B1C7488D600F26903 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F191ED981C58F7D300307421;
+			remoteInfo = "OVHAPIWrapper iOS";
+		};
+		F17A6A391C74891B00F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A1B1C7488D600F26903 /* OVHAPIWrapper.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F191EDC01C58F8D800307421;
+			remoteInfo = "OVHAPIWrapper watchOS";
+		};
+		F17A6A481C748A4600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3B1C748A4600F26903 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8111E3319A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS";
+		};
+		F17A6A4A1C748A4600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3B1C748A4600F26903 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8111E3E19A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS Tests";
+		};
+		F17A6A4C1C748A4600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3B1C748A4600F26903 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4DD67C0B1A5C55C900ED2280;
+			remoteInfo = "Alamofire OSX";
+		};
+		F17A6A4E1C748A4600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3B1C748A4600F26903 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F829C6B21A7A94F100A2CD59;
+			remoteInfo = "Alamofire OSX Tests";
+		};
+		F17A6A501C748A4600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3B1C748A4600F26903 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CF626EF1BA7CB3E0011A099;
+			remoteInfo = "Alamofire tvOS";
+		};
+		F17A6A521C748A4600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3B1C748A4600F26903 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CF626F81BA7CB3E0011A099;
+			remoteInfo = "Alamofire tvOS Tests";
+		};
+		F17A6A541C748A4600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3B1C748A4600F26903 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4202FE01B667AA100C997FB;
+			remoteInfo = "Alamofire watchOS";
+		};
+		F17A6A5B1C748A4600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 754BE45519693E190098E6F3;
+			remoteInfo = "CryptoSwift iOS";
+		};
+		F17A6A5D1C748A4600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5596BDBB1BC8F220007E38D5;
+			remoteInfo = "CryptoSwift watchOS";
+		};
+		F17A6A5F1C748A4600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 75D614BF1BD844F2001358B2;
+			remoteInfo = "CryptoSwift tvOS";
+		};
+		F17A6A611C748A4600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 75DF77721BC8EB59006E9520;
+			remoteInfo = "CryptoSwift OSX";
+		};
+		F17A6A631C748A4600F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 754BE46019693E190098E6F3;
+			remoteInfo = CryptoSwiftTests;
+		};
+		F17A6A671C748A6A00F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3B1C748A4600F26903 /* Alamofire.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F8111E3219A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS";
+		};
+		F17A6A6B1C748A6A00F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 754BE45419693E190098E6F3;
+			remoteInfo = "CryptoSwift iOS";
+		};
+		F17A6A6F1C748A9F00F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3B1C748A4600F26903 /* Alamofire.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E4202FCD1B667AA100C997FB;
+			remoteInfo = "Alamofire watchOS";
+		};
+		F17A6A731C748A9F00F26903 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5596BDBA1BC8F220007E38D5;
+			remoteInfo = "CryptoSwift watchOS";
+		};
+		F1F1EF0B1C6A45DF00827AC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1F1EEEF1C6A45DF00827AC5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F1F1EF081C6A45DF00827AC5;
+			remoteInfo = "OVHAPIWrapper-Example-watchOS WatchKit App";
+		};
+		F1F1EF1A1C6A45DF00827AC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1F1EEEF1C6A45DF00827AC5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F1F1EF171C6A45DF00827AC5;
+			remoteInfo = "OVHAPIWrapper-Example-watchOS WatchKit Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F18B80321C72178200AB683B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F17A6A721C748A9F00F26903 /* CryptoSwift.framework in Embed Frameworks */,
+				F17A6A381C74891B00F26903 /* OVHAPIWrapper.framework in Embed Frameworks */,
+				F17A6A6E1C748A9F00F26903 /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1F1EF311C6A45DF00827AC5 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F1F1EF191C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1F1EF351C6A45DF00827AC5 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				F1F1EF0A1C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1F1EF911C6B3E5C00827AC5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F17A6A6A1C748A6A00F26903 /* CryptoSwift.framework in Embed Frameworks */,
+				F17A6A341C74890300F26903 /* OVHAPIWrapper.framework in Embed Frameworks */,
+				F17A6A661C748A6A00F26903 /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		F13B0C421C6E43F500AD1C6C /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = System/Library/Frameworks/WatchConnectivity.framework; sourceTree = SDKROOT; };
+		F17A6A1B1C7488D600F26903 /* OVHAPIWrapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OVHAPIWrapper.xcodeproj; path = ../../OVHAPIWrapper.xcodeproj; sourceTree = "<group>"; };
+		F17A6A3B1C748A4600F26903 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = ../../Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
+		F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CryptoSwift.xcodeproj; path = ../../CryptoSwift/CryptoSwift.xcodeproj; sourceTree = "<group>"; };
+		F18B801D1C7204DC00AB683B /* VPSRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPSRowController.swift; sourceTree = "<group>"; };
+		F18B802B1C72097400AB683B /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		F18B807E1C72297D00AB683B /* VPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPS.swift; sourceTree = "<group>"; };
+		F18B80811C72321000AB683B /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.1.sdk/System/Library/Frameworks/WatchConnectivity.framework; sourceTree = DEVELOPER_DIR; };
+		F1C4CE351C731E4F0018C2AB /* WatchSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
+		F1C4CE3C1C7364630018C2AB /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		F1F1EEF71C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OVHAPIWrapper-Example-watchOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1F1EEFA1C6A45DF00827AC5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F1F1EEFC1C6A45DF00827AC5 /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
+		F1F1EEFF1C6A45DF00827AC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F1F1EF011C6A45DF00827AC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F1F1EF041C6A45DF00827AC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F1F1EF061C6A45DF00827AC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1F1EF091C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OVHAPIWrapper-Example-watchOS WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1F1EF0F1C6A45DF00827AC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		F1F1EF111C6A45DF00827AC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F1F1EF131C6A45DF00827AC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1F1EF181C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "OVHAPIWrapper-Example-watchOS WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1F1EF1E1C6A45DF00827AC5 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		F1F1EF1F1C6A45DF00827AC5 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		F1F1EF211C6A45DF00827AC5 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		F1F1EF231C6A45DF00827AC5 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		F1F1EF251C6A45DF00827AC5 /* GlanceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlanceController.swift; sourceTree = "<group>"; };
+		F1F1EF271C6A45DF00827AC5 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		F1F1EF291C6A45DF00827AC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F1F1EF2B1C6A45DF00827AC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1F1EF3E1C6A479500827AC5 /* OVHVPSModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OVHVPSModel.xcdatamodel; sourceTree = "<group>"; };
+		F1F1EF471C6A497E00827AC5 /* Credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Credentials.plist; sourceTree = "<group>"; };
+		F1F1EF4A1C6A4FBF00827AC5 /* OVHVPS+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OVHVPS+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F1F1EF4B1C6A4FBF00827AC5 /* OVHVPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVHVPS.swift; sourceTree = "<group>"; };
+		F1F1EF4C1C6A4FBF00827AC5 /* OVHVPSTask+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OVHVPSTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F1F1EF4D1C6A4FBF00827AC5 /* OVHVPSTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVHVPSTask.swift; sourceTree = "<group>"; };
+		F1F1EF521C6A51F100827AC5 /* OVHVPSController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVHVPSController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F1F1EEF41C6A45DF00827AC5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F13B0C431C6E43F500AD1C6C /* WatchConnectivity.framework in Frameworks */,
+				F17A6A651C748A6A00F26903 /* Alamofire.framework in Frameworks */,
+				F17A6A331C74890300F26903 /* OVHAPIWrapper.framework in Frameworks */,
+				F17A6A691C748A6A00F26903 /* CryptoSwift.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1F1EF151C6A45DF00827AC5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F17A6A121C747CE700F26903 /* WatchConnectivity.framework in Frameworks */,
+				F17A6A6D1C748A9F00F26903 /* Alamofire.framework in Frameworks */,
+				F17A6A371C74891B00F26903 /* OVHAPIWrapper.framework in Frameworks */,
+				F17A6A711C748A9F00F26903 /* CryptoSwift.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F13B0C4A1C6E441100AD1C6C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F18B80811C72321000AB683B /* WatchConnectivity.framework */,
+				F13B0C421C6E43F500AD1C6C /* WatchConnectivity.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F17A6A1C1C7488D600F26903 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F17A6A261C7488D600F26903 /* OVHAPIWrapper.framework */,
+				F17A6A281C7488D600F26903 /* OVHAPIWrapper iOS Tests.xctest */,
+				F17A6A2A1C7488D600F26903 /* OVHAPIWrapper.framework */,
+				F17A6A2C1C7488D600F26903 /* OVHAPIWrapper OSX Tests.xctest */,
+				F17A6A2E1C7488D600F26903 /* OVHAPIWrapper.framework */,
+				F17A6A301C7488D600F26903 /* OVHAPIWrapper tvOS Tests.xctest */,
+				F17A6A321C7488D600F26903 /* OVHAPIWrapper.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F17A6A3C1C748A4600F26903 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F17A6A491C748A4600F26903 /* Alamofire.framework */,
+				F17A6A4B1C748A4600F26903 /* Alamofire iOS Tests.xctest */,
+				F17A6A4D1C748A4600F26903 /* Alamofire.framework */,
+				F17A6A4F1C748A4600F26903 /* Alamofire OSX Tests.xctest */,
+				F17A6A511C748A4600F26903 /* Alamofire.framework */,
+				F17A6A531C748A4600F26903 /* Alamofire tvOS Tests.xctest */,
+				F17A6A551C748A4600F26903 /* Alamofire.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F17A6A3F1C748A4600F26903 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F17A6A5C1C748A4600F26903 /* CryptoSwift.framework */,
+				F17A6A5E1C748A4600F26903 /* CryptoSwift.framework */,
+				F17A6A601C748A4600F26903 /* CryptoSwift.framework */,
+				F17A6A621C748A4600F26903 /* CryptoSwift.framework */,
+				F17A6A641C748A4600F26903 /* CryptoSwiftTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F1F1EEEE1C6A45DF00827AC5 = {
+			isa = PBXGroup;
+			children = (
+				F17A6A3B1C748A4600F26903 /* Alamofire.xcodeproj */,
+				F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */,
+				F17A6A1B1C7488D600F26903 /* OVHAPIWrapper.xcodeproj */,
+				F1F1EEF91C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS */,
+				F1F1EF0D1C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit App */,
+				F1F1EF1C1C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit Extension */,
+				F1F1EF451C6A497E00827AC5 /* Resources */,
+				F13B0C4A1C6E441100AD1C6C /* Frameworks */,
+				F1F1EEF81C6A45DF00827AC5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F1F1EEF81C6A45DF00827AC5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F1F1EEF71C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS.app */,
+				F1F1EF091C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit App.app */,
+				F1F1EF181C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F1F1EEF91C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				F1F1EEFA1C6A45DF00827AC5 /* AppDelegate.swift */,
+				F1F1EEFC1C6A45DF00827AC5 /* ProductsViewController.swift */,
+				F18B802B1C72097400AB683B /* CoreDataManager.swift */,
+				F1C4CE351C731E4F0018C2AB /* WatchSessionManager.swift */,
+				F1F1EF521C6A51F100827AC5 /* OVHVPSController.swift */,
+				F1F1EF4A1C6A4FBF00827AC5 /* OVHVPS+CoreDataProperties.swift */,
+				F1F1EF4B1C6A4FBF00827AC5 /* OVHVPS.swift */,
+				F1F1EF4C1C6A4FBF00827AC5 /* OVHVPSTask+CoreDataProperties.swift */,
+				F1F1EF4D1C6A4FBF00827AC5 /* OVHVPSTask.swift */,
+				F1F1EEFE1C6A45DF00827AC5 /* Main.storyboard */,
+				F1F1EF011C6A45DF00827AC5 /* Assets.xcassets */,
+				F1F1EF031C6A45DF00827AC5 /* LaunchScreen.storyboard */,
+				F1F1EF061C6A45DF00827AC5 /* Info.plist */,
+				F1F1EF3D1C6A479500827AC5 /* OVHVPSModel.xcdatamodeld */,
+			);
+			path = "OVHAPIWrapper-Example-watchOS";
+			sourceTree = "<group>";
+		};
+		F1F1EF0D1C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit App */ = {
+			isa = PBXGroup;
+			children = (
+				F1F1EF0E1C6A45DF00827AC5 /* Interface.storyboard */,
+				F1F1EF111C6A45DF00827AC5 /* Assets.xcassets */,
+				F1F1EF131C6A45DF00827AC5 /* Info.plist */,
+			);
+			path = "OVHAPIWrapper-Example-watchOS WatchKit App";
+			sourceTree = "<group>";
+		};
+		F1F1EF1C1C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F1C4CE3C1C7364630018C2AB /* DataController.swift */,
+				F1F1EF1F1C6A45DF00827AC5 /* InterfaceController.swift */,
+				F18B801D1C7204DC00AB683B /* VPSRowController.swift */,
+				F18B807E1C72297D00AB683B /* VPS.swift */,
+				F1F1EF211C6A45DF00827AC5 /* ExtensionDelegate.swift */,
+				F1F1EF231C6A45DF00827AC5 /* NotificationController.swift */,
+				F1F1EF251C6A45DF00827AC5 /* GlanceController.swift */,
+				F1F1EF271C6A45DF00827AC5 /* ComplicationController.swift */,
+				F1F1EF291C6A45DF00827AC5 /* Assets.xcassets */,
+				F1F1EF2B1C6A45DF00827AC5 /* Info.plist */,
+				F1F1EF1D1C6A45DF00827AC5 /* Supporting Files */,
+			);
+			path = "OVHAPIWrapper-Example-watchOS WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		F1F1EF1D1C6A45DF00827AC5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F1F1EF1E1C6A45DF00827AC5 /* PushNotificationPayload.apns */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F1F1EF451C6A497E00827AC5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F1F1EF471C6A497E00827AC5 /* Credentials.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F1F1EEF61C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F1F1EF361C6A45DF00827AC5 /* Build configuration list for PBXNativeTarget "OVHAPIWrapper-Example-watchOS" */;
+			buildPhases = (
+				F1F1EEF31C6A45DF00827AC5 /* Sources */,
+				F1F1EEF41C6A45DF00827AC5 /* Frameworks */,
+				F1F1EEF51C6A45DF00827AC5 /* Resources */,
+				F1F1EF351C6A45DF00827AC5 /* Embed Watch Content */,
+				F1F1EF911C6B3E5C00827AC5 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F1F1EF0C1C6A45DF00827AC5 /* PBXTargetDependency */,
+				F17A6A361C74890300F26903 /* PBXTargetDependency */,
+				F17A6A681C748A6A00F26903 /* PBXTargetDependency */,
+				F17A6A6C1C748A6A00F26903 /* PBXTargetDependency */,
+			);
+			name = "OVHAPIWrapper-Example-watchOS";
+			productName = "OVHAPIWrapper-Example-watchOS";
+			productReference = F1F1EEF71C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F1F1EF081C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F1F1EF321C6A45DF00827AC5 /* Build configuration list for PBXNativeTarget "OVHAPIWrapper-Example-watchOS WatchKit App" */;
+			buildPhases = (
+				F1F1EF071C6A45DF00827AC5 /* Resources */,
+				F1F1EF311C6A45DF00827AC5 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F1F1EF1B1C6A45DF00827AC5 /* PBXTargetDependency */,
+			);
+			name = "OVHAPIWrapper-Example-watchOS WatchKit App";
+			productName = "OVHAPIWrapper-Example-watchOS WatchKit App";
+			productReference = F1F1EF091C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit App.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		F1F1EF171C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F1F1EF2E1C6A45DF00827AC5 /* Build configuration list for PBXNativeTarget "OVHAPIWrapper-Example-watchOS WatchKit Extension" */;
+			buildPhases = (
+				F1F1EF141C6A45DF00827AC5 /* Sources */,
+				F1F1EF151C6A45DF00827AC5 /* Frameworks */,
+				F1F1EF161C6A45DF00827AC5 /* Resources */,
+				F18B80321C72178200AB683B /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F17A6A3A1C74891B00F26903 /* PBXTargetDependency */,
+				F17A6A701C748A9F00F26903 /* PBXTargetDependency */,
+				F17A6A741C748A9F00F26903 /* PBXTargetDependency */,
+			);
+			name = "OVHAPIWrapper-Example-watchOS WatchKit Extension";
+			productName = "OVHAPIWrapper-Example-watchOS WatchKit Extension";
+			productReference = F1F1EF181C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F1F1EEEF1C6A45DF00827AC5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "OVH SAS";
+				TargetAttributes = {
+					F1F1EEF61C6A45DF00827AC5 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					F1F1EF081C6A45DF00827AC5 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					F1F1EF171C6A45DF00827AC5 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+				};
+			};
+			buildConfigurationList = F1F1EEF21C6A45DF00827AC5 /* Build configuration list for PBXProject "OVHAPIWrapper-Example-watchOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F1F1EEEE1C6A45DF00827AC5;
+			productRefGroup = F1F1EEF81C6A45DF00827AC5 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F17A6A3C1C748A4600F26903 /* Products */;
+					ProjectRef = F17A6A3B1C748A4600F26903 /* Alamofire.xcodeproj */;
+				},
+				{
+					ProductGroup = F17A6A3F1C748A4600F26903 /* Products */;
+					ProjectRef = F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */;
+				},
+				{
+					ProductGroup = F17A6A1C1C7488D600F26903 /* Products */;
+					ProjectRef = F17A6A1B1C7488D600F26903 /* OVHAPIWrapper.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				F1F1EEF61C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS */,
+				F1F1EF081C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit App */,
+				F1F1EF171C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F17A6A261C7488D600F26903 /* OVHAPIWrapper.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OVHAPIWrapper.framework;
+			remoteRef = F17A6A251C7488D600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A281C7488D600F26903 /* OVHAPIWrapper iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "OVHAPIWrapper iOS Tests.xctest";
+			remoteRef = F17A6A271C7488D600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A2A1C7488D600F26903 /* OVHAPIWrapper.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OVHAPIWrapper.framework;
+			remoteRef = F17A6A291C7488D600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A2C1C7488D600F26903 /* OVHAPIWrapper OSX Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "OVHAPIWrapper OSX Tests.xctest";
+			remoteRef = F17A6A2B1C7488D600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A2E1C7488D600F26903 /* OVHAPIWrapper.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OVHAPIWrapper.framework;
+			remoteRef = F17A6A2D1C7488D600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A301C7488D600F26903 /* OVHAPIWrapper tvOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "OVHAPIWrapper tvOS Tests.xctest";
+			remoteRef = F17A6A2F1C7488D600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A321C7488D600F26903 /* OVHAPIWrapper.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OVHAPIWrapper.framework;
+			remoteRef = F17A6A311C7488D600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A491C748A4600F26903 /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = F17A6A481C748A4600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A4B1C748A4600F26903 /* Alamofire iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire iOS Tests.xctest";
+			remoteRef = F17A6A4A1C748A4600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A4D1C748A4600F26903 /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = F17A6A4C1C748A4600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A4F1C748A4600F26903 /* Alamofire OSX Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire OSX Tests.xctest";
+			remoteRef = F17A6A4E1C748A4600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A511C748A4600F26903 /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = F17A6A501C748A4600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A531C748A4600F26903 /* Alamofire tvOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire tvOS Tests.xctest";
+			remoteRef = F17A6A521C748A4600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A551C748A4600F26903 /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = F17A6A541C748A4600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A5C1C748A4600F26903 /* CryptoSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CryptoSwift.framework;
+			remoteRef = F17A6A5B1C748A4600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A5E1C748A4600F26903 /* CryptoSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CryptoSwift.framework;
+			remoteRef = F17A6A5D1C748A4600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A601C748A4600F26903 /* CryptoSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CryptoSwift.framework;
+			remoteRef = F17A6A5F1C748A4600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A621C748A4600F26903 /* CryptoSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CryptoSwift.framework;
+			remoteRef = F17A6A611C748A4600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F17A6A641C748A4600F26903 /* CryptoSwiftTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CryptoSwiftTests.xctest;
+			remoteRef = F17A6A631C748A4600F26903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F1F1EEF51C6A45DF00827AC5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1F1EF051C6A45DF00827AC5 /* LaunchScreen.storyboard in Resources */,
+				F1F1EF021C6A45DF00827AC5 /* Assets.xcassets in Resources */,
+				F1F1EF491C6A497E00827AC5 /* Credentials.plist in Resources */,
+				F1F1EF001C6A45DF00827AC5 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1F1EF071C6A45DF00827AC5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1F1EF121C6A45DF00827AC5 /* Assets.xcassets in Resources */,
+				F1F1EF101C6A45DF00827AC5 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1F1EF161C6A45DF00827AC5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1F1EF2A1C6A45DF00827AC5 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F1F1EEF31C6A45DF00827AC5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1F1EF3F1C6A479500827AC5 /* OVHVPSModel.xcdatamodeld in Sources */,
+				F1F1EF4F1C6A4FBF00827AC5 /* OVHVPS.swift in Sources */,
+				F1F1EF4E1C6A4FBF00827AC5 /* OVHVPS+CoreDataProperties.swift in Sources */,
+				F1F1EF511C6A4FBF00827AC5 /* OVHVPSTask.swift in Sources */,
+				F1F1EEFD1C6A45DF00827AC5 /* ProductsViewController.swift in Sources */,
+				F1F1EF501C6A4FBF00827AC5 /* OVHVPSTask+CoreDataProperties.swift in Sources */,
+				F18B802C1C72097400AB683B /* CoreDataManager.swift in Sources */,
+				F18B807F1C72297D00AB683B /* VPS.swift in Sources */,
+				F1C4CE361C731E4F0018C2AB /* WatchSessionManager.swift in Sources */,
+				F1F1EF531C6A51F100827AC5 /* OVHVPSController.swift in Sources */,
+				F1F1EEFB1C6A45DF00827AC5 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1F1EF141C6A45DF00827AC5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1F1EF221C6A45DF00827AC5 /* ExtensionDelegate.swift in Sources */,
+				F1F1EF201C6A45DF00827AC5 /* InterfaceController.swift in Sources */,
+				F18B80801C72297D00AB683B /* VPS.swift in Sources */,
+				F18B801E1C7204DC00AB683B /* VPSRowController.swift in Sources */,
+				F1F1EF241C6A45DF00827AC5 /* NotificationController.swift in Sources */,
+				F1C4CE3D1C7364630018C2AB /* DataController.swift in Sources */,
+				F1F1EF281C6A45DF00827AC5 /* ComplicationController.swift in Sources */,
+				F1F1EF261C6A45DF00827AC5 /* GlanceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F17A6A361C74890300F26903 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "OVHAPIWrapper iOS";
+			targetProxy = F17A6A351C74890300F26903 /* PBXContainerItemProxy */;
+		};
+		F17A6A3A1C74891B00F26903 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "OVHAPIWrapper watchOS";
+			targetProxy = F17A6A391C74891B00F26903 /* PBXContainerItemProxy */;
+		};
+		F17A6A681C748A6A00F26903 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Alamofire iOS";
+			targetProxy = F17A6A671C748A6A00F26903 /* PBXContainerItemProxy */;
+		};
+		F17A6A6C1C748A6A00F26903 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CryptoSwift iOS";
+			targetProxy = F17A6A6B1C748A6A00F26903 /* PBXContainerItemProxy */;
+		};
+		F17A6A701C748A9F00F26903 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Alamofire watchOS";
+			targetProxy = F17A6A6F1C748A9F00F26903 /* PBXContainerItemProxy */;
+		};
+		F17A6A741C748A9F00F26903 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CryptoSwift watchOS";
+			targetProxy = F17A6A731C748A9F00F26903 /* PBXContainerItemProxy */;
+		};
+		F1F1EF0C1C6A45DF00827AC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F1F1EF081C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit App */;
+			targetProxy = F1F1EF0B1C6A45DF00827AC5 /* PBXContainerItemProxy */;
+		};
+		F1F1EF1B1C6A45DF00827AC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F1F1EF171C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS WatchKit Extension */;
+			targetProxy = F1F1EF1A1C6A45DF00827AC5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F1F1EEFE1C6A45DF00827AC5 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1F1EEFF1C6A45DF00827AC5 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F1F1EF031C6A45DF00827AC5 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1F1EF041C6A45DF00827AC5 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		F1F1EF0E1C6A45DF00827AC5 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1F1EF0F1C6A45DF00827AC5 /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F1F1EF2C1C6A45DF00827AC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F1F1EF2D1C6A45DF00827AC5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F1F1EF2F1C6A45DF00827AC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = "OVHAPIWrapper-Example-watchOS WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ovh.OVHAPIWrapper-Example-watchOS.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		F1F1EF301C6A45DF00827AC5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = "OVHAPIWrapper-Example-watchOS WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ovh.OVHAPIWrapper-Example-watchOS.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
+		F1F1EF331C6A45DF00827AC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				IBSC_MODULE = OVHAPIWrapper_Example_watchOS_WatchKit_Extension;
+				INFOPLIST_FILE = "OVHAPIWrapper-Example-watchOS WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ovh.OVHAPIWrapper-Example-watchOS.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		F1F1EF341C6A45DF00827AC5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				IBSC_MODULE = OVHAPIWrapper_Example_watchOS_WatchKit_Extension;
+				INFOPLIST_FILE = "OVHAPIWrapper-Example-watchOS WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ovh.OVHAPIWrapper-Example-watchOS.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
+		F1F1EF371C6A45DF00827AC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = "OVHAPIWrapper-Example-watchOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ovh.OVHAPIWrapper-Example-watchOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F1F1EF381C6A45DF00827AC5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = "OVHAPIWrapper-Example-watchOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ovh.OVHAPIWrapper-Example-watchOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F1F1EEF21C6A45DF00827AC5 /* Build configuration list for PBXProject "OVHAPIWrapper-Example-watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F1F1EF2C1C6A45DF00827AC5 /* Debug */,
+				F1F1EF2D1C6A45DF00827AC5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F1F1EF2E1C6A45DF00827AC5 /* Build configuration list for PBXNativeTarget "OVHAPIWrapper-Example-watchOS WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F1F1EF2F1C6A45DF00827AC5 /* Debug */,
+				F1F1EF301C6A45DF00827AC5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F1F1EF321C6A45DF00827AC5 /* Build configuration list for PBXNativeTarget "OVHAPIWrapper-Example-watchOS WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F1F1EF331C6A45DF00827AC5 /* Debug */,
+				F1F1EF341C6A45DF00827AC5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F1F1EF361C6A45DF00827AC5 /* Build configuration list for PBXNativeTarget "OVHAPIWrapper-Example-watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F1F1EF371C6A45DF00827AC5 /* Debug */,
+				F1F1EF381C6A45DF00827AC5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F1F1EF3D1C6A479500827AC5 /* OVHVPSModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F1F1EF3E1C6A479500827AC5 /* OVHVPSModel.xcdatamodel */,
+			);
+			currentVersion = F1F1EF3E1C6A479500827AC5 /* OVHVPSModel.xcdatamodel */;
+			path = OVHVPSModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = F1F1EEEF1C6A45DF00827AC5 /* Project object */;
+}

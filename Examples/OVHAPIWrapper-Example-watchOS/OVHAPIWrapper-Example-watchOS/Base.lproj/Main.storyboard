@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E33e" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Xif-GB-SAX">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--OVH VPS-->
+        <scene sceneID="TBp-2a-uST">
+            <objects>
+                <collectionViewController title="OVH VPS" id="d2g-0Y-bkj" customClass="ProductsViewController" customModule="OVHAPIWrapper_Example_watchOS" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="B1Y-Cx-83V">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="GHi-8l-O86">
+                            <size key="itemSize" width="120" height="90"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VPSCell" id="Rhg-FI-mDt">
+                                <rect key="frame" x="0.0" y="64" width="120" height="90"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="120" height="90"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VPS name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Wdm-Wv-MxW">
+                                            <rect key="frame" x="8" y="70" width="104" height="16"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="16" id="OXm-rr-4rk"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" tag="2" contentMode="bottomLeft" horizontalHuggingPriority="251" verticalHuggingPriority="248" image="vps" translatesAutoresizingMaskIntoConstraints="NO" id="GxC-U3-1QB">
+                                            <rect key="frame" x="8" y="8" width="104" height="60"/>
+                                        </imageView>
+                                        <activityIndicatorView opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="1sS-ku-XNy">
+                                            <rect key="frame" x="50" y="21" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="GxC-U3-1QB" firstAttribute="leading" secondItem="Rhg-FI-mDt" secondAttribute="leadingMargin" id="5IU-vC-1ns"/>
+                                    <constraint firstItem="Wdm-Wv-MxW" firstAttribute="trailing" secondItem="Rhg-FI-mDt" secondAttribute="trailingMargin" id="5cn-Tw-LA1"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="Wdm-Wv-MxW" secondAttribute="bottom" constant="-4" id="8dy-th-Rqs"/>
+                                    <constraint firstItem="1sS-ku-XNy" firstAttribute="top" secondItem="Rhg-FI-mDt" secondAttribute="topMargin" constant="13" id="MSr-g5-u2h"/>
+                                    <constraint firstItem="GxC-U3-1QB" firstAttribute="trailing" secondItem="Rhg-FI-mDt" secondAttribute="trailingMargin" id="U1I-Zh-Eai"/>
+                                    <constraint firstItem="GxC-U3-1QB" firstAttribute="top" secondItem="Rhg-FI-mDt" secondAttribute="topMargin" id="VYR-OX-Nzv"/>
+                                    <constraint firstItem="1sS-ku-XNy" firstAttribute="centerX" secondItem="GxC-U3-1QB" secondAttribute="centerX" id="sxi-MI-u9B"/>
+                                    <constraint firstItem="Wdm-Wv-MxW" firstAttribute="leading" secondItem="Rhg-FI-mDt" secondAttribute="leadingMargin" id="xxP-49-dm9"/>
+                                    <constraint firstItem="Wdm-Wv-MxW" firstAttribute="top" secondItem="GxC-U3-1QB" secondAttribute="bottom" constant="2" id="y9W-dD-SSW"/>
+                                </constraints>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="d2g-0Y-bkj" id="ZSq-jM-ocQ"/>
+                            <outlet property="delegate" destination="d2g-0Y-bkj" id="A3B-Ji-cxF"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="OVH VPS" id="Lv6-5q-lvs">
+                        <barButtonItem key="rightBarButtonItem" title="Authenticate" id="59S-Kh-C2E">
+                            <connections>
+                                <action selector="authenticate:" destination="d2g-0Y-bkj" id="NPn-PA-XEF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="authenticateButton" destination="59S-Kh-C2E" id="ZcD-PN-MC4"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hoE-cQ-QCT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1050" y="329"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="TvS-mw-bsS">
+            <objects>
+                <navigationController id="Xif-GB-SAX" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vX9-EQ-Hgw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="d2g-0Y-bkj" kind="relationship" relationship="rootViewController" id="vdM-br-XYO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AMi-mF-14s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="352" y="329"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="vps" width="100" height="56"/>
+    </resources>
+</document>

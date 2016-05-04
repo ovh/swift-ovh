@@ -69,7 +69,7 @@ class ViewController: UITableViewController {
     }
     
     private func loadProductsWithPath(path: String, dataIndex: Int, completion: () -> Void) {
-        numberOfRequestsLaunched++
+        numberOfRequestsLaunched += 1
         
         OVHAPI?.get(path){ (result, error, request, response) -> Void in
             self.presentError(error)
@@ -90,14 +90,15 @@ class ViewController: UITableViewController {
         var title: String? = error.debugDescription
         var message: String? = nil
         
-        if error is OVHAPIError {
-            switch error as! OVHAPIError {
-            case OVHAPIError.MissingApplicationKey: title = "Application key is missing"; message = "Please fix the Credentials.plist file."
-            case OVHAPIError.MissingApplicationSecret: title = "Application secret is missing"; message = "Please fix the Credentials.plist file."
-            case OVHAPIError.MissingConsumerKey: title = "Consumer key is missing"; message = "Please authenticate first."
-            case OVHAPIError.HttpError(let code): title = "HTTP error"; message = "code \(code)"
-            case OVHAPIError.RequestError(_, let httpCode, let errorCode, let m): title = m; message = "Error \(httpCode!): \(errorCode!)"
-            default: title = "Invalid response"
+        if let error = error as? OVHAPIError {
+            title = error.description
+            switch error {
+            case OVHAPIError.MissingApplicationKey: message = "Please fix the Credentials.plist file."
+            case OVHAPIError.MissingApplicationSecret: message = "Please fix the Credentials.plist file."
+            case OVHAPIError.MissingConsumerKey: message = "Please authenticate first."
+            case OVHAPIError.HttpError(let code): message = "code \(code)"
+            case OVHAPIError.RequestError(_, let httpCode?, let errorCode?, _): message = "Error \(httpCode): \(errorCode)"
+            default: break
             }
         }
         
@@ -123,7 +124,7 @@ class ViewController: UITableViewController {
         let completion = { () -> Void in
             self.tableView.reloadData()
             
-            self.numberOfRequestsLaunched--
+            self.numberOfRequestsLaunched -= 1
             if self.numberOfRequestsLaunched <= 0 {
                 sender.endRefreshing()
             }
