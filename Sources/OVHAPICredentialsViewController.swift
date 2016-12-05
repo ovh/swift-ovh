@@ -92,15 +92,13 @@ public class OVHAPICredentialsViewController: UINavigationController, UIWebViewD
         }
     }
     
-    public func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
-        if let error = error {
-            let alert = UIAlertController(title: error.localizedDescription, message: error.localizedFailureReason, preferredStyle: .Alert)
-            let action = UIAlertAction(title: "Close", style: .Cancel){ action in
-                self.dismissViewControllerAnimated(true, completion: nil)
-            }
-            alert.addAction(action)
-            
-            presentViewController(alert, animated: true, completion: nil)
+    public func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
+        let alert = UIAlertController(title: error.localizedDescription, message: error.localizedFailureReason, preferredStyle: .Alert)
+        let action = UIAlertAction(title: "Close", style: .Cancel){ action in
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
+        alert.addAction(action)
+        
+        presentViewController(alert, animated: true, completion: nil)
     }
 }

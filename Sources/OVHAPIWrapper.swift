@@ -227,13 +227,15 @@ final public class OVHAPIWrapper {
             }
             
             // Create the view controller to present to the user.
-            credentialsViewController = NSBundle(forClass: OVHAPICredentialsViewController.self).loadNibNamed("OVHAPICredentialsViewController", owner: nil, options: nil)[0] as? OVHAPICredentialsViewController
-            credentialsViewController?.validationUrl = validationUrl!
-            credentialsViewController?.redirectionUrl = redirectionUrl
-            
-            // If the authentication is canceled by the user, the consumer key is reset.
-            credentialsViewController?.cancelCompletion = {
-                self.consumerKey = currentConsumerKey
+            if let viewControllers = NSBundle(forClass: OVHAPICredentialsViewController.self).loadNibNamed("OVHAPICredentialsViewController", owner: nil, options: nil), let viewController = viewControllers.first as? OVHAPICredentialsViewController {
+                credentialsViewController = viewController
+                credentialsViewController?.validationUrl = validationUrl!
+                credentialsViewController?.redirectionUrl = redirectionUrl
+                
+                // If the authentication is canceled by the user, the consumer key is reset.
+                credentialsViewController?.cancelCompletion = {
+                    self.consumerKey = currentConsumerKey
+                }
             }
         }
     }

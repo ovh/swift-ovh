@@ -279,6 +279,10 @@ final class DataController: NSObject, WCSessionDelegate {
         }
     }
     
+    func session(session: WCSession, activationDidCompleteWithState activationState: WCSessionActivationState, error: NSError?) {
+        
+    }
+    
     
     // MARK: - Lifecycle
     

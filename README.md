@@ -13,6 +13,10 @@ iOS, OSX, tvOS, watchOS
 - iOS 8.0+ / Mac OS X 10.10+ / tvOS 9.0+ / watchOS 2.0+
 - Xcode 7.2+
 
+### Swift
+
+This package only supports swift 2.3. To support older versions, please check out the version 1.0.1 of this project.
+
 ### Dependencies
 
 Swift-OVH depends of [Alamofire](https://github.com/Alamofire/Alamofire) and [CryptoSwift](https://github.com/krzyzanowskim/CryptoSwift).

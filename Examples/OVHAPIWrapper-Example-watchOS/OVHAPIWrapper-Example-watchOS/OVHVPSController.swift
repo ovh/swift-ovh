@@ -661,24 +661,48 @@ final class OVHVPSController: WatchSessionManagerDelegate {
             // Count of running VPS.
             request = NSFetchRequest(entityName: "OVHVPS")
             request.predicate = NSCompoundPredicate.init(andPredicateWithSubpredicates: [predicateCurrentTaskIsNil, NSPredicate(format: "%K = %@", "state", OVHVPSState.running.rawValue)])
-            countOfRunningVPS = context.countForFetchRequest(request, error: nil)
+            
+            do {
+                countOfRunningVPS = try context.countForFetchRequest(request)
+            }
+            catch let e {
+                debugPrint("Can not get the count of running VPS: \(e)")
+            }
             
             // Count of stopped VPS.
             request = NSFetchRequest(entityName: "OVHVPS")
             request.predicate = NSCompoundPredicate.init(andPredicateWithSubpredicates: [predicateCurrentTaskIsNil, NSPredicate(format: "%K = %@", "state", OVHVPSState.stopped.rawValue)])
-            countOfStoppedVPS = context.countForFetchRequest(request, error: nil)
+            
+            do {
+                countOfStoppedVPS = try context.countForFetchRequest(request)
+            }
+            catch let e {
+                debugPrint("Can not get the count of stopped VPS: \(e)")
+            }
             
             // Count of unknown VPS.
             request = NSFetchRequest(entityName: "OVHVPS")
             request.predicate = NSCompoundPredicate.init(andPredicateWithSubpredicates: [predicateCurrentTaskIsNil, NSPredicate(format: "%K = %@", "state", OVHVPSState.unknown.rawValue)])
-            countOfUnknownVPS = context.countForFetchRequest(request, error: nil)
+            
+            do {
+                countOfUnknownVPS = try context.countForFetchRequest(request)
+            }
+            catch let e {
+                debugPrint("Can not get the count of unknown VPS: \(e)")
+            }
             
             // Count of busy VPS.
             request = NSFetchRequest(entityName: "OVHVPS")
             let predicateCurrentTaskIsNotNil = NSPredicate(format: "%K != nil", "currentTask")
             let predicateStates = NSCompoundPredicate.init(andPredicateWithSubpredicates: [NSPredicate(format: "%K != %@", "state", OVHVPSState.unknown.rawValue), NSPredicate(format: "%K != %@", "state", OVHVPSState.stopped.rawValue), NSPredicate(format: "%K != %@", "state", OVHVPSState.running.rawValue)])
             request.predicate = NSCompoundPredicate.init(orPredicateWithSubpredicates: [predicateCurrentTaskIsNotNil, predicateStates])
-            countOfBusyVPS = context.countForFetchRequest(request, error: nil)
+            
+            do {
+                countOfBusyVPS = try context.countForFetchRequest(request)
+            }
+            catch let e {
+                debugPrint("Can not get the count of busy VPS: \(e)")
+            }
         }
         
         return ["running": countOfRunningVPS, "stopped": countOfStoppedVPS, "unknown": countOfUnknownVPS, "busy": countOfBusyVPS]
@@ -693,19 +717,34 @@ final class OVHVPSController: WatchSessionManagerDelegate {
             
             // Count of VPS.
             request = NSFetchRequest(entityName: "OVHVPS")
-            countOfVPS = context.countForFetchRequest(request, error: nil)
+            do {
+                countOfVPS = try context.countForFetchRequest(request)
+            }
+            catch let e {
+                debugPrint("Can not get the count of VPS: \(e)")
+            }
             
             // Count of unknown VPS.
             request = NSFetchRequest(entityName: "OVHVPS")
             request.predicate = NSCompoundPredicate.init(andPredicateWithSubpredicates: [NSPredicate(format: "%K = nil", "currentTask"), NSPredicate(format: "%K = %@", "state", OVHVPSState.unknown.rawValue)])
-            countOfUnknownVPS = context.countForFetchRequest(request, error: nil)
+            do {
+                countOfUnknownVPS = try context.countForFetchRequest(request)
+            }
+            catch let e {
+                debugPrint("Can not get the count of unknown VPS: \(e)")
+            }
             
             // Count of busy VPS.
             request = NSFetchRequest(entityName: "OVHVPS")
             let predicateCurrentTaskIsNotNil = NSPredicate(format: "%K != nil", "currentTask")
             let predicateStates = NSCompoundPredicate.init(andPredicateWithSubpredicates: [NSPredicate(format: "%K != %@", "state", OVHVPSState.unknown.rawValue), NSPredicate(format: "%K != %@", "state", OVHVPSState.stopped.rawValue), NSPredicate(format: "%K != %@", "state", OVHVPSState.running.rawValue)])
             request.predicate = NSCompoundPredicate.init(orPredicateWithSubpredicates: [predicateCurrentTaskIsNotNil, predicateStates])
-            countOfBusyVPS = context.countForFetchRequest(request, error: nil)
+            do {
+                countOfBusyVPS = try context.countForFetchRequest(request)
+            }
+            catch let e {
+                debugPrint("Can not get the count of busy VPS: \(e)")
+            }
         }
         
         return ["all": countOfVPS, "unknown": countOfUnknownVPS, "busy": countOfBusyVPS]

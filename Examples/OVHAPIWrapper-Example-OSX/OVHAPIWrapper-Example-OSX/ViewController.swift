@@ -105,7 +105,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         }
         
         let alert = NSAlert()
-        alert.alertStyle = .WarningAlertStyle
+        alert.alertStyle = .Warning
         if let title = title {
             alert.messageText = title
         }

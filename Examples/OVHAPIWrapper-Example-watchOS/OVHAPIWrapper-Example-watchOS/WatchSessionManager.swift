@@ -197,6 +197,18 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         replyHandler(response)
     }
     
+    func session(session: WCSession, activationDidCompleteWithState activationState: WCSessionActivationState, error: NSError?) {
+        
+    }
+    
+    func sessionDidBecomeInactive(session: WCSession) {
+        
+    }
+    
+    func sessionDidDeactivate(session: WCSession) {
+        
+    }
+    
     
     // MARK: - Lifecycle
     
