@@ -45,7 +45,7 @@ struct VPS {
     
     
     // MARK: - Build a VPS struct
-    static func VPSFromWatchRepresentation(representation: [String:AnyObject]) -> VPS {
+    static func VPSFromWatchRepresentation(_ representation: [String:AnyObject]) -> VPS {
         var vpsName: String?
         if let name = representation["name"] as? String {
             vpsName = name

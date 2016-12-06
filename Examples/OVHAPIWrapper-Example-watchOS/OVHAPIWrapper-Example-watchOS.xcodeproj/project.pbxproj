@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		F13B0C431C6E43F500AD1C6C /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F13B0C421C6E43F500AD1C6C /* WatchConnectivity.framework */; };
-		F17A6A121C747CE700F26903 /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F18B80811C72321000AB683B /* WatchConnectivity.framework */; };
 		F17A6A331C74890300F26903 /* OVHAPIWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A261C7488D600F26903 /* OVHAPIWrapper.framework */; };
 		F17A6A341C74890300F26903 /* OVHAPIWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A261C7488D600F26903 /* OVHAPIWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F17A6A371C74891B00F26903 /* OVHAPIWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A321C7488D600F26903 /* OVHAPIWrapper.framework */; };
@@ -19,14 +18,16 @@
 		F17A6A6A1C748A6A00F26903 /* CryptoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A5C1C748A4600F26903 /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F17A6A6D1C748A9F00F26903 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A551C748A4600F26903 /* Alamofire.framework */; };
 		F17A6A6E1C748A9F00F26903 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A551C748A4600F26903 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F17A6A711C748A9F00F26903 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A5E1C748A4600F26903 /* CryptoSwift.framework */; };
-		F17A6A721C748A9F00F26903 /* CryptoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F17A6A5E1C748A4600F26903 /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F18B801E1C7204DC00AB683B /* VPSRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18B801D1C7204DC00AB683B /* VPSRowController.swift */; };
 		F18B802C1C72097400AB683B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18B802B1C72097400AB683B /* CoreDataManager.swift */; };
 		F18B807F1C72297D00AB683B /* VPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18B807E1C72297D00AB683B /* VPS.swift */; };
 		F18B80801C72297D00AB683B /* VPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18B807E1C72297D00AB683B /* VPS.swift */; };
 		F1C4CE361C731E4F0018C2AB /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C4CE351C731E4F0018C2AB /* WatchSessionManager.swift */; };
 		F1C4CE3D1C7364630018C2AB /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C4CE3C1C7364630018C2AB /* DataController.swift */; };
+		F1E7ABF71DF70E8900C28ACC /* OVHVPS+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E7ABF31DF70E8900C28ACC /* OVHVPS+CoreDataClass.swift */; };
+		F1E7ABF81DF70E8900C28ACC /* OVHVPS+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E7ABF41DF70E8900C28ACC /* OVHVPS+CoreDataProperties.swift */; };
+		F1E7ABF91DF70E8900C28ACC /* OVHVPSTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E7ABF51DF70E8900C28ACC /* OVHVPSTask+CoreDataClass.swift */; };
+		F1E7ABFA1DF70E8900C28ACC /* OVHVPSTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E7ABF61DF70E8900C28ACC /* OVHVPSTask+CoreDataProperties.swift */; };
 		F1F1EEFB1C6A45DF00827AC5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EEFA1C6A45DF00827AC5 /* AppDelegate.swift */; };
 		F1F1EEFD1C6A45DF00827AC5 /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EEFC1C6A45DF00827AC5 /* ProductsViewController.swift */; };
 		F1F1EF001C6A45DF00827AC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F1EEFE1C6A45DF00827AC5 /* Main.storyboard */; };
@@ -44,10 +45,6 @@
 		F1F1EF2A1C6A45DF00827AC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1F1EF291C6A45DF00827AC5 /* Assets.xcassets */; };
 		F1F1EF3F1C6A479500827AC5 /* OVHVPSModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF3D1C6A479500827AC5 /* OVHVPSModel.xcdatamodeld */; };
 		F1F1EF491C6A497E00827AC5 /* Credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1F1EF471C6A497E00827AC5 /* Credentials.plist */; };
-		F1F1EF4E1C6A4FBF00827AC5 /* OVHVPS+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF4A1C6A4FBF00827AC5 /* OVHVPS+CoreDataProperties.swift */; };
-		F1F1EF4F1C6A4FBF00827AC5 /* OVHVPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF4B1C6A4FBF00827AC5 /* OVHVPS.swift */; };
-		F1F1EF501C6A4FBF00827AC5 /* OVHVPSTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF4C1C6A4FBF00827AC5 /* OVHVPSTask+CoreDataProperties.swift */; };
-		F1F1EF511C6A4FBF00827AC5 /* OVHVPSTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF4D1C6A4FBF00827AC5 /* OVHVPSTask.swift */; };
 		F1F1EF531C6A51F100827AC5 /* OVHVPSController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F1EF521C6A51F100827AC5 /* OVHVPSController.swift */; };
 /* End PBXBuildFile section */
 
@@ -171,27 +168,6 @@
 			remoteGlobalIDString = 754BE45519693E190098E6F3;
 			remoteInfo = "CryptoSwift iOS";
 		};
-		F17A6A5D1C748A4600F26903 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5596BDBB1BC8F220007E38D5;
-			remoteInfo = "CryptoSwift watchOS";
-		};
-		F17A6A5F1C748A4600F26903 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 75D614BF1BD844F2001358B2;
-			remoteInfo = "CryptoSwift tvOS";
-		};
-		F17A6A611C748A4600F26903 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 75DF77721BC8EB59006E9520;
-			remoteInfo = "CryptoSwift OSX";
-		};
 		F17A6A631C748A4600F26903 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */;
@@ -220,13 +196,6 @@
 			remoteGlobalIDString = E4202FCD1B667AA100C997FB;
 			remoteInfo = "Alamofire watchOS";
 		};
-		F17A6A731C748A9F00F26903 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F17A6A3E1C748A4600F26903 /* CryptoSwift.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5596BDBA1BC8F220007E38D5;
-			remoteInfo = "CryptoSwift watchOS";
-		};
 		F1F1EF0B1C6A45DF00827AC5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F1F1EEEF1C6A45DF00827AC5 /* Project object */;
@@ -250,7 +219,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F17A6A721C748A9F00F26903 /* CryptoSwift.framework in Embed Frameworks */,
 				F17A6A381C74891B00F26903 /* OVHAPIWrapper.framework in Embed Frameworks */,
 				F17A6A6E1C748A9F00F26903 /* Alamofire.framework in Embed Frameworks */,
 			);
@@ -302,9 +270,12 @@
 		F18B801D1C7204DC00AB683B /* VPSRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPSRowController.swift; sourceTree = "<group>"; };
 		F18B802B1C72097400AB683B /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		F18B807E1C72297D00AB683B /* VPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPS.swift; sourceTree = "<group>"; };
-		F18B80811C72321000AB683B /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.1.sdk/System/Library/Frameworks/WatchConnectivity.framework; sourceTree = DEVELOPER_DIR; };
 		F1C4CE351C731E4F0018C2AB /* WatchSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
 		F1C4CE3C1C7364630018C2AB /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		F1E7ABF31DF70E8900C28ACC /* OVHVPS+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OVHVPS+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F1E7ABF41DF70E8900C28ACC /* OVHVPS+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OVHVPS+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F1E7ABF51DF70E8900C28ACC /* OVHVPSTask+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OVHVPSTask+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F1E7ABF61DF70E8900C28ACC /* OVHVPSTask+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OVHVPSTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F1F1EEF71C6A45DF00827AC5 /* OVHAPIWrapper-Example-watchOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OVHAPIWrapper-Example-watchOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1F1EEFA1C6A45DF00827AC5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1F1EEFC1C6A45DF00827AC5 /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
@@ -327,10 +298,6 @@
 		F1F1EF2B1C6A45DF00827AC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1F1EF3E1C6A479500827AC5 /* OVHVPSModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OVHVPSModel.xcdatamodel; sourceTree = "<group>"; };
 		F1F1EF471C6A497E00827AC5 /* Credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Credentials.plist; sourceTree = "<group>"; };
-		F1F1EF4A1C6A4FBF00827AC5 /* OVHVPS+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OVHVPS+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		F1F1EF4B1C6A4FBF00827AC5 /* OVHVPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVHVPS.swift; sourceTree = "<group>"; };
-		F1F1EF4C1C6A4FBF00827AC5 /* OVHVPSTask+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OVHVPSTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		F1F1EF4D1C6A4FBF00827AC5 /* OVHVPSTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVHVPSTask.swift; sourceTree = "<group>"; };
 		F1F1EF521C6A51F100827AC5 /* OVHVPSController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVHVPSController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -350,10 +317,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F17A6A121C747CE700F26903 /* WatchConnectivity.framework in Frameworks */,
 				F17A6A6D1C748A9F00F26903 /* Alamofire.framework in Frameworks */,
 				F17A6A371C74891B00F26903 /* OVHAPIWrapper.framework in Frameworks */,
-				F17A6A711C748A9F00F26903 /* CryptoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,7 +328,6 @@
 		F13B0C4A1C6E441100AD1C6C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F18B80811C72321000AB683B /* WatchConnectivity.framework */,
 				F13B0C421C6E43F500AD1C6C /* WatchConnectivity.framework */,
 			);
 			name = Frameworks;
@@ -401,9 +365,6 @@
 			isa = PBXGroup;
 			children = (
 				F17A6A5C1C748A4600F26903 /* CryptoSwift.framework */,
-				F17A6A5E1C748A4600F26903 /* CryptoSwift.framework */,
-				F17A6A621C748A4600F26903 /* CryptoSwift.framework */,
-				F17A6A601C748A4600F26903 /* CryptoSwift.framework */,
 				F17A6A641C748A4600F26903 /* CryptoSwiftTests.xctest */,
 			);
 			name = Products;
@@ -442,10 +403,10 @@
 				F18B802B1C72097400AB683B /* CoreDataManager.swift */,
 				F1C4CE351C731E4F0018C2AB /* WatchSessionManager.swift */,
 				F1F1EF521C6A51F100827AC5 /* OVHVPSController.swift */,
-				F1F1EF4A1C6A4FBF00827AC5 /* OVHVPS+CoreDataProperties.swift */,
-				F1F1EF4B1C6A4FBF00827AC5 /* OVHVPS.swift */,
-				F1F1EF4C1C6A4FBF00827AC5 /* OVHVPSTask+CoreDataProperties.swift */,
-				F1F1EF4D1C6A4FBF00827AC5 /* OVHVPSTask.swift */,
+				F1E7ABF31DF70E8900C28ACC /* OVHVPS+CoreDataClass.swift */,
+				F1E7ABF41DF70E8900C28ACC /* OVHVPS+CoreDataProperties.swift */,
+				F1E7ABF51DF70E8900C28ACC /* OVHVPSTask+CoreDataClass.swift */,
+				F1E7ABF61DF70E8900C28ACC /* OVHVPSTask+CoreDataProperties.swift */,
 				F1F1EEFE1C6A45DF00827AC5 /* Main.storyboard */,
 				F1F1EF011C6A45DF00827AC5 /* Assets.xcassets */,
 				F1F1EF031C6A45DF00827AC5 /* LaunchScreen.storyboard */,
@@ -556,7 +517,6 @@
 			dependencies = (
 				F17A6A3A1C74891B00F26903 /* PBXTargetDependency */,
 				F17A6A701C748A9F00F26903 /* PBXTargetDependency */,
-				F17A6A741C748A9F00F26903 /* PBXTargetDependency */,
 			);
 			name = "OVHAPIWrapper-Example-watchOS WatchKit Extension";
 			productName = "OVHAPIWrapper-Example-watchOS WatchKit Extension";
@@ -575,12 +535,15 @@
 				TargetAttributes = {
 					F1F1EEF61C6A45DF00827AC5 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0810;
 					};
 					F1F1EF081C6A45DF00827AC5 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0810;
 					};
 					F1F1EF171C6A45DF00827AC5 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -724,27 +687,6 @@
 			remoteRef = F17A6A5B1C748A4600F26903 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		F17A6A5E1C748A4600F26903 /* CryptoSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CryptoSwift.framework;
-			remoteRef = F17A6A5D1C748A4600F26903 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F17A6A601C748A4600F26903 /* CryptoSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CryptoSwift.framework;
-			remoteRef = F17A6A5F1C748A4600F26903 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F17A6A621C748A4600F26903 /* CryptoSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CryptoSwift.framework;
-			remoteRef = F17A6A611C748A4600F26903 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		F17A6A641C748A4600F26903 /* CryptoSwiftTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -791,11 +733,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1F1EF3F1C6A479500827AC5 /* OVHVPSModel.xcdatamodeld in Sources */,
-				F1F1EF4F1C6A4FBF00827AC5 /* OVHVPS.swift in Sources */,
-				F1F1EF4E1C6A4FBF00827AC5 /* OVHVPS+CoreDataProperties.swift in Sources */,
-				F1F1EF511C6A4FBF00827AC5 /* OVHVPSTask.swift in Sources */,
+				F1E7ABF91DF70E8900C28ACC /* OVHVPSTask+CoreDataClass.swift in Sources */,
+				F1E7ABFA1DF70E8900C28ACC /* OVHVPSTask+CoreDataProperties.swift in Sources */,
+				F1E7ABF71DF70E8900C28ACC /* OVHVPS+CoreDataClass.swift in Sources */,
+				F1E7ABF81DF70E8900C28ACC /* OVHVPS+CoreDataProperties.swift in Sources */,
 				F1F1EEFD1C6A45DF00827AC5 /* ProductsViewController.swift in Sources */,
-				F1F1EF501C6A4FBF00827AC5 /* OVHVPSTask+CoreDataProperties.swift in Sources */,
 				F18B802C1C72097400AB683B /* CoreDataManager.swift in Sources */,
 				F18B807F1C72297D00AB683B /* VPS.swift in Sources */,
 				F1C4CE361C731E4F0018C2AB /* WatchSessionManager.swift in Sources */,
@@ -846,11 +788,6 @@
 			isa = PBXTargetDependency;
 			name = "Alamofire watchOS";
 			targetProxy = F17A6A6F1C748A9F00F26903 /* PBXContainerItemProxy */;
-		};
-		F17A6A741C748A9F00F26903 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "CryptoSwift watchOS";
-			targetProxy = F17A6A731C748A9F00F26903 /* PBXContainerItemProxy */;
 		};
 		F1F1EF0C1C6A45DF00827AC5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -993,6 +930,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
@@ -1009,6 +947,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
@@ -1025,6 +964,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.1;
 			};
@@ -1041,6 +981,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.1;
 			};
@@ -1055,6 +996,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ovh.OVHAPIWrapper-Example-watchOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1067,6 +1009,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ovh.OVHAPIWrapper-Example-watchOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

@@ -38,7 +38,7 @@ protocol WatchSessionManagerDelegate {
     func VPSList() -> [[String:AnyObject]]
     func glanceData() -> [String:AnyObject]
     func complicationData() -> [String:AnyObject]
-    func loadNewVPSTask(VPSName: String, task: [String:AnyObject])
+    func loadNewVPSTask(_ VPSName: String, task: [String:AnyObject])
 }
 
 
@@ -53,30 +53,30 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     
     var delegate: WatchSessionManagerDelegate?
     
-    private let session: WCSession?
-    private let queue: dispatch_queue_t = dispatch_queue_create("com.ovh.OVHAPIWrapper-Example-watchOS.watchos", nil)
+    fileprivate let session: WCSession?
+    fileprivate let queue: DispatchQueue = DispatchQueue(label: "com.ovh.OVHAPIWrapper-Example-watchOS.watchos", attributes: [])
     
-    private var validSession: WCSession? {
-        if let session = session where session.paired && session.watchAppInstalled {
+    fileprivate var validSession: WCSession? {
+        if let session = session, session.isPaired && session.isWatchAppInstalled {
             return session
         }
         
         return nil
     }
     
-    private var APICredentials: [String:AnyObject]? {
+    fileprivate var APICredentials: [String:AnyObject]? {
         return delegate?.APICredentials()
     }
     
-    private var VPSList: [[String:AnyObject]]? {
+    fileprivate var VPSList: [[String:AnyObject]]? {
         return delegate?.VPSList()
     }
     
-    private var glanceData: [String:AnyObject]? {
+    fileprivate var glanceData: [String:AnyObject]? {
         return delegate?.glanceData()
     }
     
-    private var complicationData: [String:AnyObject]? {
+    fileprivate var complicationData: [String:AnyObject]? {
         return delegate?.complicationData()
     }
     
@@ -88,8 +88,8 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     */
     func updateAPICredentials() {
         if let credentials = APICredentials {
-            dispatch_async(queue) { () -> Void in
-                self.sendDataWithKey("credentials", andData: credentials)
+            queue.async { () -> Void in
+                self.sendDataWithKey("credentials", andData: credentials as AnyObject)
             }
         }
     }
@@ -99,8 +99,8 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
      */
     func updateVPSList() {
         if let list = VPSList {
-            dispatch_async(queue) { () -> Void in
-                self.sendDataWithKey("VPSlist", andData: list)
+            queue.async { () -> Void in
+                self.sendDataWithKey("VPSlist", andData: list as AnyObject)
             }
         }
     }
@@ -108,12 +108,12 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     /**
      Send to the watch the updated state of a VPS.
      */
-    func updateVPS(VPS: [String:AnyObject], withOldRepresentation oldVPS: [String:AnyObject]) {
+    func updateVPS(_ VPS: [String:AnyObject], withOldRepresentation oldVPS: [String:AnyObject]) {
         if VPS["busy"] as? Bool == oldVPS["busy"] as? Bool && VPS["state"] as? String == oldVPS["state"] as? String && VPS["displayName"] as? String == oldVPS["displayName"] as? String {
             return
         }
         
-        dispatch_async(queue) { () -> Void in
+        queue.async { () -> Void in
             self.sendDataWithKey("VPS", andData: VPS as AnyObject)
         }
     }
@@ -122,7 +122,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
      Send to the watch the updated glance data.
      */
     func updateGlance() {
-        dispatch_async(queue) { () -> Void in
+        queue.async { () -> Void in
             if let session = self.validSession, let data = self.delegate?.glanceData() {
                 do {
                     try session.updateApplicationContext(data)
@@ -140,8 +140,8 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
      Send to the watch the updated complication data.
      */
     func updateComplication() {
-        dispatch_async(queue) { () -> Void in
-            if let session = self.validSession where session.complicationEnabled, let data = self.delegate?.complicationData() {
+        queue.async { () -> Void in
+            if let session = self.validSession, session.isComplicationEnabled, let data = self.delegate?.complicationData() {
                 session.transferCurrentComplicationUserInfo(data)
                 print("Send complication data: \(data)")
             } else {
@@ -156,8 +156,8 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     /**
      Send some data to the watch.
      */
-    private func sendDataWithKey(key: String, andData data: AnyObject) {
-        if let session = validSession where session.reachable {
+    fileprivate func sendDataWithKey(_ key: String, andData data: AnyObject) {
+        if let session = validSession, session.isReachable {
             session.sendMessage([key : data], replyHandler: { response -> Void in
                 print("Response received from watch application: \(response)")
                 }, errorHandler: { error -> Void in
@@ -172,7 +172,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     
     // MARK: - WCSessionDelegate methods
     
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
         print("Receive message from watch application: \(message)")
         
         var response = [String : AnyObject]()
@@ -182,7 +182,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             case "init":
                 // Get the API credentials and the VPS list.
                 if let credentials = APICredentials, let list = VPSList {
-                    response = ["credentials": credentials, "VPSlist": list]
+                    response = ["credentials": credentials as AnyObject, "VPSlist": list as AnyObject]
                 }
             case "newTask":
                 if let data = value as? [String:AnyObject] {
@@ -197,15 +197,15 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         replyHandler(response)
     }
     
-    func session(session: WCSession, activationDidCompleteWithState activationState: WCSessionActivationState, error: NSError?) {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         
     }
     
-    func sessionDidBecomeInactive(session: WCSession) {
+    func sessionDidBecomeInactive(_ session: WCSession) {
         
     }
     
-    func sessionDidDeactivate(session: WCSession) {
+    func sessionDidDeactivate(_ session: WCSession) {
         
     }
     
@@ -214,7 +214,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     
     override init() {
         if WCSession.isSupported() {
-            session = WCSession.defaultSession()
+            session = WCSession.default()
         } else {
             session = nil
         }
@@ -222,6 +222,6 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         super.init()
         
         session?.delegate = self
-        session?.activateSession()
+        session?.activate()
     }
 }

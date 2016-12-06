@@ -59,27 +59,6 @@
 			remoteGlobalIDString = 754BE45519693E190098E6F3;
 			remoteInfo = "CryptoSwift iOS";
 		};
-		F128F6F81C5A7540006AF1A1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F128F6EE1C5A7540006AF1A1 /* CryptoSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5596BDBB1BC8F220007E38D5;
-			remoteInfo = "CryptoSwift watchOS";
-		};
-		F128F6FA1C5A7540006AF1A1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F128F6EE1C5A7540006AF1A1 /* CryptoSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 75D614BF1BD844F2001358B2;
-			remoteInfo = "CryptoSwift tvOS";
-		};
-		F128F6FC1C5A7540006AF1A1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F128F6EE1C5A7540006AF1A1 /* CryptoSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 75DF77721BC8EB59006E9520;
-			remoteInfo = "CryptoSwift OSX";
-		};
 		F128F6FE1C5A7540006AF1A1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F128F6EE1C5A7540006AF1A1 /* CryptoSwift.xcodeproj */;
@@ -157,13 +136,6 @@
 			remoteGlobalIDString = 4DD67C0A1A5C55C900ED2280;
 			remoteInfo = "Alamofire OSX";
 		};
-		F128F7201C5A75B9006AF1A1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F128F6EE1C5A7540006AF1A1 /* CryptoSwift.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 75DF77461BC8EB59006E9520;
-			remoteInfo = "CryptoSwift OSX";
-		};
 		F128F7241C5A75D7006AF1A1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F128F7001C5A7546006AF1A1 /* Alamofire.xcodeproj */;
@@ -171,26 +143,12 @@
 			remoteGlobalIDString = 4CF626EE1BA7CB3E0011A099;
 			remoteInfo = "Alamofire tvOS";
 		};
-		F128F7261C5A75D7006AF1A1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F128F6EE1C5A7540006AF1A1 /* CryptoSwift.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 75D614921BD844F2001358B2;
-			remoteInfo = "CryptoSwift tvOS";
-		};
 		F128F72A1C5A75F3006AF1A1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F128F7001C5A7546006AF1A1 /* Alamofire.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = E4202FCD1B667AA100C997FB;
 			remoteInfo = "Alamofire watchOS";
-		};
-		F128F72C1C5A75F3006AF1A1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F128F6EE1C5A7540006AF1A1 /* CryptoSwift.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5596BDBA1BC8F220007E38D5;
-			remoteInfo = "CryptoSwift watchOS";
 		};
 		F1791CC61C5902A6004901F9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -308,9 +266,6 @@
 			isa = PBXGroup;
 			children = (
 				F128F6F71C5A7540006AF1A1 /* CryptoSwift.framework */,
-				F128F6F91C5A7540006AF1A1 /* CryptoSwift.framework */,
-				F128F6FD1C5A7540006AF1A1 /* CryptoSwift.framework */,
-				F128F6FB1C5A7540006AF1A1 /* CryptoSwift.framework */,
 				F128F6FF1C5A7540006AF1A1 /* CryptoSwiftTests.xctest */,
 			);
 			name = Products;
@@ -539,7 +494,6 @@
 			);
 			dependencies = (
 				F128F71F1C5A75B9006AF1A1 /* PBXTargetDependency */,
-				F128F7211C5A75B9006AF1A1 /* PBXTargetDependency */,
 			);
 			name = "OVHAPIWrapper OSX";
 			productName = "OVHAPIWrapper OSX";
@@ -559,7 +513,6 @@
 			);
 			dependencies = (
 				F128F7251C5A75D7006AF1A1 /* PBXTargetDependency */,
-				F128F7271C5A75D7006AF1A1 /* PBXTargetDependency */,
 			);
 			name = "OVHAPIWrapper tvOS";
 			productName = "OVHAPIWrapper tvOS";
@@ -579,7 +532,6 @@
 			);
 			dependencies = (
 				F128F72B1C5A75F3006AF1A1 /* PBXTargetDependency */,
-				F128F72D1C5A75F3006AF1A1 /* PBXTargetDependency */,
 			);
 			name = "OVHAPIWrapper watchOS";
 			productName = "OVHAPIWrapper watchOS";
@@ -597,9 +549,11 @@
 				TargetAttributes = {
 					F1791CBF1C5902A6004901F9 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0810;
 					};
 					F1791CCE1C5902D0004901F9 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0810;
 					};
 					F1791CDD1C5902EC004901F9 = {
 						CreatedOnToolsVersion = 7.2;
@@ -607,9 +561,11 @@
 					};
 					F191ED981C58F7D300307421 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0810;
 					};
 					F191EDA61C58F87E00307421 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0810;
 					};
 					F191EDB31C58F8B800307421 = {
 						CreatedOnToolsVersion = 7.2;
@@ -617,6 +573,7 @@
 					};
 					F191EDC01C58F8D800307421 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -659,27 +616,6 @@
 			fileType = wrapper.framework;
 			path = CryptoSwift.framework;
 			remoteRef = F128F6F61C5A7540006AF1A1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F128F6F91C5A7540006AF1A1 /* CryptoSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CryptoSwift.framework;
-			remoteRef = F128F6F81C5A7540006AF1A1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F128F6FB1C5A7540006AF1A1 /* CryptoSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CryptoSwift.framework;
-			remoteRef = F128F6FA1C5A7540006AF1A1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F128F6FD1C5A7540006AF1A1 /* CryptoSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CryptoSwift.framework;
-			remoteRef = F128F6FC1C5A7540006AF1A1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		F128F6FF1C5A7540006AF1A1 /* CryptoSwiftTests.xctest */ = {
@@ -887,30 +823,15 @@
 			name = "Alamofire OSX";
 			targetProxy = F128F71E1C5A75B9006AF1A1 /* PBXContainerItemProxy */;
 		};
-		F128F7211C5A75B9006AF1A1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "CryptoSwift OSX";
-			targetProxy = F128F7201C5A75B9006AF1A1 /* PBXContainerItemProxy */;
-		};
 		F128F7251C5A75D7006AF1A1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Alamofire tvOS";
 			targetProxy = F128F7241C5A75D7006AF1A1 /* PBXContainerItemProxy */;
 		};
-		F128F7271C5A75D7006AF1A1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "CryptoSwift tvOS";
-			targetProxy = F128F7261C5A75D7006AF1A1 /* PBXContainerItemProxy */;
-		};
 		F128F72B1C5A75F3006AF1A1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Alamofire watchOS";
 			targetProxy = F128F72A1C5A75F3006AF1A1 /* PBXContainerItemProxy */;
-		};
-		F128F72D1C5A75F3006AF1A1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "CryptoSwift watchOS";
-			targetProxy = F128F72C1C5A75F3006AF1A1 /* PBXContainerItemProxy */;
 		};
 		F1791CC71C5902A6004901F9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -975,6 +896,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1015,6 +937,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ovh.OVHAPIWrapper-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1065,6 +988,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1106,6 +1030,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ovh.OVHAPIWrapper-OSX-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1152,7 +1077,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Debug;
@@ -1192,7 +1117,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ovh.OVHAPIWrapper-tvOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.1;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1221,7 +1146,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Debug;
 		};
@@ -1247,7 +1172,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Release;
 		};
@@ -1303,6 +1228,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1353,6 +1279,7 @@
 				PRODUCT_NAME = OVHAPIWrapper;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1414,6 +1341,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1465,6 +1393,7 @@
 				PRODUCT_NAME = OVHAPIWrapper;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1521,7 +1450,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1572,7 +1501,7 @@
 				PRODUCT_NAME = OVHAPIWrapper;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
@@ -1633,6 +1562,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1684,6 +1614,7 @@
 				PRODUCT_NAME = OVHAPIWrapper;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";

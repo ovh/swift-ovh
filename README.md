@@ -11,11 +11,11 @@ iOS, OSX, tvOS, watchOS
 ### System
 
 - iOS 8.0+ / Mac OS X 10.10+ / tvOS 9.0+ / watchOS 2.0+
-- Xcode 7.2+
+- Xcode 8.0+
 
 ### Swift
 
-This package only supports swift 2.3. To support older versions, please check out the version 1.0.1 of this project.
+This package only supports Swift > 3.0. To support older versions of Swift, please check out the older versions of this project.
 
 ### Dependencies
 
@@ -138,7 +138,7 @@ let OVHAPI = OVHAPIWrapper(endpoint: .OVHEU, applicationKey: "[YOUR APPLICATION 
 let accessRules = OVHAPIAccessRule.allRights()
 
 // Request a token to the API and return a view controller.
-OVHAPI.requestCredentialsWithAccessRules(accessRules, redirectionUrl: "[YOU URL]", completion: { (viewController, error) -> Void in
+OVHAPI.requestCredentials(withAccessRules: accessRules, redirection: "[YOU URL]", andCompletion: { (viewController, error) -> Void in
     guard error == nil else {
         // Handle the error here.
         return
@@ -151,7 +151,7 @@ OVHAPI.requestCredentialsWithAccessRules(accessRules, redirectionUrl: "[YOU URL]
         }
 
         // The application is responsible to present the view controller to the user.
-        self.presentViewController(viewController, animated: true, completion: nil)
+        self.present(viewController, animated: true, completion: nil)
     }
 })
 ```
@@ -163,7 +163,7 @@ OVHAPI.requestCredentialsWithAccessRules(accessRules, redirectionUrl: "[YOU URL]
 let accessRules = OVHAPIAccessRule.readOnlyRights()
 
 // Request a token to the API and return a validation url.
-OVHAPI.requestCredentialsWithAccessRules(accessRules, redirectionUrl: "[YOU URL]") { (consumerKey, validationUrl, error, request, response) -> Void in
+OVHAPI.requestCredentials(withAccessRules: accessRules, redirection: "[YOU URL]") { (consumerKey, validationUrl, error, request, response) -> Void in
     guard error == nil else {
         // Handle the error here.
         return
@@ -182,19 +182,19 @@ OVHAPI.requestCredentialsWithAccessRules(accessRules, redirectionUrl: "[YOU URL]
 
 ```swift
 // Manually build rules: read rights (with GET method) on all the API, and rights to POST on all the sub-API "/vps/".
-let accessRules = [OVHAPIAccessRule(method: .GET, path: "/*"), OVHAPIAccessRule(method: .POST, path: "/vps/*")]
+let accessRules = [OVHAPIAccessRule(method: .get, path: "/*"), OVHAPIAccessRule(method: .post, path: "/vps/*")]
 
-// Equivalent to [OVHAPIAccessRule(method: .GET, path: "/*")]
+// Equivalent to [OVHAPIAccessRule(method: .get, path: "/*")]
 let accessRules = OVHAPIAccessRule.readOnlyRights()
 
-// Equivalent to [OVHAPIAccessRule(method: .GET, path: "/vps/*")]
-let accessRules = OVHAPIAccessRule.readOnlyRights("/vps/*")
+// Equivalent to [OVHAPIAccessRule(method: .get, path: "/vps/*")]
+let accessRules = OVHAPIAccessRule.readOnlyRights(forPath: "/vps/*")
 
-// Equivalent to [OVHAPIAccessRule(method: .GET, path: "/*"), OVHAPIAccessRule(method: .POST, path: "/*"), OVHAPIAccessRule(method: .PUT, path: "/*"), OVHAPIAccessRule(method: .DELETE, path: "/*")]
+// Equivalent to [OVHAPIAccessRule(method: .get, path: "/*"), OVHAPIAccessRule(method: .post, path: "/*"), OVHAPIAccessRule(method: .put, path: "/*"), OVHAPIAccessRule(method: .delete, path: "/*")]
 let accessRules = OVHAPIAccessRule.allRights()
 
-// Equivalent to [OVHAPIAccessRule(method: .GET, path: "/vps/*"), OVHAPIAccessRule(method: .POST, path: "/vps/*"), OVHAPIAccessRule(method: .PUT, path: "/vps/*"), OVHAPIAccessRule(method: .DELETE, path: "/vps/*")]
-let accessRules = OVHAPIAccessRule.allRights("/vps/*")
+// Equivalent to [OVHAPIAccessRule(method: .get, path: "/vps/*"), OVHAPIAccessRule(method: .post, path: "/vps/*"), OVHAPIAccessRule(method: .put, path: "/vps/*"), OVHAPIAccessRule(method: .delete, path: "/vps/*")]
+let accessRules = OVHAPIAccessRule.allRights(forPath: "/vps/*")
 ```
 
 ### Request API
@@ -208,7 +208,7 @@ OVHAPI.get("/vps") { (result, error, request, response) -> Void in
         return
     }
 
-    // Result is an 'AnyObject?' object, it is a JSON deserialization result.
+    // Result is an 'Any?' object, it is a JSON deserialization result.
     // So 'result' may be a NSArray object or a NSDictionary object.
     // If 'result' is nil, look at the 'response' object.
 }
@@ -223,8 +223,12 @@ OVHAPI.get("/dedicated/server") { (result, error, request, response) -> Void in
         return
     }
 
+    guard let servers = result as? [String] else {
+        // Handle the error here.
+        return
+    }
+
     // Iterate the servers to get the details.
-    let servers = result as! [String]
     for server in servers {
         OVHAPI.get("/dedicated/server/\(server)") { (result, error, request, response) -> Void in
             guard error == nil else {
@@ -232,19 +236,21 @@ OVHAPI.get("/dedicated/server") { (result, error, request, response) -> Void in
                 return
             }
 
-            let details = result as! NSDictionary
-            if let datacenter = details.objectForKey("datacenter") {
-                if datacenter.isEqualToString("sbg1") {
-                    // Enable network burst.
-                    OVHAPI.put("/dedicated/server/\(server)/burst", content: ["status":"active"]) { (result, error, request, response) -> Void in
-                        guard error == nil else {
-                            // Handle the error here.
-                            return
-                        }
+            guard let details = result as? NSDictionary else {
+                // Handle the error here.
+                return
+            }
 
-                        // Server is burst.
-                        print("We burst \(server).")
+            if let datacenter = details["datacenter"] as? String, datacenter == "sbg1" {
+                // Enable network burst.
+                OVHAPI.put("/dedicated/server/\(server)/burst", content: ["status":"active" as AnyObject]) { (result, error, request, response) -> Void in
+                    guard error == nil else {
+                        // Handle the error here.
+                        return
                     }
+
+                    // Server is burst.
+                    print("We burst \(server).")
                 }
             }
         }

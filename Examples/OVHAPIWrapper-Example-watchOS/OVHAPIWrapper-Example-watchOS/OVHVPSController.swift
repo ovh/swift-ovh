@@ -41,7 +41,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
     
     // MARK: - Structs
     
-    private struct RunningTask {
+    fileprivate struct RunningTask {
         let id: Int64
         let running: Bool
     }
@@ -53,21 +53,21 @@ final class OVHVPSController: WatchSessionManagerDelegate {
     let OVHAPI: OVHAPIWrapper
     
     // Manage the CoreData layer.
-    private let coreDataController = CoreDataManager.sharedManager
+    fileprivate let coreDataController = CoreDataManager.sharedManager
     
     // The running tasks are tracked to be refreshed.
-    private var runningTasks = [String:RunningTask]()
-    private var runningTasksTimer: NSTimer?
-    private let runningTasksTimerTimeInterval: NSTimeInterval = 15
+    fileprivate var runningTasks = [String:RunningTask]()
+    fileprivate var runningTasksTimer: Timer?
+    fileprivate let runningTasksTimerTimeInterval: TimeInterval = 15
     
     // The properties (state) of the VPS are tracked to be refreshed.
-    private var runningProperties = [String:Bool]()
-    private var runningPropertiesTimer: NSTimer?
-    private let runningPropertiesTimerTimeInterval: NSTimeInterval = 15
+    fileprivate var runningProperties = [String:Bool]()
+    fileprivate var runningPropertiesTimer: Timer?
+    fileprivate let runningPropertiesTimerTimeInterval: TimeInterval = 15
     
     // The VPS are refreshed every hour.
-    private var runningVPSTimer: NSTimer?
-    private let runningVPSTimerTimeInterval: NSTimeInterval = 60*60
+    fileprivate var runningVPSTimer: Timer?
+    fileprivate let runningVPSTimerTimeInterval: TimeInterval = 60*60
     
     
     // MARK: - Data loading
@@ -75,7 +75,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
     /**
     Load all the VPS from the OVH API.
     */
-    func loadVPSWithBlock(completionBlock: ((ErrorType?) -> Void)?) {
+    func loadVPS(withBlock completionBlock: ((Error?) -> Void)? = nil) {
         // Invalidate the current timer.
         if let timer = runningVPSTimer {
             timer.invalidate()
@@ -85,15 +85,14 @@ final class OVHVPSController: WatchSessionManagerDelegate {
         OVHAPI.get("/vps") { (result, error, request, response) -> Void in
             
             // The process is run in the background to not block the main thread.
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
-                
+            DispatchQueue.global(qos: .background).async {
                 // Defered actions: call the completion block.
-                var completionError: ErrorType?
+                var completionError: Error?
                 defer {
                     if let block = completionBlock {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        DispatchQueue.main.async {
                             block(completionError)
-                        })
+                        }
                     }
                     
                     // Start the timer.
@@ -101,9 +100,9 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                     if let _ = completionError {
                         fireDateTimeInterval = 30
                     }
-                    self.runningVPSTimer = NSTimer(fireDate: NSDate(timeIntervalSinceNow: fireDateTimeInterval), interval: self.runningTasksTimerTimeInterval, target: self, selector: #selector(OVHVPSController.refreshVPS), userInfo: nil, repeats: false)
+                    self.runningVPSTimer = Timer(fireAt: Date(timeIntervalSinceNow: fireDateTimeInterval), interval: self.runningTasksTimerTimeInterval, target: self, selector: #selector(OVHVPSController.refreshVPS), userInfo: nil, repeats: false)
                     if let timer = self.runningVPSTimer {
-                        NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+                        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
                     }
                 }
                 
@@ -115,7 +114,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                 
                 // Handle invalid response.
                 guard result is [String] else {
-                    completionError = OVHAPIError.InvalidRequestResponse
+                    completionError = OVHAPIError.invalidRequestResponse
                     return
                 }
                 
@@ -123,15 +122,15 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                 if let allVPS = (result as? [String]) {
                     
                     let context = self.coreDataController.newManagedObjectContext()
-                    context.performBlockAndWait({ () -> Void in
+                    context.performAndWait({
                         do {
                             // Get all the saved VPS.
-                            let fetchRequest = NSFetchRequest(entityName: "OVHVPS")
+                            let fetchRequest: NSFetchRequest<OVHVPS> = OVHVPS.fetchRequest()
                             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
                             fetchRequest.includesSubentities = false
                             fetchRequest.propertiesToFetch = ["name"]
                             
-                            var fetchedVPS = try context.executeFetchRequest(fetchRequest)
+                            var fetchedVPS = try context.fetch(fetchRequest)
                             
                             for VPS in allVPS {
                                 let VPSName = VPS as String
@@ -142,7 +141,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                                     for i in 0...fetchedVPS.count {
                                         if fetchedVPS[i].name == VPSName {
                                             found = true
-                                            fetchedVPS.removeAtIndex(i)
+                                            fetchedVPS.remove(at: i)
                                             break
                                         }
                                     }
@@ -150,7 +149,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                                 
                                 // If not saved create it.
                                 if !found {
-                                    let VPSEntity = NSEntityDescription.insertNewObjectForEntityForName("OVHVPS", inManagedObjectContext: context) as! OVHVPS
+                                    let VPSEntity = NSEntityDescription.insertNewObject(forEntityName: "OVHVPS", into: context) as! OVHVPS
                                     VPSEntity.name = VPSName
                                     VPSEntity.displayName = VPSName
                                     VPSEntity.state = OVHVPSState.unknown.rawValue
@@ -158,10 +157,10 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                                     self.coreDataController.saveManagedObjectContext(context)
                                     
                                     // Load the properties.
-                                    self.reloadVPSPropertiesWithName(VPSName) { properties, error in
+                                    self.reloadVPSProperties(withName: VPSName) { properties, error in
                                         if let properties = properties, let state = properties["state"] as? String {
                                             if state != OVHVPSState.running.rawValue && state != OVHVPSState.stopped.rawValue {
-                                                self.loadVPSTaskWithVPSName(VPSName, completionBlock: nil)
+                                                self.loadVPSTask(withVPSName: VPSName)
                                             }
                                         }
                                     }
@@ -170,7 +169,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                             
                             // Delete the VPS that are not returned by the request.
                             for VPS in fetchedVPS {
-                                context.deleteObject(VPS as! NSManagedObject)
+                                context.delete(VPS)
                             }
                             
                             self.coreDataController.saveManagedObjectContext(context)
@@ -185,14 +184,14 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                         }
                     })
                 }
-            })
+            }
         }
     }
     
     /**
      Load the properties of a VPS from the OVH API.
      */
-    func reloadVPSPropertiesWithName(VPSName: String, completionBlock: (([String:AnyObject]?, ErrorType?) -> Void)?) {
+    func reloadVPSProperties(withName VPSName: String, andCompletionBlock completionBlock: (([String:AnyObject]?, Error?) -> Void)? = nil) {
         // Track this running task.
         runningProperties[VPSName] = true
         
@@ -200,16 +199,16 @@ final class OVHVPSController: WatchSessionManagerDelegate {
         OVHAPI.get("/vps/\(VPSName)") { (result, error, request, response) -> Void in
             
             // The process is run in the background to not block the main thread.
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
+            DispatchQueue.global(qos: .background).async {
                 
                 // Defered actions: call the completion block.
                 var completionProperties : [String:AnyObject]?
-                var completionError: ErrorType?
+                var completionError: Error?
                 defer {
                     if let block = completionBlock {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        DispatchQueue.main.async {
                             block(completionProperties, completionError)
-                        })
+                        }
                     }
                     
                     if let _ = self.runningProperties[VPSName] {
@@ -225,7 +224,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                 
                 // Handle invalid response.
                 guard result is [String:AnyObject] else {
-                    completionError = OVHAPIError.InvalidRequestResponse
+                    completionError = OVHAPIError.invalidRequestResponse
                     return
                 }
                 
@@ -233,17 +232,16 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                 if let VPSProperties = (result as? [String:AnyObject]) {
                     
                     let context = self.coreDataController.newManagedObjectContext()
-                    context.performBlockAndWait({ () -> Void in
+                    context.performAndWait({
                         var keepTrackingTask = false
                         
                         do {
-                            let fetchRequest = NSFetchRequest(entityName: "OVHVPS")
+                            let fetchRequest: NSFetchRequest<OVHVPS> = OVHVPS.fetchRequest()
                             fetchRequest.predicate = NSPredicate(format: "%K = %@", "name", VPSName)
                             fetchRequest.fetchLimit = 1
                             
-                            let fetchedVPS = try context.executeFetchRequest(fetchRequest)
-                            if fetchedVPS.count > 0 {
-                                let VPS = fetchedVPS.first as! OVHVPS
+                            let fetchedVPS = try context.fetch(fetchRequest)
+                            if let VPS = fetchedVPS.first {
                                 let oldWatchRepresentation = VPS.watchRepresentation()
                                 
                                 if let displayName = VPSProperties["displayName"] as? String {
@@ -267,34 +265,34 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                         }
                         
                         if !keepTrackingTask {
-                            self.runningProperties.removeValueForKey(VPSName)
+                            self.runningProperties.removeValue(forKey: VPSName)
                         }
                         
                         self.coreDataController.saveManagedObjectContext(context)
                     })
                 }
-            })
+            }
         }
     }
     
     /**
      Load the tasks of a VPS from the OVH API.
      */
-    func loadVPSTaskWithVPSName(VPSName: String, completionBlock: (([String:AnyObject]?, ErrorType?) -> Void)?) {
+    func loadVPSTask(withVPSName VPSName: String, andCompletionBlock completionBlock: (([String:AnyObject]?, Error?) -> Void)? = nil) {
         // Launch the request.
         OVHAPI.get("/vps/\(VPSName)/tasks") { (result, error, request, response) -> Void in
             
             // The process is run in the background to not block the main thread.
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
+            DispatchQueue.global(qos: .background).async {
                 
                 // Defered actions: call the completion block.
                 var completionVPSTask: [String:AnyObject]?
-                var completionError: ErrorType?
+                var completionError: Error?
                 defer {
                     if let block = completionBlock {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        DispatchQueue.main.async {
                             block(completionVPSTask, completionError)
-                        })
+                        }
                     }
                 }
                 
@@ -306,7 +304,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                 
                 // Handle invalid response.
                 guard result is [String] else {
-                    completionError = OVHAPIError.InvalidRequestResponse
+                    completionError = OVHAPIError.invalidRequestResponse
                     return
                 }
                 
@@ -317,27 +315,27 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                             
                             // As we have a defer block and the following API call is asynchronous,
                             // a semaphore is used in order to wait to not return now.
-                            let semaphore = dispatch_semaphore_create(0)
+                            let semaphore = DispatchSemaphore(value: 0)
                             
-                            self.reloadVPSTaskWithVPSName(VPSName, taskId: VPSTaskID, completionBlock: { (VPSTask, error) -> Void in
+                            self.reloadVPSTask(withVPSName: VPSName, taskId: VPSTaskID, andCompletionBlock: { (VPSTask, error) in
                                 completionVPSTask = VPSTask
                                 completionError = error
-                                dispatch_semaphore_signal(semaphore)
+                                semaphore.signal()
                             })
                             
                             // Waiting for the end of call "/vps/x/task/y"
-                            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+                            let _ = semaphore.wait(timeout: DispatchTime.distantFuture)
                         }
                     }
                 }
-            })
+            }
         }
     }
     
     /**
      Load the task with ID of a VPS from the OVH API.
      */
-    func reloadVPSTaskWithVPSName(VPSName: String, taskId: Int64, completionBlock: (([String:AnyObject]?, ErrorType?) -> Void)?) {
+    func reloadVPSTask(withVPSName VPSName: String, taskId: Int64, andCompletionBlock completionBlock: (([String:AnyObject]?, Error?) -> Void)? = nil) {
         // Track this running task.
         runningTasks[VPSName] = RunningTask(id: taskId, running: true)
         
@@ -345,16 +343,16 @@ final class OVHVPSController: WatchSessionManagerDelegate {
         self.OVHAPI.get("/vps/\(VPSName)/tasks/\(taskId)") { (result, error, request, response) -> Void in
             
             // The process is running in the background to not block the main thread.
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
+            DispatchQueue.global(qos: .background).async {
                 
                 // Defered actions: call the completion block.
                 var completionVPSTask: [String:AnyObject]?
-                var completionError: ErrorType?
+                var completionError: Error?
                 defer {
                     if let block = completionBlock {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        DispatchQueue.main.async {
                             block(completionVPSTask, completionError)
-                        })
+                        }
                     }
                     
                     if var task = self.runningTasks[VPSName] {
@@ -370,7 +368,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                 
                 // Handle invalid response.
                 guard result is [String:AnyObject] else {
-                    completionError = OVHAPIError.InvalidRequestResponse
+                    completionError = OVHAPIError.invalidRequestResponse
                     return
                 }
                 
@@ -378,19 +376,18 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                 if let VPSTask = (result as? [String:AnyObject]) {
                     
                     let context = self.coreDataController.newManagedObjectContext()
-                    context.performBlockAndWait({ () -> Void in
+                    context.performAndWait({
                         var keepTrackingTask = false
                         
                         do {
-                            let fetchRequest = NSFetchRequest(entityName: "OVHVPS")
+                            let fetchRequest: NSFetchRequest<OVHVPS> = OVHVPS.fetchRequest()
                             fetchRequest.predicate = NSPredicate(format: "%K = %@", "name", VPSName)
                             fetchRequest.fetchLimit = 1
                             
-                            let fetchedVPS = try context.executeFetchRequest(fetchRequest)
-                            if fetchedVPS.count > 0 {
-                                let VPS = fetchedVPS.first as! OVHVPS
-                                let VPSTaskId = ((VPSTask["id"] as? NSNumber)?.longLongValue)!
-                                let VPSTaskProgress = ((VPSTask["progress"] as? NSNumber)?.longLongValue)!
+                            let fetchedVPS = try context.fetch(fetchRequest)
+                            if let VPS = fetchedVPS.first {
+                                let VPSTaskId = VPSTask["id"] as? NSNumber
+                                let VPSTaskProgress = VPSTask["progress"] as? NSNumber
                                 let VPSTaskType = VPSTask["type"] as! String
                                 let VPSTaskState = VPSTask["state"] as! String
                                 
@@ -404,7 +401,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                                         VPS.currentTask?.progress = VPSTaskProgress
                                     }
                                 } else {
-                                    let VPSTaskEntity = NSEntityDescription.insertNewObjectForEntityForName("OVHVPSTask", inManagedObjectContext: context) as! OVHVPSTask
+                                    let VPSTaskEntity = NSEntityDescription.insertNewObject(forEntityName: "OVHVPSTask", into: context) as! OVHVPSTask
                                     VPSTaskEntity.id = VPSTaskId
                                     VPSTaskEntity.type = VPSTaskType
                                     VPSTaskEntity.state = VPSTaskState
@@ -417,7 +414,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                                     if task.isFinished() {
                                         VPS.currentTask = nil
                                         
-                                        self.reloadVPSPropertiesWithName(VPSName, completionBlock: nil)
+                                        self.reloadVPSProperties(withName: VPSName)
                                     } else {
                                         keepTrackingTask = true
                                     }
@@ -438,35 +435,35 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                         }
                         
                         if !keepTrackingTask {
-                            self.runningTasks.removeValueForKey(VPSName)
+                            self.runningTasks.removeValue(forKey: VPSName)
                         }
                         
                         self.coreDataController.saveManagedObjectContext(context)
                     })
                 }
-            })
+            }
         }
     }
     
     /**
      Reboot a VPS.
      */
-    func rebootVPSWithName(VPSName: String, completionBlock: (([String:AnyObject]?, ErrorType?) -> Void)?) {
-        callAPIAction("reboot", onVPS: VPSName, completionBlock: completionBlock)
+    func rebootVPS(withName VPSName: String, andCompletionBlock completionBlock: (([String:AnyObject]?, Error?) -> Void)? = nil) {
+        call(APIAction: "reboot", onVPS: VPSName, withCompletionBlock: completionBlock)
     }
     
     /**
      Start a VPS.
      */
-    func startVPSWithName(VPSName: String, completionBlock: (([String:AnyObject]?, ErrorType?) -> Void)?) {
-        callAPIAction("start", onVPS: VPSName, completionBlock: completionBlock)
+    func startVPS(withName VPSName: String, andCompletionBlock completionBlock: (([String:AnyObject]?, Error?) -> Void)? = nil) {
+        call(APIAction: "start", onVPS: VPSName, withCompletionBlock: completionBlock)
     }
     
     /**
      Stop a VPS.
      */
-    func stopVPSWithName(VPSName: String, completionBlock: (([String:AnyObject]?, ErrorType?) -> Void)?) {
-        callAPIAction("stop", onVPS: VPSName, completionBlock: completionBlock)
+    func stopVPS(withName VPSName: String, andCompletionBlock completionBlock: (([String:AnyObject]?, Error?) -> Void)? = nil) {
+        call(APIAction: "stop", onVPS: VPSName, withCompletionBlock: completionBlock)
     }
     
     
@@ -475,15 +472,15 @@ final class OVHVPSController: WatchSessionManagerDelegate {
     /**
     Start the timers.
     */
-    private func startTimers() {
-        runningTasksTimer = NSTimer(fireDate: NSDate(timeIntervalSinceNow: runningTasksTimerTimeInterval), interval: runningTasksTimerTimeInterval, target: self, selector: #selector(OVHVPSController.refreshVPSTasks), userInfo: nil, repeats: true)
+    fileprivate func startTimers() {
+        runningTasksTimer = Timer(fireAt: Date(timeIntervalSinceNow: runningTasksTimerTimeInterval), interval: runningTasksTimerTimeInterval, target: self, selector: #selector(OVHVPSController.refreshVPSTasks), userInfo: nil, repeats: true)
         if let timer = runningTasksTimer {
-            NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+            RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
         }
         
-        runningPropertiesTimer = NSTimer(fireDate: NSDate(timeIntervalSinceNow: runningTasksTimerTimeInterval), interval: runningTasksTimerTimeInterval, target: self, selector: #selector(OVHVPSController.refreshVPSProperties), userInfo: nil, repeats: true)
+        runningPropertiesTimer = Timer(fireAt: Date(timeIntervalSinceNow: runningTasksTimerTimeInterval), interval: runningTasksTimerTimeInterval, target: self, selector: #selector(OVHVPSController.refreshVPSProperties), userInfo: nil, repeats: true)
         if let timer = runningPropertiesTimer {
-            NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+            RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
         }
     }
     
@@ -491,7 +488,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
     Refresh the VPS.
     */
     @objc func refreshVPS() {
-        loadVPSWithBlock(nil)
+        loadVPS()
     }
     
     /**
@@ -500,7 +497,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
     @objc func refreshVPSProperties() {
         for (VPSName, running) in runningProperties {
             if !running {
-                reloadVPSPropertiesWithName(VPSName, completionBlock: nil)
+                reloadVPSProperties(withName: VPSName)
             }
         }
     }
@@ -511,7 +508,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
     @objc func refreshVPSTasks() {
         for (VPSName, task) in runningTasks {
             if !task.running {
-                reloadVPSTaskWithVPSName(VPSName, taskId: task.id, completionBlock: nil)
+                reloadVPSTask(withVPSName: VPSName, taskId: task.id)
             }
         }
     }
@@ -519,16 +516,16 @@ final class OVHVPSController: WatchSessionManagerDelegate {
     /**
      Call API: action on VPS
      */
-    private func callAPIAction(action: String, onVPS VPSName: String, completionBlock: (([String:AnyObject]?, ErrorType?) -> Void)?) {
+    fileprivate func call(APIAction action: String, onVPS VPSName: String, withCompletionBlock completionBlock: (([String:AnyObject]?, Error?) -> Void)?) {
         // The VPS is flagged as waiting the result of an action.
         let context = self.coreDataController.newManagedObjectContext()
-        context.performBlock({ () -> Void in
+        context.perform({ () -> Void in
             do {
-                let fetchRequest = NSFetchRequest(entityName: "OVHVPS")
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "OVHVPS")
                 fetchRequest.predicate = NSPredicate(format: "%K = %@", "name", VPSName)
                 fetchRequest.fetchLimit = 1
                 
-                let fetchedVPS = try context.executeFetchRequest(fetchRequest)
+                let fetchedVPS = try context.fetch(fetchRequest)
                 if fetchedVPS.count > 0 {
                     let VPS = fetchedVPS.first as! OVHVPS
                     VPS.waitingTask = true
@@ -544,16 +541,15 @@ final class OVHVPSController: WatchSessionManagerDelegate {
         OVHAPI.post("/vps/\(VPSName)/\(action)") { (result, error, request, response) -> Void in
             
             // The process is run in the background to not block the main thread.
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
-                
+            DispatchQueue.global(qos: .background).async {
                 // Defered actions: call the completion block.
                 var completionVPSTask : [String:AnyObject]?
-                var completionError: ErrorType?
+                var completionError: Error?
                 defer {
                     if let block = completionBlock {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        DispatchQueue.main.async {
                             block(completionVPSTask, completionError)
-                        })
+                        }
                     }
                 }
                 
@@ -565,7 +561,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                 
                 // Handle invalid response.
                 guard result is [String:AnyObject] else {
-                    completionError = OVHAPIError.InvalidRequestResponse
+                    completionError = OVHAPIError.invalidRequestResponse
                     return
                 }
                 
@@ -573,21 +569,20 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                 if let VPSTask = (result as? [String:AnyObject]) {
                     
                     let context = self.coreDataController.newManagedObjectContext()
-                    context.performBlockAndWait({ () -> Void in
+                    context.performAndWait({
                         do {
-                            let fetchRequest = NSFetchRequest(entityName: "OVHVPS")
+                            let fetchRequest: NSFetchRequest<OVHVPS> = OVHVPS.fetchRequest()
                             fetchRequest.predicate = NSPredicate(format: "%K = %@", "name", VPSName)
                             fetchRequest.fetchLimit = 1
                             
-                            let fetchedVPS = try context.executeFetchRequest(fetchRequest)
-                            if fetchedVPS.count > 0 {
-                                let VPSTaskEntity = NSEntityDescription.insertNewObjectForEntityForName("OVHVPSTask", inManagedObjectContext: context) as! OVHVPSTask
-                                VPSTaskEntity.id = ((VPSTask["id"] as? NSNumber)?.longLongValue)!
+                            let fetchedVPS = try context.fetch(fetchRequest)
+                            if let VPS = fetchedVPS.first {
+                                let VPSTaskEntity = NSEntityDescription.insertNewObject(forEntityName: "OVHVPSTask", into: context) as! OVHVPSTask
+                                VPSTaskEntity.id = VPSTask["id"] as? NSNumber
                                 VPSTaskEntity.type = VPSTask["type"] as? String
                                 VPSTaskEntity.state = VPSTask["state"] as? String
-                                VPSTaskEntity.progress = ((VPSTask["progress"] as? NSNumber)?.longLongValue)!
+                                VPSTaskEntity.progress = VPSTask["progress"] as? NSNumber
                                 
-                                let VPS = fetchedVPS.first as! OVHVPS
                                 let oldWatchRepresentation = VPS.watchRepresentation()
                                 
                                 VPS.currentTask = VPSTaskEntity
@@ -595,7 +590,9 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                                 
                                 completionVPSTask = VPSTask
                                 
-                                self.runningTasks[VPSName] = RunningTask(id: VPSTaskEntity.id, running: false)
+                                if let taskId = VPSTaskEntity.id?.int64Value {
+                                    self.runningTasks[VPSName] = RunningTask(id: taskId, running: false)
+                                }
                                 
                                 // Send to the watch the updated state of VPS.
                                 WatchSessionManager.sharedManager.updateVPS(VPS.watchRepresentation(), withOldRepresentation: oldWatchRepresentation)
@@ -610,7 +607,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                         self.coreDataController.saveManagedObjectContext(context)
                     })
                 }
-            })
+            }
         }
     }
     
@@ -624,19 +621,19 @@ final class OVHVPSController: WatchSessionManagerDelegate {
             credentials["consumerKey"] = consumerKey
         }
         
-        return credentials
+        return credentials as [String : AnyObject]
     }
     
     func VPSList() -> [[String:AnyObject]] {
         var list = [[String:AnyObject]]()
         
         let context = coreDataController.newManagedObjectContext()
-        context.performBlockAndWait { () -> Void in
-            let fetchRequest = NSFetchRequest(entityName: "OVHVPS")
+        context.performAndWait { () -> Void in
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "OVHVPS")
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "displayName", ascending: true)]
             
             do {
-                let VPSList = try context.executeFetchRequest(fetchRequest) as! [OVHVPS]
+                let VPSList = try context.fetch(fetchRequest) as! [OVHVPS]
                 
                 for VPS in VPSList {
                     list.append(VPS.watchRepresentation())
@@ -653,8 +650,8 @@ final class OVHVPSController: WatchSessionManagerDelegate {
         var countOfRunningVPS = 0, countOfStoppedVPS = 0, countOfUnknownVPS = 0, countOfBusyVPS = 0
         
         let context = coreDataController.newManagedObjectContext()
-        context.performBlockAndWait { () -> Void in
-            var request: NSFetchRequest
+        context.performAndWait { () -> Void in
+            var request: NSFetchRequest<NSFetchRequestResult>
             
             let predicateCurrentTaskIsNil = NSPredicate(format: "%K = nil", "currentTask")
             
@@ -663,7 +660,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
             request.predicate = NSCompoundPredicate.init(andPredicateWithSubpredicates: [predicateCurrentTaskIsNil, NSPredicate(format: "%K = %@", "state", OVHVPSState.running.rawValue)])
             
             do {
-                countOfRunningVPS = try context.countForFetchRequest(request)
+                countOfRunningVPS = try context.count(for: request)
             }
             catch let e {
                 debugPrint("Can not get the count of running VPS: \(e)")
@@ -674,7 +671,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
             request.predicate = NSCompoundPredicate.init(andPredicateWithSubpredicates: [predicateCurrentTaskIsNil, NSPredicate(format: "%K = %@", "state", OVHVPSState.stopped.rawValue)])
             
             do {
-                countOfStoppedVPS = try context.countForFetchRequest(request)
+                countOfStoppedVPS = try context.count(for: request)
             }
             catch let e {
                 debugPrint("Can not get the count of stopped VPS: \(e)")
@@ -685,7 +682,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
             request.predicate = NSCompoundPredicate.init(andPredicateWithSubpredicates: [predicateCurrentTaskIsNil, NSPredicate(format: "%K = %@", "state", OVHVPSState.unknown.rawValue)])
             
             do {
-                countOfUnknownVPS = try context.countForFetchRequest(request)
+                countOfUnknownVPS = try context.count(for: request)
             }
             catch let e {
                 debugPrint("Can not get the count of unknown VPS: \(e)")
@@ -698,27 +695,27 @@ final class OVHVPSController: WatchSessionManagerDelegate {
             request.predicate = NSCompoundPredicate.init(orPredicateWithSubpredicates: [predicateCurrentTaskIsNotNil, predicateStates])
             
             do {
-                countOfBusyVPS = try context.countForFetchRequest(request)
+                countOfBusyVPS = try context.count(for: request)
             }
             catch let e {
                 debugPrint("Can not get the count of busy VPS: \(e)")
             }
         }
         
-        return ["running": countOfRunningVPS, "stopped": countOfStoppedVPS, "unknown": countOfUnknownVPS, "busy": countOfBusyVPS]
+        return ["running": countOfRunningVPS as AnyObject, "stopped": countOfStoppedVPS as AnyObject, "unknown": countOfUnknownVPS as AnyObject, "busy": countOfBusyVPS as AnyObject]
     }
     
     func complicationData() -> [String:AnyObject] {
         var countOfVPS = 0, countOfUnknownVPS = 0, countOfBusyVPS = 0
         
         let context = coreDataController.newManagedObjectContext()
-        context.performBlockAndWait { () -> Void in
-            var request: NSFetchRequest
+        context.performAndWait { () -> Void in
+            var request: NSFetchRequest<NSFetchRequestResult>
             
             // Count of VPS.
             request = NSFetchRequest(entityName: "OVHVPS")
             do {
-                countOfVPS = try context.countForFetchRequest(request)
+                countOfVPS = try context.count(for: request)
             }
             catch let e {
                 debugPrint("Can not get the count of VPS: \(e)")
@@ -728,7 +725,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
             request = NSFetchRequest(entityName: "OVHVPS")
             request.predicate = NSCompoundPredicate.init(andPredicateWithSubpredicates: [NSPredicate(format: "%K = nil", "currentTask"), NSPredicate(format: "%K = %@", "state", OVHVPSState.unknown.rawValue)])
             do {
-                countOfUnknownVPS = try context.countForFetchRequest(request)
+                countOfUnknownVPS = try context.count(for: request)
             }
             catch let e {
                 debugPrint("Can not get the count of unknown VPS: \(e)")
@@ -740,31 +737,31 @@ final class OVHVPSController: WatchSessionManagerDelegate {
             let predicateStates = NSCompoundPredicate.init(andPredicateWithSubpredicates: [NSPredicate(format: "%K != %@", "state", OVHVPSState.unknown.rawValue), NSPredicate(format: "%K != %@", "state", OVHVPSState.stopped.rawValue), NSPredicate(format: "%K != %@", "state", OVHVPSState.running.rawValue)])
             request.predicate = NSCompoundPredicate.init(orPredicateWithSubpredicates: [predicateCurrentTaskIsNotNil, predicateStates])
             do {
-                countOfBusyVPS = try context.countForFetchRequest(request)
+                countOfBusyVPS = try context.count(for: request)
             }
             catch let e {
                 debugPrint("Can not get the count of busy VPS: \(e)")
             }
         }
         
-        return ["all": countOfVPS, "unknown": countOfUnknownVPS, "busy": countOfBusyVPS]
+        return ["all": countOfVPS as AnyObject, "unknown": countOfUnknownVPS as AnyObject, "busy": countOfBusyVPS as AnyObject]
     }
     
-    func loadNewVPSTask(VPSName: String, task: [String : AnyObject]) {
+    func loadNewVPSTask(_ VPSName: String, task: [String : AnyObject]) {
         let context = coreDataController.newManagedObjectContext()
-        context.performBlockAndWait { () -> Void in
+        context.performAndWait { () -> Void in
             do {
-                let fetchRequest = NSFetchRequest(entityName: "OVHVPS")
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "OVHVPS")
                 fetchRequest.predicate = NSPredicate(format: "%K = %@", "name", VPSName)
                 fetchRequest.fetchLimit = 1
                 
-                let fetchedVPS = try context.executeFetchRequest(fetchRequest)
+                let fetchedVPS = try context.fetch(fetchRequest)
                 if fetchedVPS.count > 0 {
-                    let VPSTaskEntity = NSEntityDescription.insertNewObjectForEntityForName("OVHVPSTask", inManagedObjectContext: context) as! OVHVPSTask
-                    VPSTaskEntity.id = ((task["id"] as? NSNumber)?.longLongValue)!
+                    let VPSTaskEntity = NSEntityDescription.insertNewObject(forEntityName: "OVHVPSTask", into: context) as! OVHVPSTask
+                    VPSTaskEntity.id = task["id"] as? NSNumber
                     VPSTaskEntity.type = task["type"] as? String
                     VPSTaskEntity.state = task["state"] as? String
-                    VPSTaskEntity.progress = ((task["progress"] as? NSNumber)?.longLongValue)!
+                    VPSTaskEntity.progress = task["progress"] as? NSNumber
                     
                     let VPS = fetchedVPS.first as! OVHVPS
                     VPS.currentTask = VPSTaskEntity
@@ -772,7 +769,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
                     
                     self.coreDataController.saveManagedObjectContext(context)
                     
-                    self.reloadVPSTaskWithVPSName(VPSName, taskId: VPSTaskEntity.id, completionBlock: nil)
+                    self.reloadVPSTask(withVPSName: VPSName, taskId: VPSTaskEntity.id as! Int64)
                 }
             } catch let error {
                 print("Failed to fetch VPS: \(error)")
@@ -784,7 +781,7 @@ final class OVHVPSController: WatchSessionManagerDelegate {
     // MARK: - Lifecycle
     
     init() {
-        if let credentials = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("Credentials", ofType: "plist")!) {
+        if let credentials = NSDictionary(contentsOfFile: Bundle.main.path(forResource: "Credentials", ofType: "plist")!) {
             OVHAPI = OVHAPIWrapper(endpoint: .OVHEU, applicationKey: credentials["ApplicationKey"] as! String, applicationSecret: credentials["ApplicationSecret"] as! String, consumerKey: credentials["ConsumerKey"] as? String)
             OVHAPI.enableLogs = true
         } else {

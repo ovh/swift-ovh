@@ -1,2 +1,2 @@
-github "Alamofire/Alamofire" == 3.5.0
-github "krzyzanowskim/CryptoSwift" == 0.5.2
+github "Alamofire/Alamofire" == 4.2.0
+github "krzyzanowskim/CryptoSwift" == 0.6.6

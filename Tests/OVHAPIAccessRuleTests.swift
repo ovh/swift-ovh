@@ -49,44 +49,44 @@ class OVHAPIAccessRuleTests: XCTestCase {
     // MARK: - Tests
     
     func testDistionaryRepresentations() {
-        XCTAssertEqual(OVHAPIAccessRule(method: .GET, path: "/*").dictionaryRepresentation(), ["method": "GET", "path": "/*"], "The dictionary representation of a GET access rule must return the right dictionary object.")
-        XCTAssertEqual(OVHAPIAccessRule(method: .POST, path: "/*").dictionaryRepresentation(), ["method": "POST", "path": "/*"], "The dictionary representation of a POST access rule must return the right dictionary object.")
-        XCTAssertEqual(OVHAPIAccessRule(method: .PUT, path: "/*").dictionaryRepresentation(), ["method": "PUT", "path": "/*"], "The dictionary representation of a PUT access rule must return the right dictionary object.")
-        XCTAssertEqual(OVHAPIAccessRule(method: .DELETE, path: "/*").dictionaryRepresentation(), ["method": "DELETE", "path": "/*"], "The dictionary representation of a DELETE access rule must return the right dictionary object.")
+        XCTAssertEqual(OVHAPIAccessRule(method: .get, path: "/*").dictionaryRepresentation(), ["method": "GET", "path": "/*"], "The dictionary representation of a GET access rule must return the right dictionary object.")
+        XCTAssertEqual(OVHAPIAccessRule(method: .post, path: "/*").dictionaryRepresentation(), ["method": "POST", "path": "/*"], "The dictionary representation of a POST access rule must return the right dictionary object.")
+        XCTAssertEqual(OVHAPIAccessRule(method: .put, path: "/*").dictionaryRepresentation(), ["method": "PUT", "path": "/*"], "The dictionary representation of a PUT access rule must return the right dictionary object.")
+        XCTAssertEqual(OVHAPIAccessRule(method: .delete, path: "/*").dictionaryRepresentation(), ["method": "DELETE", "path": "/*"], "The dictionary representation of a DELETE access rule must return the right dictionary object.")
     }
 
     func testShorthandAllRights() {
         let allRights = OVHAPIAccessRule.allRights()
-        let rights = [OVHAPIAccessRule(method: .GET, path: "/*"), OVHAPIAccessRule(method: .POST, path: "/*"), OVHAPIAccessRule(method: .PUT, path: "/*"), OVHAPIAccessRule(method: .DELETE, path: "/*")]
+        let rights = [OVHAPIAccessRule(method: .get, path: "/*"), OVHAPIAccessRule(method: .post, path: "/*"), OVHAPIAccessRule(method: .put, path: "/*"), OVHAPIAccessRule(method: .delete, path: "/*")]
         
         XCTAssertTrue(rulesAreEqual(allRights, otherRights: rights), "The 'allRights()' shorthand must return the right access rules.")
     }
     
     func testShorthandAllRightsWithPath() {
-        let allRights = OVHAPIAccessRule.allRights("/vps/*")
-        let rights = [OVHAPIAccessRule(method: .GET, path: "/vps/*"), OVHAPIAccessRule(method: .POST, path: "/vps/*"), OVHAPIAccessRule(method: .PUT, path: "/vps/*"), OVHAPIAccessRule(method: .DELETE, path: "/vps/*")]
+        let allRights = OVHAPIAccessRule.allRights(forPath: "/vps/*")
+        let rights = [OVHAPIAccessRule(method: .get, path: "/vps/*"), OVHAPIAccessRule(method: .post, path: "/vps/*"), OVHAPIAccessRule(method: .put, path: "/vps/*"), OVHAPIAccessRule(method: .delete, path: "/vps/*")]
         
-        XCTAssertTrue(rulesAreEqual(allRights, otherRights: rights), "The 'allRights(path:)' shorthand must return the right access rules.")
+        XCTAssertTrue(rulesAreEqual(allRights, otherRights: rights), "The 'allRights(forPath:)' shorthand must return the right access rules.")
     }
     
     func testShorthandReadOnlyRights() {
         let allRights = OVHAPIAccessRule.readOnlyRights()
-        let rights = [OVHAPIAccessRule(method: .GET, path: "/*")]
+        let rights = [OVHAPIAccessRule(method: .get, path: "/*")]
         
         XCTAssertTrue(rulesAreEqual(allRights, otherRights: rights), "The 'readOnlyRights()' shorthand must return the right access rules.")
     }
     
     func testShorthandReadOnlyRightsWithPath() {
-        let allRights = OVHAPIAccessRule.readOnlyRights("/vps/*")
-        let rights = [OVHAPIAccessRule(method: .GET, path: "/vps/*")]
+        let allRights = OVHAPIAccessRule.readOnlyRights(forPath: "/vps/*")
+        let rights = [OVHAPIAccessRule(method: .get, path: "/vps/*")]
         
-        XCTAssertTrue(rulesAreEqual(allRights, otherRights: rights), "The 'readOnlyRights(path:)' shorthand must return the right access rules.")
+        XCTAssertTrue(rulesAreEqual(allRights, otherRights: rights), "The 'readOnlyRights(forPath:)' shorthand must return the right access rules.")
     }
     
     
     // MARK: - Methods
     
-    private func rulesAreEqual(rights: [OVHAPIAccessRule], otherRights: [OVHAPIAccessRule]) -> Bool {
+    fileprivate func rulesAreEqual(_ rights: [OVHAPIAccessRule], otherRights: [OVHAPIAccessRule]) -> Bool {
         return rights.elementsEqual(otherRights) { $0.method.rawValue == $1.method.rawValue && $0.path == $1.path }
     }
 
