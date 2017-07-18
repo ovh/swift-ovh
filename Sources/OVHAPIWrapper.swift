@@ -52,11 +52,11 @@ final public class OVHAPIWrapper {
     public var consumerKey: String? = nil
     
     // Delta between local timestamp and API server timestamp.
-    private var deltaTime: NSTimeInterval? = nil
+    fileprivate var deltaTime: TimeInterval? = nil
     
     // The request manager.
-    private var requestManager: Alamofire.Manager
-    static private var requestManagerCount = 0
+    fileprivate var requestManager: Alamofire.SessionManager
+    static fileprivate var requestManagerCount = 0
     
     // Set to true if the logs must be enabled.
     public var enableLogs = false
@@ -77,21 +77,21 @@ final public class OVHAPIWrapper {
     
     - returns: The new `OVHAPIWrapper` instance.
     */
-    public init(endpoint: OVHAPIEndpoint, endpointVersion: String, applicationKey: String, applicationSecret: String, consumerKey: String? = nil, timeout: NSTimeInterval? = nil) {
+    public init(endpoint: OVHAPIEndpoint, endpointVersion: String, applicationKey: String, applicationSecret: String, consumerKey: String? = nil, timeout: TimeInterval? = nil) {
         self.endpoint = "\(endpoint.rawValue)\(endpointVersion)"
         self.applicationKey = applicationKey
         self.applicationSecret = applicationSecret
         self.consumerKey = consumerKey
         
-        var requestTimeout: NSTimeInterval = 30;
+        var requestTimeout: TimeInterval = 30;
         if let timeout = timeout {
             requestTimeout = timeout
         }
         
-        let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("com.ovh.apiwrapper.background\(OVHAPIWrapper.requestManagerCount)")
+        let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = requestTimeout
         configuration.timeoutIntervalForResource = requestTimeout
-        requestManager = Alamofire.Manager(configuration: configuration)
+        requestManager = Alamofire.SessionManager(configuration: configuration)
         
         OVHAPIWrapper.requestManagerCount += 1
         
@@ -112,7 +112,7 @@ final public class OVHAPIWrapper {
     
     - returns: The new `OVHAPIWrapper` instance.
     */
-    public convenience init(endpoint: OVHAPIEndpoint, applicationKey: String, applicationSecret: String, consumerKey: String? = nil, timeout: NSTimeInterval? = nil) {
+    public convenience init(endpoint: OVHAPIEndpoint, applicationKey: String, applicationSecret: String, consumerKey: String? = nil, timeout: TimeInterval? = nil) {
         var endpointVersion: String
         switch endpoint {
         case .OVHEU:
@@ -146,7 +146,7 @@ final public class OVHAPIWrapper {
     - parameter redirectionUrl: url to redirect on your website after authentication.
     - parameter completion:     block called when the request is done.
     */
-    public func requestCredentialsWithAccessRules(accessRules: [OVHAPIAccessRule], redirectionUrl: String, completion: ((consumerKey: String?, validationUrl: String?, error: ErrorType?, request: NSURLRequest?, response: NSHTTPURLResponse?) -> Void)? = nil) {
+    public func requestCredentials(withAccessRules accessRules: [OVHAPIAccessRule], redirection redirectionUrl: String, andCompletion completion: ((_ consumerKey: String?, _ validationUrl: String?, _ error: Error?, _ request: URLRequest?, _ response: HTTPURLResponse?) -> Void)? = nil) {
         log("requesting credentials...")
         
         // Set the access rules to a dictionary of strings.
@@ -156,33 +156,32 @@ final public class OVHAPIWrapper {
         }
         
         // Execute the request.
-        rawCallWithMethod(.POST, path: "/auth/credential", content: ["accessRules": rules, "redirection": redirectionUrl], isAuthenticated: false, completion: { result, error, request, response in
+        rawCall(withMethod: .post, path: "/auth/credential", content: ["accessRules": rules as AnyObject, "redirection": redirectionUrl as AnyObject], authentication: false, andCompletion: { (result, error, request, response) in
             // Defer the handler.
             var consumerKey: String?
             var validationUrl: String?
-            var err: ErrorType?
+            var completionError: Error?
             defer {
                 if let block = completion {
-                    block(consumerKey: consumerKey, validationUrl: validationUrl, error: err, request: request, response: response)
+                    block(consumerKey, validationUrl, completionError, request, response)
                 }
             }
             
             // Handle the request error.
             guard error == nil else {
                 self.log("error while requesting credentials: \(error.debugDescription)")
-                err = error
+                completionError = error
                 return
             }
             
             // Request must return a dictionary object.
-            guard result is NSDictionary else {
+            guard let dictionary = result as? NSDictionary else {
                 self.log("get invalid response while requesting credentials")
-                err = OVHAPIError.InvalidRequestResponse
+                completionError = OVHAPIError.invalidRequestResponse
                 return
             }
             
             // The consumer key and the validation url are returned.
-            let dictionary = result as! NSDictionary
             consumerKey = dictionary["consumerKey"] as? String
             validationUrl = dictionary["validationUrl"] as? String
             
@@ -202,38 +201,40 @@ final public class OVHAPIWrapper {
      - parameter redirectionUrl:    url to redirect on your website after authentication.
      - parameter completion:        block called when the request is done.
      */
-    public func requestCredentialsWithAccessRules(accessRules: [OVHAPIAccessRule], redirectionUrl: String, completion: (viewController: OVHAPICredentialsViewController?, error: ErrorType?) -> Void) {
+    public func requestCredentials(withAccessRules accessRules: [OVHAPIAccessRule], redirection redirectionUrl: String, andCompletion completion: @escaping (_ viewController: OVHAPICredentialsViewController?, _ error: Error?) -> Void) {
         let currentConsumerKey = consumerKey
         
         // Request the credentials.
-        requestCredentialsWithAccessRules(accessRules, redirectionUrl: redirectionUrl) { (consumerKey, validationUrl, error, request, response) -> Void in
+        requestCredentials(withAccessRules: accessRules, redirection: redirectionUrl) { (consumerKey, validationUrl, error, request, response) in
             // Defer the handler.
             var credentialsViewController: OVHAPICredentialsViewController?
-            var err: ErrorType?
+            var completionError: Error?
             defer {
-                completion(viewController: credentialsViewController, error: err);
+                completion(credentialsViewController, completionError);
             }
             
             // Handle the request error.
             guard error == nil else {
-                err = error
+                completionError = error
                 return
             }
             
             // The request must return a validation url.
-            guard validationUrl != nil else {
-                err = OVHAPIError.InvalidRequestResponse
+            guard let url = validationUrl else {
+                completionError = OVHAPIError.invalidRequestResponse
                 return
             }
             
             // Create the view controller to present to the user.
-            credentialsViewController = NSBundle(forClass: OVHAPICredentialsViewController.self).loadNibNamed("OVHAPICredentialsViewController", owner: nil, options: nil)[0] as? OVHAPICredentialsViewController
-            credentialsViewController?.validationUrl = validationUrl!
-            credentialsViewController?.redirectionUrl = redirectionUrl
-            
-            // If the authentication is canceled by the user, the consumer key is reset.
-            credentialsViewController?.cancelCompletion = {
-                self.consumerKey = currentConsumerKey
+            if let viewControllers = Bundle(for: OVHAPICredentialsViewController.self).loadNibNamed("OVHAPICredentialsViewController", owner: nil, options: nil), let viewController = viewControllers.first as? OVHAPICredentialsViewController {
+                credentialsViewController = viewController
+                credentialsViewController?.validationUrl = url
+                credentialsViewController?.redirectionUrl = url
+                
+                // If the authentication is canceled by the user, the consumer key is reset.
+                credentialsViewController?.cancelCompletion = {
+                    self.consumerKey = currentConsumerKey
+                }
             }
         }
     }
@@ -245,8 +246,8 @@ final public class OVHAPIWrapper {
     - parameter path:       relative path of API request.
     - parameter completion: block called when the request is done.
     */
-    public func get(path: String, completion: ((result: Any?, error: ErrorType?, request: NSURLRequest?, response: NSHTTPURLResponse?) -> Void)? = nil) {
-        rawCallWithMethod(.GET, path: path, content: nil, isAuthenticated: true, completion: completion)
+    public func get(_ path: String, completion: ((_ result: Any?, _ error: Error?, _ request: URLRequest?, _ response: HTTPURLResponse?) -> Void)? = nil) {
+        rawCall(withMethod: .get, path: path, content: nil, authentication: true, andCompletion: completion)
     }
     
     /**
@@ -256,8 +257,8 @@ final public class OVHAPIWrapper {
     - parameter content:    body of the request.
     - parameter completion: block called when the request is done.
     */
-    public func post(path: String, content: [String : AnyObject]? = nil, completion: ((result: Any?, error: ErrorType?, request: NSURLRequest?, response: NSHTTPURLResponse?) -> Void)? = nil) {
-        rawCallWithMethod(.POST, path: path, content: content, isAuthenticated: true, completion: completion)
+    public func post(_ path: String, content: [String : AnyObject]? = nil, completion: ((_ result: Any?, _ error: Error?, _ request: URLRequest?, _ response: HTTPURLResponse?) -> Void)? = nil) {
+        rawCall(withMethod: .post, path: path, content: content, authentication: true, andCompletion: completion)
     }
     
     /**
@@ -267,8 +268,8 @@ final public class OVHAPIWrapper {
     - parameter content:    body of the request.
     - parameter completion: block called when the request is done.
     */
-    public func put(path: String, content: [String : AnyObject]? = nil, completion: ((result: Any?, error: ErrorType?, request: NSURLRequest?, response: NSHTTPURLResponse?) -> Void)? = nil) {
-        rawCallWithMethod(.PUT, path: path, content: content, isAuthenticated: true, completion: completion)
+    public func put(_ path: String, content: [String : AnyObject]? = nil, completion: ((_ result: Any?, _ error: Error?, _ request: URLRequest?, _ response: HTTPURLResponse?) -> Void)? = nil) {
+        rawCall(withMethod: .put, path: path, content: content, authentication: true, andCompletion: completion)
     }
     
     /**
@@ -277,8 +278,8 @@ final public class OVHAPIWrapper {
     - parameter path:       relative path of API request.
     - parameter completion: block called when the request is done.
     */
-    public func delete(path: String, completion: ((result: Any?, error: ErrorType?, request: NSURLRequest?, response: NSHTTPURLResponse?) -> Void)? = nil) {
-        rawCallWithMethod(.DELETE, path: path, content: nil, isAuthenticated: true, completion: completion)
+    public func delete(_ path: String, completion: ((_ result: Any?, _ error: Error?, _ request: URLRequest?, _ response: HTTPURLResponse?) -> Void)? = nil) {
+        rawCall(withMethod: .delete, path: path, content: nil, authentication: true, andCompletion: completion)
     }
     
     
@@ -289,22 +290,22 @@ final public class OVHAPIWrapper {
     
     - parameter completion: block called when the request is done.
     */
-    private func calculateDeltaTime(completion: ((ErrorType?) -> Void)?) {
+    fileprivate func calculateDeltaTime(withCompletion completion: ((Error?) -> Void)? = nil) {
         log("calculating delta time...")
         
         // Execute the request.
-        requestManager.request(.GET, "\(endpoint)/auth/time")
-            .responseString{ response in
-                var error: ErrorType? = response.result.error
+        requestManager.request("\(endpoint)/auth/time")
+            .responseString{ (response) in
+                var error = response.result.error
                 
                 if response.result.isSuccess {
-                    if let value = response.result.value, let serverTimestamp = NSTimeInterval(value) {
+                    if let value = response.result.value, let serverTimestamp = TimeInterval(value) {
                         self.deltaTime = serverTimestamp - NSDate().timeIntervalSince1970
                         self.log("calculate delta time done, get '\(self.deltaTime!)'")
                     }
                     
                     if self.deltaTime == nil {
-                        error = OVHAPIError.InvalidRequestResponse
+                        error = OVHAPIError.invalidRequestResponse
                     }
                 }
                 
@@ -323,48 +324,48 @@ final public class OVHAPIWrapper {
      
     - parameter log: string to log in the console.
     */
-    private func log(log: String) {
+    fileprivate func log(_ log: String) {
         if enableLogs {
-            NSLog("[OVH API] \(log)")
+            print("[OVH API] \(log)")
         }
     }
     
     /**
     This is the main func of this wrapper. It will sign a given query and return its result.
     
-    - parameter method:             HTTP method of the request (GET, POST, DELETE, PUT, etc.).
+    - parameter method:             HTTP method of the request (get, post, delete, put, etc.).
     - parameter path:               relative path of API request.
     - parameter content:            body of the request.
     - parameter isAuthenticated:    true if the request uses authentication.
     - parameter completion:         block called when the request is done.
     */
-    private func rawCallWithMethod(method: Alamofire.Method, path: String, content: [String : AnyObject]?, isAuthenticated: Bool = true, completion: ((Any?, ErrorType?, NSURLRequest?, NSHTTPURLResponse?) -> Void)? = nil) {
+    fileprivate func rawCall(withMethod method: HTTPMethod, path: String, content: [String : AnyObject]?, authentication isAuthenticated: Bool = true, andCompletion completion: ((Any?, Error?, URLRequest?, HTTPURLResponse?) -> Void)? = nil) {
         // Define a closure to call the request.
-        let rawCall = { () -> Void in
+        let rawCall = {
             let logPrefix = "[\(method.rawValue) \(path)]"
             
-            var error: ErrorType? = nil
+            var error: Error? = nil
             
             // The application key and secret must be initialized before any request.
             if self.applicationKey.characters.count == 0 {
                 self.log("\(logPrefix) the application key is missing")
-                error = OVHAPIError.MissingApplicationKey
+                error = OVHAPIError.missingApplicationKey
             }
             
             else if self.applicationSecret.characters.count == 0 {
                 self.log("\(logPrefix) the application secret is missing")
-                error = OVHAPIError.MissingApplicationSecret
+                error = OVHAPIError.missingApplicationSecret
             }
             
             // The consumer key property must be initialized before calling any authenticated request.
             else if isAuthenticated && (self.consumerKey == nil || self.consumerKey?.characters.count == 0) {
                 self.log("\(logPrefix) the consuer key is missing")
-                error = OVHAPIError.MissingConsumerKey
+                error = OVHAPIError.missingConsumerKey
             }
             
             guard error == nil else {
                 if let block = completion {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DispatchQueue.main.async(execute: {
                         block(nil, error, nil, nil)
                     })
                 }
@@ -381,20 +382,20 @@ final public class OVHAPIWrapper {
             
             if isAuthenticated {
                 // Set the timestamp header.
-                let now = Int32(NSDate().timeIntervalSince1970 + self.deltaTime!)
+                let now = Int32(Date().timeIntervalSince1970 + self.deltaTime!)
                 headers["X-Ovh-Timestamp"] = "\(now)"
                 
                 // Set the signature header.
                 var jsonBody = ""
-                if (method == .POST || method == .PUT) && content != nil {
+                if (method == .post || method == .put) && content != nil {
                     do {
-                        let data = try NSJSONSerialization.dataWithJSONObject(content!, options: [])
-                        jsonBody = String(data: data, encoding: NSUTF8StringEncoding)!
+                        let data = try JSONSerialization.data(withJSONObject: content!, options: [])
+                        jsonBody = String(data: data, encoding: String.Encoding.utf8)!
                     } catch let error {
                         self.log("\(logPrefix) error while serializing JSON: \(error)")
                         
                         if let block = completion {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            DispatchQueue.main.async(execute: {
                                 block(nil, error, nil, nil)
                             })
                         }
@@ -414,14 +415,14 @@ final public class OVHAPIWrapper {
             self.log("\(logPrefix) headers: \(headers)")
             
             // Execute the request.
-            self.requestManager.request(method, urlString, parameters: content, encoding: .JSON, headers: headers)
-                .responseData { response in
+            self.requestManager.request(urlString, method: method, parameters: content, encoding: JSONEncoding.default, headers: headers)
+                .responseJSON { (response) in
                     // Log the response.
                     if let response = response.response {
                         self.log("\(logPrefix) done, response: \(response.statusCode)")
                     }
                     if let data = response.data {
-                        self.log("\(logPrefix) done, data: \(String(data:data, encoding: NSUTF8StringEncoding)!)")
+                        self.log("\(logPrefix) done, data: \(String(data:data, encoding: String.Encoding.utf8)!)")
                     }
                     
                     guard completion != nil else {
@@ -429,41 +430,30 @@ final public class OVHAPIWrapper {
                     }
                     
                     // Get the error of the request.
-                    var error: ErrorType? = response.result.error
+                    var error = response.result.error
                     var httpReponseCode = 0
                     
                     if let statusCode = response.response?.statusCode {
                         httpReponseCode = statusCode
                         if  statusCode >= 400 {
-                            error = OVHAPIError.HttpError(code: statusCode)
+                            error = OVHAPIError.httpError(code: statusCode)
                         }
                     }
                     
-                    // Get the content of the request.
-                    var result: AnyObject?
-                    
-                    if let data = response.result.value {
-                        do {
-                            try result = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
-                            
-                            if let dictionary = result as? NSDictionary, let message = dictionary["message"] as? String {
-                                error = OVHAPIError.RequestError(code: httpReponseCode, httpCode: dictionary["httpCode"] as? String, errorCode: dictionary["errorCode"] as? String, message: message)
-                            }
-                        } catch {
-                            result = String(data: data, encoding: NSUTF8StringEncoding)
-                        }
+                    if let dictionary = response.result.value as? NSDictionary, let message = dictionary["message"] as? String {
+                        error = OVHAPIError.requestError(code: httpReponseCode, httpCode: dictionary["httpCode"] as? String, errorCode: dictionary["errorCode"] as? String, message: message)
                     }
                     
                     // Callback.
                     if let block = completion {
-                        block(result, error, response.request, response.response)
+                        block(response.result.value, error, response.request, response.response)
                     }
             }
         }
         
         // If delta time is not defined, a request to calculate this delta time is launched first.
         guard deltaTime != nil else {
-            calculateDeltaTime() { error in
+            calculateDeltaTime() { (error) in
                 // Handle the request error.
                 guard error == nil else {
                     if let block = completion {

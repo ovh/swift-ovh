@@ -41,9 +41,9 @@ class GlanceController: WKInterfaceController {
     
     // MARK: - Private methods
     
-    @objc private func updateData() {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        if let data = userDefaults.valueForKey("glance") as? [String:Int] {
+    @objc fileprivate func updateData() {
+        let userDefaults = UserDefaults.standard
+        if let data = userDefaults.value(forKey: "glance") as? [String:Int] {
             label.setText("Running: \(data["running"]!)\nStopped: \(data["stopped"]!)\nBusy: \(data["busy"]!)\nUnknown: \(data["unknown"]!)")
         }
     }
@@ -51,8 +51,8 @@ class GlanceController: WKInterfaceController {
     
     // MARK: - Lifecycle
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         // Configure interface objects here.
         updateData()
@@ -62,14 +62,14 @@ class GlanceController: WKInterfaceController {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(GlanceController.updateData), name: NSUserDefaultsDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GlanceController.updateData), name: UserDefaults.didChangeNotification, object: nil)
     }
 
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
         
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
 }

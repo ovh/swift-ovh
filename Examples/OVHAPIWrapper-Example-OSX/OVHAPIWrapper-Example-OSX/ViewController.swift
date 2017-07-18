@@ -13,15 +13,15 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     
     // MARK: - Structs
     
-    private struct Product {
+    fileprivate struct Product {
         let type: String
         let name: String
         
-        func compareType(anotherProduct: Product) -> NSComparisonResult {
+        func compareType(_ anotherProduct: Product) -> ComparisonResult {
             return type.compare(anotherProduct.type)
         }
         
-        func compareName(anotherProduct: Product) -> NSComparisonResult {
+        func compareName(_ anotherProduct: Product) -> ComparisonResult {
             return name.compare(anotherProduct.name)
         }
     }
@@ -29,10 +29,10 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     
     // MARK: - Properties
     
-    private var OVHAPI: OVHAPIWrapper?
-    private var data = [Product]()
-    private var numberOfRequestsLaunched = 0
-    private var numberOfRequestsDone = 0
+    fileprivate var OVHAPI: OVHAPIWrapper?
+    fileprivate var data = [Product]()
+    fileprivate var numberOfRequestsLaunched = 0
+    fileprivate var numberOfRequestsDone = 0
     
     
     // MARK: - UI items
@@ -43,32 +43,32 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     
     // MARK: - Methods
     
-    private func loadDomainsWithCompletion(completion: () -> Void) {
-        loadProductsWithPath("/domain", type: "domain", completion: completion)
+    fileprivate func loadDomains(withCompletion completion: @escaping () -> Void) {
+        loadProducts(withPath: "/domain", type: "domain", completion: completion)
     }
     
-    private func loadHostingWebsWithCompletion(completion: () -> Void) {
-        loadProductsWithPath("/hosting/web", type: "web hosting", completion: completion)
+    fileprivate func loadHostingWebs(withCompletion completion: @escaping () -> Void) {
+        loadProducts(withPath: "/hosting/web", type: "web hosting", completion: completion)
     }
     
-    private func loadEmailsWithCompletion(completion: () -> Void) {
-        loadProductsWithPath("/email/domain", type: "email", completion: completion)
+    fileprivate func loadEmails(withCompletion completion: @escaping () -> Void) {
+        loadProducts(withPath: "/email/domain", type: "email", completion: completion)
     }
     
-    private func loadDedicatedServersWithCompletion(completion: () -> Void) {
-        loadProductsWithPath("/dedicated/server", type: "dedicated", completion: completion)
+    fileprivate func loadDedicatedServers(withCompletion completion: @escaping () -> Void) {
+        loadProducts(withPath: "/dedicated/server", type: "dedicated", completion: completion)
     }
     
-    private func loadVPSWithCompletion(completion: () -> Void) {
-        loadProductsWithPath("/vps", type: "vps", completion: completion)
+    fileprivate func loadVPS(withCompletion completion: @escaping () -> Void) {
+        loadProducts(withPath: "/vps", type: "vps", completion: completion)
     }
     
-    private func loadProductsWithPath(path: String, type: String, completion: () -> Void) {
+    fileprivate func loadProducts(withPath path: String, type: String, completion: @escaping () -> Void) {
         numberOfRequestsLaunched += 1
         progressIndicator.maxValue += 1
         
         OVHAPI?.get(path){ (result, error, request, response) -> Void in
-            self.presentError(error)
+            self.present(error)
             
             if let result = (result as? [String]) {
                 for name in result {
@@ -84,7 +84,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         }
     }
     
-    private func presentError(error: ErrorType?) {
+    fileprivate func present(_ error: Error?) {
         guard error != nil else {
             return
         }
@@ -95,74 +95,74 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         if let error = error as? OVHAPIError {
             title = error.description
             switch error {
-            case OVHAPIError.MissingApplicationKey: message = "Please fix the Credentials.plist file."
-            case OVHAPIError.MissingApplicationSecret: message = "Please fix the Credentials.plist file."
-            case OVHAPIError.MissingConsumerKey: message = "Please authenticate first."
-            case OVHAPIError.HttpError(let code): message = "code \(code)"
-            case OVHAPIError.RequestError(_, let httpCode?, let errorCode?, _): message = "Error \(httpCode): \(errorCode)"
+            case OVHAPIError.missingApplicationKey: message = "Please fix the Credentials.plist file."
+            case OVHAPIError.missingApplicationSecret: message = "Please fix the Credentials.plist file."
+            case OVHAPIError.missingConsumerKey: message = "Please authenticate first."
+            case OVHAPIError.httpError(let code): message = "code \(code)"
+            case OVHAPIError.requestError(_, let httpCode?, let errorCode?, _): message = "Error \(httpCode): \(errorCode)"
             default: break
             }
         }
         
         let alert = NSAlert()
-        alert.alertStyle = .WarningAlertStyle
+        alert.alertStyle = .warning
         if let title = title {
             alert.messageText = title
         }
         if let message = message {
             alert.informativeText = message
         }
-        alert.addButtonWithTitle("Close")
-        alert.beginSheetModalForWindow(view.window!, completionHandler: nil)
+        alert.addButton(withTitle: "Close")
+        alert.beginSheetModal(for: view.window!, completionHandler: nil)
     }
     
-    private func resetData() {
+    fileprivate func resetData() {
         data.removeAll()
     }
     
     
     // MARK: - Actions
     
-    @IBAction func refreshProducts(sender: NSButton) {
+    @IBAction func refreshProducts(_ sender: NSButton) {
         numberOfRequestsLaunched = 0
         numberOfRequestsDone = 0
         progressIndicator.maxValue = 0
         progressIndicator.doubleValue = 0
         
-        sender.enabled = false
-        progressIndicator.hidden = false
+        sender.isEnabled = false
+        progressIndicator.isHidden = false
         
         let completion = { () -> Void in
             if self.numberOfRequestsDone >= self.numberOfRequestsLaunched {
                 // It is important to let the user see that the task is complete, so the 100% UI feedback is visible during a few seconds.
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
-                    sender.enabled = true
-                    self.progressIndicator.hidden = true
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(1.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: { () -> Void in
+                    sender.isEnabled = true
+                    self.progressIndicator.isHidden = true
                 })
             }
         }
         
-        loadDomainsWithCompletion(completion)
-        loadHostingWebsWithCompletion(completion)
-        loadEmailsWithCompletion(completion)
-        loadDedicatedServersWithCompletion(completion)
-        loadVPSWithCompletion(completion)
+        loadDomains(withCompletion: completion)
+        loadHostingWebs(withCompletion: completion)
+        loadEmails(withCompletion: completion)
+        loadDedicatedServers(withCompletion: completion)
+        loadVPS(withCompletion: completion)
     }
     
-    @IBAction func authenticate(sender: NSButton) {
-        sender.enabled = false
+    @IBAction func authenticate(_ sender: NSButton) {
+        sender.isEnabled = false
         
-        OVHAPI?.requestCredentialsWithAccessRules(OVHAPIAccessRule.readOnlyRights(), redirectionUrl: "https://www.ovh.com/fr/") { (consumerKey, validationUrl, error, request, response) -> Void in
-            sender.enabled = true
+        OVHAPI?.requestCredentials(withAccessRules: OVHAPIAccessRule.readOnlyRights(), redirection: "https://www.ovh.com/fr/") { (consumerKey, validationUrl, error, request, response) -> Void in
+            sender.isEnabled = true
             
             guard error == nil else {
-                self.presentError(error)
+                self.present(error)
                 return
             }
             
             if let validationUrl = validationUrl {
                 if let url = NSURL(string: validationUrl) {
-                    NSWorkspace.sharedWorkspace().openURL(url)
+                    NSWorkspace.shared().open(url as URL)
                 }
             }
         }
@@ -171,12 +171,12 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     
     // MARK: - Table view data source
     
-    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+    func numberOfRows(in tableView: NSTableView) -> Int {
         return data.count
     }
     
-    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let result = tableView.makeViewWithIdentifier("productCell", owner: self)
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        let result = tableView.make(withIdentifier: "productCell", owner: self)
         
         if let result = (result as? NSTableCellView) {
             var value: String = ""
@@ -195,15 +195,15 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         return result
     }
     
-    func tableView(tableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
+    func tableView(_ tableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
         if let sortDescriptor = tableView.sortDescriptors.first {
             if let key = sortDescriptor.key {
-                var comparisonResult = NSComparisonResult.OrderedAscending
+                var comparisonResult = ComparisonResult.orderedAscending
                 if !sortDescriptor.ascending {
-                    comparisonResult = .OrderedDescending
+                    comparisonResult = .orderedDescending
                 }
                 
-                data.sortInPlace { (product1, product2) -> Bool in
+                data.sort { (product1, product2) -> Bool in
                     switch key {
                     case "type": return product1.compareType(product2) == comparisonResult
                     case "name": return product1.compareName(product2) == comparisonResult
@@ -222,7 +222,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        if let credentials = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("Credentials", ofType: "plist")!) {
+        if let credentials = NSDictionary(contentsOfFile: Bundle.main.path(forResource: "Credentials", ofType: "plist")!) {
             OVHAPI = OVHAPIWrapper(endpoint: .OVHEU, applicationKey: credentials["ApplicationKey"] as! String, applicationSecret: credentials["ApplicationSecret"] as! String, consumerKey: credentials["ConsumerKey"] as? String)
             OVHAPI?.enableLogs = true
         }
@@ -236,7 +236,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         // Do any additional setup after loading the view.
     }
 
-    override var representedObject: AnyObject? {
+    override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
         }

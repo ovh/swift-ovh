@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15E33e" minimumToolsVersion="Xcode 7.0">
-    <entity name="OVHVPS" representedClassName=".OVHVPS" syncable="YES">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="16C53a" minimumToolsVersion="Xcode 7.0" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="OVHVPS" representedClassName=".OVHVPS" syncable="YES" codeGenerationType="category">
         <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="offerType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="waitingTask" transient="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="waitingTask" transient="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="currentTask" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="OVHVPSTask" inverseName="currentVPSTask" inverseEntity="OVHVPSTask" syncable="YES"/>
     </entity>
-    <entity name="OVHVPSTask" representedClassName=".OVHVPSTask" syncable="YES">
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="progress" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    <entity name="OVHVPSTask" representedClassName=".OVHVPSTask" syncable="YES" codeGenerationType="category">
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="progress" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="state" attributeType="String" syncable="YES"/>
         <attribute name="type" attributeType="String" syncable="YES"/>
         <relationship name="currentVPSTask" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OVHVPS" inverseName="currentTask" inverseEntity="OVHVPS" syncable="YES"/>

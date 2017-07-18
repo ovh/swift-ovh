@@ -31,7 +31,7 @@
 import Foundation
 import UIKit
 
-public class OVHAPICredentialsViewController: UINavigationController, UIWebViewDelegate {
+open class OVHAPICredentialsViewController: UINavigationController, UIWebViewDelegate {
     
     // MARK: - Properties
     
@@ -42,26 +42,26 @@ public class OVHAPICredentialsViewController: UINavigationController, UIWebViewD
     var redirectionUrl: String = ""
     
     // Flag to know if the consumer key is validated by the user.
-    private var consumerKeyValidated: Bool = false
+    fileprivate var consumerKeyValidated: Bool = false
     
     // The block called as soon as the credentials view controller is dismissed.
     // The Bool value is set to true if the consumer key is validated, false else.
-    public var completion: ((Bool) -> ())?
+    open var completion: ((Bool) -> ())?
     
     // Block called when the view controller is dismissed without validating the consumer key.
     var cancelCompletion: (() -> ())?
     
     // The webview in which the page will be displayed.
-    @IBOutlet private weak var webView: UIWebView!
+    @IBOutlet fileprivate weak var webView: UIWebView!
     
     
     // MARK: - Lifecycle
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let url = NSURL.init(string: validationUrl) {
-            let request = NSURLRequest.init(URL: url)
+        if let url = URL.init(string: validationUrl) {
+            let request = URLRequest.init(url: url)
             webView.loadRequest(request)
         }
     }
@@ -69,14 +69,14 @@ public class OVHAPICredentialsViewController: UINavigationController, UIWebViewD
     
     // MARK: - Actions
     
-    @IBAction func dismiss(sender: AnyObject) {
+    @IBAction func dismiss(_ sender: AnyObject) {
         if !consumerKeyValidated {
             if let block = cancelCompletion {
                 block()
             }
         }
         
-        dismissViewControllerAnimated(true) { () -> Void in
+        self.dismiss(animated: true) {
             if let block = self.completion {
                 block(self.consumerKeyValidated)
             }
@@ -86,21 +86,19 @@ public class OVHAPICredentialsViewController: UINavigationController, UIWebViewD
     
     // MARK: - WebView delegate methods
     
-    public func webViewDidFinishLoad(webView: UIWebView) {
-        if let url = webView.request?.URLString {
+    open func webViewDidFinishLoad(_ webView: UIWebView) {
+        if let url = webView.request?.url?.absoluteString {
             consumerKeyValidated = (url == redirectionUrl)
         }
     }
     
-    public func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
-        if let error = error {
-            let alert = UIAlertController(title: error.localizedDescription, message: error.localizedFailureReason, preferredStyle: .Alert)
-            let action = UIAlertAction(title: "Close", style: .Cancel){ action in
-                self.dismissViewControllerAnimated(true, completion: nil)
-            }
-            alert.addAction(action)
-            
-            presentViewController(alert, animated: true, completion: nil)
+    open func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+        let alert = UIAlertController(title: error.localizedDescription, message: error.localizedDescription, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Close", style: .cancel){ (action) in
+            self.dismiss(animated: true, completion: nil)
         }
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
     }
 }

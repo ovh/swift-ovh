@@ -36,8 +36,8 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
     
     // MARK: - Properties
     
-    lazy private var fetchedResultsController: NSFetchedResultsController = {
-        let fetchRequest = NSFetchRequest(entityName: "OVHVPS")
+    lazy fileprivate var fetchedResultsController: NSFetchedResultsController<OVHVPS> = { () -> NSFetchedResultsController<OVHVPS> in
+        let fetchRequest: NSFetchRequest<OVHVPS> = OVHVPS.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "displayName", ascending: true)]
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataManager.sharedManager.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -47,35 +47,35 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
     }()
     
     typealias changes = () -> ()
-    private var sectionsChanges = [changes]()
-    private var objectChanges = [changes]()
+    fileprivate var sectionsChanges = [changes]()
+    fileprivate var objectChanges = [changes]()
 
     
     // MARK: - UI elements
     
     @IBOutlet weak var authenticateButton: UIBarButtonItem!
-    private var refreshControl: UIRefreshControl?
+    fileprivate var refreshControl: UIRefreshControl?
     
     
     // MARK: - Actions
     
-    @IBAction func authenticate(sender: UIBarButtonItem) {
-        sender.enabled = false;
+    @IBAction func authenticate(_ sender: UIBarButtonItem) {
+        sender.isEnabled = false;
         
-        OVHVPSController.sharedController.OVHAPI.requestCredentialsWithAccessRules([OVHAPIAccessRule(method: .GET, path: "/vps*"), OVHAPIAccessRule(method: .POST, path: "/vps*")], redirectionUrl: "https://www.ovh.com/fr/") { (viewController, error) -> Void in
+        OVHVPSController.sharedController.OVHAPI.requestCredentials(withAccessRules: [OVHAPIAccessRule(method: .get, path: "/vps*"), OVHAPIAccessRule(method: .post, path: "/vps*")], redirection: "https://www.ovh.com/fr/") { (viewController, error) -> Void in
             guard error == nil else {
                 self.presentError(error)
-                sender.enabled = true
+                sender.isEnabled = true
                 return
             }
             
             if let viewController = viewController {
                 viewController.completion = { consumerKeyIsValidated in
-                    sender.enabled = true
+                    sender.isEnabled = true
                     
                     if consumerKeyIsValidated {
                         self.refreshControl?.beginRefreshing()
-                        self.collectionView?.contentOffset = CGPointMake(0, -self.refreshControl!.frame.size.height);
+                        self.collectionView?.contentOffset = CGPoint(x: 0, y: -self.refreshControl!.frame.size.height);
                         self.refreshVPS(self.refreshControl!)
                         
                         // Send to the watch the updated credentials.
@@ -83,13 +83,13 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
                     }
                 }
                 
-                self.presentViewController(viewController, animated: true, completion: nil)
+                self.present(viewController, animated: true, completion: nil)
             }
         }
     }
     
-    @IBAction func refreshVPS(sender: UIRefreshControl) {
-        OVHVPSController.sharedController.loadVPSWithBlock({ error -> Void in
+    @IBAction func refreshVPS(_ sender: UIRefreshControl) {
+        OVHVPSController.sharedController.loadVPS(withBlock: { error in
             self.presentError(error)
             self.refreshControl?.endRefreshing()
         })
@@ -98,7 +98,7 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
     
     // MARK: - UICollectionViewController delegate methods
     
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         if let count = fetchedResultsController.sections?.count {
             return count
         }
@@ -106,7 +106,7 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
         return 0
     }
     
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let sectionInfo = fetchedResultsController.sections?[section] {
             return sectionInfo.numberOfObjects
         }
@@ -114,17 +114,17 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
         return 0
     }
     
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("VPSCell", forIndexPath: indexPath)
-        let VPS = fetchedResultsController.objectAtIndexPath(indexPath) as! OVHVPS
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VPSCell", for: indexPath)
+        let VPS = fetchedResultsController.object(at: indexPath)
         
         configureCell(cell, withVPS: VPS)
         
         return cell
     }
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let VPS = fetchedResultsController.objectAtIndexPath(indexPath) as! OVHVPS
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let VPS = fetchedResultsController.object(at: indexPath)
         
         // No action on the busy VPS.
         guard !VPS.isBusy() && !VPS.isStateUnknown() else {
@@ -134,12 +134,12 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
         let VPSName = VPS.name!
         
         // Create the alert controller to present to the user.
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         // Add the 'start' action.
         if VPS.isStopped() {
-            let startAction = UIAlertAction(title: "Start", style: .Default, handler: { action -> Void in
-                OVHVPSController.sharedController.startVPSWithName(VPSName, completionBlock: { (task, error) -> Void in
+            let startAction = UIAlertAction(title: "Start", style: .default, handler: { action -> Void in
+                OVHVPSController.sharedController.startVPS(withName: VPSName, andCompletionBlock: { (task, error) in
                     self.presentError(error)
                 })
             })
@@ -148,16 +148,16 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
         
         if VPS.isRunning() {
             // Add the 'reboot' action.
-            let rebootAction = UIAlertAction(title: "Reboot", style: .Default, handler: { action -> Void in
-                OVHVPSController.sharedController.rebootVPSWithName(VPSName, completionBlock: { (task, error) -> Void in
+            let rebootAction = UIAlertAction(title: "Reboot", style: .default, handler: { action -> Void in
+                OVHVPSController.sharedController.rebootVPS(withName: VPSName, andCompletionBlock: { (task, error) in
                     self.presentError(error)
                 })
             })
             alertController.addAction(rebootAction)
             
             // Add the 'stop' action.
-            let stopAction = UIAlertAction(title: "Stop", style: .Destructive, handler: { action -> Void in
-                OVHVPSController.sharedController.stopVPSWithName(VPSName, completionBlock: { (task, error) -> Void in
+            let stopAction = UIAlertAction(title: "Stop", style: .destructive, handler: { action -> Void in
+                OVHVPSController.sharedController.stopVPS(withName: VPSName, andCompletionBlock: { (task, error) in
                     self.presentError(error)
                 })
             })
@@ -165,34 +165,34 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
         }
         
         // Add the 'cancel' action.
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: { action -> Void in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { action -> Void in
+            alertController.dismiss(animated: true, completion: nil)
         })
         alertController.addAction(cancelAction)
         
         // A popover is created on the devices supporting this feature (iPad).
         if let popoverPresentationController = alertController.popoverPresentationController {
-            alertController.modalPresentationStyle = .Popover
+            alertController.modalPresentationStyle = .popover
             
-            if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
+            if let cell = collectionView.cellForItem(at: indexPath) {
                 popoverPresentationController.sourceView = cell
                 popoverPresentationController.sourceRect = cell.bounds
             }
         }
         
         // Present the alert controller to the user.
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     
     // MARK: - FetchedController delegate methods
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         sectionsChanges.removeAll()
         objectChanges.removeAll()
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         collectionView?.performBatchUpdates({ () -> Void in
             for block in self.sectionsChanges {
                 block()
@@ -208,56 +208,56 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
         })
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-        let sections = NSIndexSet(index: sectionIndex)
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        let sections = IndexSet(integer: sectionIndex)
         
         switch (type) {
-        case .Insert:
+        case .insert:
             sectionsChanges.append({ () -> () in
                 self.collectionView?.insertSections(sections)
             })
-        case .Delete:
+        case .delete:
             sectionsChanges.append({ () -> () in
                 self.collectionView?.deleteSections(sections)
             })
-        case .Update:
+        case .update:
             sectionsChanges.append({ () -> () in
                 self.collectionView?.reloadSections(sections)
             })
-        case .Move:
+        case .move:
             break
         }
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch (type) {
-        case .Insert:
+        case .insert:
             if let newIndexPath = newIndexPath {
                 objectChanges.append({ () -> () in
-                    self.collectionView?.insertItemsAtIndexPaths([newIndexPath])
+                    self.collectionView?.insertItems(at: [newIndexPath])
                 })
             }
-        case .Delete:
+        case .delete:
             if let indexPath = indexPath {
                 objectChanges.append({ () -> () in
-                    self.collectionView?.deleteItemsAtIndexPaths([indexPath])
+                    self.collectionView?.deleteItems(at: [indexPath])
                 })
             }
-        case .Update:
+        case .update:
             if let indexPath = indexPath {
                 objectChanges.append({ () -> () in
-                    self.collectionView?.reloadItemsAtIndexPaths([indexPath])
+                    self.collectionView?.reloadItems(at: [indexPath])
                 })
             }
-        case .Move:
+        case .move:
             if let indexPath = indexPath, let newIndexPath = newIndexPath {
                 objectChanges.append({ () -> () in
                     // A cell must change its position means that this cell must be updated with the corresponding VPS.
-                    if let cell = self.collectionView?.cellForItemAtIndexPath(indexPath) {
-                        let VPS = self.fetchedResultsController.objectAtIndexPath(newIndexPath) as! OVHVPS
+                    if let cell = self.collectionView?.cellForItem(at: indexPath) {
+                        let VPS = self.fetchedResultsController.object(at: newIndexPath)
                         self.configureCell(cell, withVPS: VPS)
                     }
-                    self.collectionView?.moveItemAtIndexPath(indexPath, toIndexPath: newIndexPath)
+                    self.collectionView?.moveItem(at: indexPath, to: newIndexPath)
                 })
             }
         }
@@ -266,7 +266,7 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
     
     // MARK: - Private methods
     
-    private func configureCell(cell: UICollectionViewCell, withVPS VPS: OVHVPS) {
+    fileprivate func configureCell(_ cell: UICollectionViewCell, withVPS VPS: OVHVPS) {
         let nameLabel = cell.viewWithTag(1) as! UILabel
         let imageView = cell.viewWithTag(2) as! UIImageView
         let loadingView = cell.viewWithTag(3) as! UIActivityIndicatorView
@@ -283,17 +283,17 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
             loadingView.stopAnimating()
         }
         
-        var color = UIColor.grayColor()
+        var color = UIColor.gray
         if VPS.isRunning() {
             color = UIColor(red: 0.0, green: 0.8, blue: 0.2, alpha: 1.0)
         } else if VPS.isStopped() {
-            color = UIColor.blackColor()
+            color = UIColor.black
         }
         
         imageView.tintColor = color
     }
     
-    private func presentError(error: ErrorType?) {
+    fileprivate func presentError(_ error: Error?) {
         guard error != nil else {
             return
         }
@@ -304,22 +304,22 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
         if let error = error as? OVHAPIError {
             title = error.description
             switch error {
-            case OVHAPIError.MissingApplicationKey: message = "Please fix the Credentials.plist file."
-            case OVHAPIError.MissingApplicationSecret: message = "Please fix the Credentials.plist file."
-            case OVHAPIError.MissingConsumerKey: message = "Please authenticate first."
-            case OVHAPIError.HttpError(let code): message = "code \(code)"
-            case OVHAPIError.RequestError(_, let httpCode?, let errorCode?, _): message = "Error \(httpCode): \(errorCode)"
+            case OVHAPIError.missingApplicationKey: message = "Please fix the Credentials.plist file."
+            case OVHAPIError.missingApplicationSecret: message = "Please fix the Credentials.plist file."
+            case OVHAPIError.missingConsumerKey: message = "Please authenticate first."
+            case OVHAPIError.httpError(let code): message = "code \(code)"
+            case OVHAPIError.requestError(_, let httpCode?, let errorCode?, _): message = "Error \(httpCode): \(errorCode)"
             default: break
             }
         }
         
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let action = UIAlertAction(title: "Close", style: .Cancel) { action in
-            self.dismissViewControllerAnimated(true, completion: nil)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Close", style: .cancel) { action in
+            self.dismiss(animated: true, completion: nil)
         }
         alert.addAction(action)
         
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     
@@ -330,7 +330,7 @@ class ProductsViewController: UICollectionViewController, NSFetchedResultsContro
         // Do any additional setup after loading the view, typically from a nib.
         
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(ProductsViewController.refreshVPS(_:)), forControlEvents: .ValueChanged)
+        refreshControl?.addTarget(self, action: #selector(ProductsViewController.refreshVPS(_:)), for: .valueChanged)
         
         if let refreshControl = refreshControl {
             collectionView?.addSubview(refreshControl)

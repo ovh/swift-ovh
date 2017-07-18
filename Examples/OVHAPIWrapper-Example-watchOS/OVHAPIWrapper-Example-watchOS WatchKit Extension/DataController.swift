@@ -49,10 +49,10 @@ final class DataController: NSObject, WCSessionDelegate {
     
     var delegate: DataControllerDelegate?
     
-    private var VPSList = [VPS]()
+    fileprivate var VPSList = [VPS]()
     
-    private var OVHAPI: OVHAPIWrapper?
-    private let session: WCSession?
+    fileprivate var OVHAPI: OVHAPIWrapper?
+    fileprivate let session: WCSession?
     
     var count: Int {
         return VPSList.count
@@ -69,7 +69,7 @@ final class DataController: NSObject, WCSessionDelegate {
      Ask the iOS application for the intial data.
      */
     func initializeData() {
-        sendDataWithKey("init", data: "") { message in
+        sendDataWithKey("init", data: "" as AnyObject) { message in
             print("Receive response from iOS application: \(message)")
             
             for (key, value) in message {
@@ -91,21 +91,21 @@ final class DataController: NSObject, WCSessionDelegate {
     /**
      Reboot a VPS.
      */
-    func rebootVPSWithName(VPSName: String, completionBlock: ((ErrorType?) -> Void)?) {
+    func rebootVPSWithName(_ VPSName: String, completionBlock: ((Error?) -> Void)?) {
         callAPIAction("reboot", onVPS: VPSName, completionBlock: completionBlock)
     }
     
     /**
      Start a VPS.
      */
-    func startVPSWithName(VPSName: String, completionBlock: ((ErrorType?) -> Void)?) {
+    func startVPSWithName(_ VPSName: String, completionBlock: ((Error?) -> Void)?) {
         callAPIAction("start", onVPS: VPSName, completionBlock: completionBlock)
     }
     
     /**
      Stop a VPS.
      */
-    func stopVPSWithName(VPSName: String, completionBlock: ((ErrorType?) -> Void)?) {
+    func stopVPSWithName(_ VPSName: String, completionBlock: ((Error?) -> Void)?) {
         callAPIAction("stop", onVPS: VPSName, completionBlock: completionBlock)
     }
     
@@ -115,8 +115,8 @@ final class DataController: NSObject, WCSessionDelegate {
     /**
     Send some data to the watch.
     */
-    private func sendDataWithKey(key: String, data: AnyObject, replyHandler: (([String:AnyObject]) -> Void)?) {
-        if let session = session where session.reachable {
+    fileprivate func sendDataWithKey(_ key: String, data: AnyObject, replyHandler: (([String:Any]) -> Void)?) {
+        if let session = session, session.isReachable {
             session.sendMessage([key : data], replyHandler: replyHandler, errorHandler: { error -> Void in
                 print("Error send message to the iOS app: \(error)")
             })
@@ -129,7 +129,7 @@ final class DataController: NSObject, WCSessionDelegate {
     /**
      The credentials are updated.
      */
-    private func updateAPICredentials(credentials: [String:AnyObject]) {
+    fileprivate func updateAPICredentials(_ credentials: [String:AnyObject]) {
         let applicationKey = credentials["applicationKey"] as! String
         let applicationSecret = credentials["applicationSecret"] as! String
         let consumerKey = credentials["consumerKey"] as! String
@@ -140,7 +140,7 @@ final class DataController: NSObject, WCSessionDelegate {
     /**
      The VPS list is updated.
      */
-    private func updadeVPSList(list: [[String:AnyObject]]) {
+    fileprivate func updadeVPSList(_ list: [[String:AnyObject]]) {
         VPSList.removeAll()
         
         for representation in list {
@@ -148,7 +148,7 @@ final class DataController: NSObject, WCSessionDelegate {
             VPSList.append(vps)
         }
         
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        DispatchQueue.main.async { () -> Void in
             self.delegate?.VPSListUpdated()
         }
     }
@@ -156,7 +156,7 @@ final class DataController: NSObject, WCSessionDelegate {
     /**
      A VPS is updated.
      */
-    private func updadeVPS(representation: [String:AnyObject]) {
+    fileprivate func updadeVPS(_ representation: [String:AnyObject]) {
         let vps = VPS.VPSFromWatchRepresentation(representation)
         
         var index = -1
@@ -170,7 +170,7 @@ final class DataController: NSObject, WCSessionDelegate {
             }
         }
         
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        DispatchQueue.main.async { () -> Void in
             self.delegate?.VPSUpdated(atIndex: index)
         }
     }
@@ -178,10 +178,10 @@ final class DataController: NSObject, WCSessionDelegate {
     /**
      Call API: action on VPS
      */
-    private func callAPIAction(action: String, onVPS VPSName: String, completionBlock: ((ErrorType?) -> Void)?) {
+    fileprivate func callAPIAction(_ action: String, onVPS VPSName: String, completionBlock: ((Error?) -> Void)?) {
         // Closure to update the VPS busy state.
         let updateVPSWithName = { (name: String, busy: Bool) -> Void in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 if self.VPSList.count > 0 {
                     for i in 0...self.VPSList.count {
                         var vps = self.VPSList[i]
@@ -203,7 +203,7 @@ final class DataController: NSObject, WCSessionDelegate {
         OVHAPI?.post("/vps/\(VPSName)/\(action)") { result, error, request, response in
             
             // Defered actions: call the completion block.
-            var completionError: ErrorType?
+            var completionError: Error?
             defer {
                 if let _ = completionError {
                     updateVPSWithName(VPSName, false)
@@ -221,12 +221,12 @@ final class DataController: NSObject, WCSessionDelegate {
             
             // Handle invalid response.
             guard result is [String:AnyObject] else {
-                completionError = OVHAPIError.InvalidRequestResponse
+                completionError = OVHAPIError.invalidRequestResponse
                 return
             }
             
             // Notify the iOS application.
-            self.sendDataWithKey("newTask", data: ["vps":VPSName, "task":result as! [String:AnyObject]], replyHandler: { message -> Void in
+            self.sendDataWithKey("newTask", data: ["vps": VPSName, "task": result] as AnyObject, replyHandler: { message -> Void in
                 print("Receive response from iOS application: \(message)")
             })
         }
@@ -235,7 +235,7 @@ final class DataController: NSObject, WCSessionDelegate {
     
     // MARK: - WCSessionDelegate methods
     
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
         print("Receive message from iOS application: \(message)")
         
         for (key, value) in message {
@@ -259,11 +259,11 @@ final class DataController: NSObject, WCSessionDelegate {
         replyHandler([String:AnyObject]())
     }
     
-    func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
         print("Receive application context from iOS application: \(applicationContext)")
         
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.setObject(applicationContext, forKey: "glance")
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(applicationContext, forKey: "glance")
         if userDefaults.synchronize() {
             print("Glance data saved.")
         } else {
@@ -271,7 +271,7 @@ final class DataController: NSObject, WCSessionDelegate {
         }
     }
     
-    func sessionReachabilityDidChange(session: WCSession) {
+    func sessionReachabilityDidChange(_ session: WCSession) {
         print("iOS application reachability changed.")
         
         if OVHAPI == nil {
@@ -279,12 +279,16 @@ final class DataController: NSObject, WCSessionDelegate {
         }
     }
     
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
     
     // MARK: - Lifecycle
     
     override init() {
         if WCSession.isSupported() {
-            session = WCSession.defaultSession()
+            session = WCSession.default()
         } else {
             session = nil
         }
@@ -292,7 +296,7 @@ final class DataController: NSObject, WCSessionDelegate {
         super.init()
         
         session?.delegate = self
-        session?.activateSession()
+        session?.activate()
     }
     
 }

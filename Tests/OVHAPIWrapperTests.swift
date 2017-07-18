@@ -35,11 +35,11 @@ class OVHAPIWrapperTests: XCTestCase {
     
     // MARK: - Properties
     
-    let credentials = NSDictionary(contentsOfFile: NSBundle(forClass: OVHAPIWrapperTests.self).pathForResource("Credentials", ofType: "plist")!)!
+    let credentials = NSDictionary(contentsOfFile: Bundle(for: OVHAPIWrapperTests.self).path(forResource: "Credentials", ofType: "plist")!)!
     var applicationKey = ""
     var applicationSecret = ""
     var consumerKey = ""
-    let timeout: NSTimeInterval = 30.0
+    let timeout: TimeInterval = 30.0
     let invalidValue = "x"
     
     
@@ -84,18 +84,18 @@ class OVHAPIWrapperTests: XCTestCase {
     }
     
     func testCallAPIBeforeRequestingCredentialsMustThrowError() {
-        let expectation = expectationWithDescription("Calling API before requesting credentials")
+        let expectation = self.expectation(description: "Calling API before requesting credentials")
         
         let APIWrapper = OVHAPIWrapper(endpoint: .OVHEU, applicationKey: applicationKey, applicationSecret: applicationSecret)
         
         APIWrapper.get("/me") { (result, error, request, response) -> Void in
-            XCTAssertTrue(NSThread.isMainThread(), "\(expectation) must run completion in the main thread.")
+            XCTAssertTrue(Thread.isMainThread, "\(expectation) must run completion in the main thread.")
             XCTAssertNotNil(error, "\(expectation) must return an error.")
             XCTAssertTrue(error is OVHAPIError, "\(expectation) must return a 'OVHAPIError' as error.")
             
             if let error = error {
                 switch error {
-                case OVHAPIError.MissingConsumerKey: break
+                case OVHAPIError.missingConsumerKey: break
                 default: XCTFail("\(expectation) must not return error \(error).")
                 }
             }
@@ -103,19 +103,19 @@ class OVHAPIWrapperTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testRequestCredentials() {
         checkCredentials()
         
-        let expectation = expectationWithDescription("Request credentials")
+        let expectation = self.expectation(description: "Request credentials")
         
         let APIWrapper = OVHAPIWrapper(endpoint: .OVHEU, applicationKey: applicationKey, applicationSecret: applicationSecret)
         let accessRules = OVHAPIAccessRule.allRights()
         
-        APIWrapper.requestCredentialsWithAccessRules(accessRules, redirectionUrl: "https://www.ovh.com/fr/") { key, validationUrl, error, request, response in
-            XCTAssertTrue(NSThread.isMainThread(), "\(expectation) must run completion in the main thread.")
+        APIWrapper.requestCredentials(withAccessRules: accessRules, redirection: "https://www.ovh.com/fr/") { key, validationUrl, error, request, response in
+            XCTAssertTrue(Thread.isMainThread, "\(expectation) must run completion in the main thread.")
             XCTAssertNil(error, "\(expectation) must not return an error.")
             XCTAssertNotNil(key, "\(expectation) must return a consumer key.")
             XCTAssertNotNil(validationUrl, "\(expectation) must return a validation url.")
@@ -133,27 +133,27 @@ class OVHAPIWrapperTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     #if os(iOS)
     func testRequestCredentialsWithViewController() {
         checkCredentials()
         
-        let expectation = expectationWithDescription("Request credentials with view controller")
+        let expectation = self.expectation(description: "Request credentials with view controller")
         
         let APIWrapper = OVHAPIWrapper(endpoint: .OVHEU, applicationKey: applicationKey, applicationSecret: applicationSecret)
         let accessRules = OVHAPIAccessRule.allRights()
         
-        APIWrapper.requestCredentialsWithAccessRules(accessRules, redirectionUrl: "https://www.ovh.com/fr/") { viewController, error in
-            XCTAssertTrue(NSThread.isMainThread(), "\(expectation) must run completion in the main thread.")
+        APIWrapper.requestCredentials(withAccessRules: accessRules, redirection: "https://www.ovh.com/fr/") { viewController, error in
+            XCTAssertTrue(Thread.isMainThread, "\(expectation) must run completion in the main thread.")
             XCTAssertNil(error, "\(expectation) must not return an error.")
             XCTAssertNotNil(viewController, "\(expectation) must return a view controller.")
             
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     #else
     func testRequestCredentialsWithViewController() {
@@ -194,46 +194,46 @@ class OVHAPIWrapperTests: XCTestCase {
     func testCallAPIGetWithURLParameters() {
         checkCredentials()
         
-        let expectation = expectationWithDescription("Call API GET with URL parameters.")
+        let expectation = self.expectation(description: "Call API GET with URL parameters.")
         
         let APIWrapper = OVHAPIWrapper(endpoint: .OVHEU, applicationKey: applicationKey, applicationSecret: applicationSecret, consumerKey: consumerKey)
         
         APIWrapper.get("/me/api/credential?status=validated") { result, error, request, response in
-            XCTAssertTrue(NSThread.isMainThread(), "\(expectation) must run completion in the main thread.")
+            XCTAssertTrue(Thread.isMainThread, "\(expectation) must run completion in the main thread.")
             XCTAssertNil(error, "\(expectation) must not return an error.")
             XCTAssertTrue(result is NSArray, "\(expectation) must return a NSArray object.")
             
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     
     // MARK: - Annex methods
     
-    private func checkCredentials() {
+    fileprivate func checkCredentials() {
         XCTAssertFalse(applicationKey.characters.count == 0, "The application key must be defined.")
         XCTAssertFalse(applicationSecret.characters.count == 0, "The application secret must be defined.")
         XCTAssertFalse(consumerKey.characters.count == 0, "The consumer key must be defined.")
     }
     
-    private func checkEndpointMeWithApplicationKey(applicationKey: String, applicationSecret: String, consumerKey: String?, expectationDescription: String) {
+    fileprivate func checkEndpointMeWithApplicationKey(_ applicationKey: String, applicationSecret: String, consumerKey: String?, expectationDescription: String) {
         checkCredentials()
         
-        let expectation = expectationWithDescription(expectationDescription)
+        let expectation = self.expectation(description: expectationDescription)
         
         let APIWrapper = OVHAPIWrapper(endpoint: .OVHEU, applicationKey: applicationKey, applicationSecret: applicationSecret, consumerKey: consumerKey)
         
         APIWrapper.get("/me") { result, error, request, response in
-            XCTAssertTrue(NSThread.isMainThread(), "\(expectation) must run completion in the main thread.")
+            XCTAssertTrue(Thread.isMainThread, "\(expectation) must run completion in the main thread.")
             
             // Wrong parameter cases.
             guard applicationKey != self.invalidValue && applicationSecret != self.invalidValue && consumerKey != self.invalidValue else {
                 
                 if let error = error as? OVHAPIError {
                     switch error {
-                    case .RequestError(let code, let httpCode, let errorCode, let message):
+                    case .requestError(let code, let httpCode, let errorCode, let message):
                         var expectedCode: Int = 0
                         var expectedHttpCode: String = ""
                         var expectedErrorCode: String = ""
@@ -275,15 +275,15 @@ class OVHAPIWrapperTests: XCTestCase {
             guard error == nil else {
                 if let error = error {
                     switch error {
-                    case OVHAPIError.MissingApplicationKey:
+                    case OVHAPIError.missingApplicationKey:
                         if applicationKey.characters.count > 0 {
                             XCTFail("\(expectation) must not return error OVHAPIError.MissingApplicationKey.")
                         }
-                    case OVHAPIError.MissingApplicationSecret:
+                    case OVHAPIError.missingApplicationSecret:
                         if applicationSecret.characters.count > 0 {
                             XCTFail("\(expectation) must not return error OVHAPIError.MissingApplicationKey.")
                         }
-                    case OVHAPIError.MissingConsumerKey:
+                    case OVHAPIError.missingConsumerKey:
                         if consumerKey != nil && consumerKey!.characters.count > 0 {
                             XCTFail("\(expectation) must not throw error OVHAPIError.MissingConsumerKey.")
                         }
@@ -308,7 +308,7 @@ class OVHAPIWrapperTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
 }

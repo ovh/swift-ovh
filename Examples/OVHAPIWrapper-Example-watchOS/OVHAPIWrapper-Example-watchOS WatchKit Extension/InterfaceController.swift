@@ -41,7 +41,7 @@ class InterfaceController: WKInterfaceController, DataControllerDelegate {
     
     // MARK: - Properties
     
-    private let dataController = DataController.sharedController
+    fileprivate let dataController = DataController.sharedController
     
     
     // MARK: - DataController delegate methods
@@ -66,7 +66,7 @@ class InterfaceController: WKInterfaceController, DataControllerDelegate {
     /**
     Configure the whole table.
     */
-    private func configureTable() {
+    fileprivate func configureTable() {
         let countOfRows = dataController.count
         table.setNumberOfRows(countOfRows, withRowType: "VPSRow")
         
@@ -78,8 +78,8 @@ class InterfaceController: WKInterfaceController, DataControllerDelegate {
     /**
      Configure a single table row.
      */
-    private func configureTableRowAtIndex(index: Int) {
-        if let controller = table.rowControllerAtIndex(index) as? VPSRowController {
+    fileprivate func configureTableRowAtIndex(_ index: Int) {
+        if let controller = table.rowController(at: index) as? VPSRowController {
             controller.vps = dataController[index]
         }
     }
@@ -87,55 +87,55 @@ class InterfaceController: WKInterfaceController, DataControllerDelegate {
     
     // MARK: - Table view methods
     
-    override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
+    override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
         let VPS = dataController[rowIndex]
         
         guard !VPS.busy else {
             return
         }
         
-        let completionBlock = { (error: ErrorType?) -> Void in
+        let completionBlock = { (error: Error?) -> Void in
             if let error = error {
-                let action = WKAlertAction(title: "Close", style: .Cancel, handler: { () -> Void in
+                let action = WKAlertAction(title: "Close", style: .cancel, handler: { () -> Void in
                 })
                 
                 var title = "can not execute action"
                 if let error = error as? OVHAPIError {
                     title = error.description
                 }
-                self.presentAlertControllerWithTitle(title, message: nil, preferredStyle: .Alert, actions: [action])
+                self.presentAlert(withTitle: title, message: nil, preferredStyle: .alert, actions: [action])
             }
         }
         
         var actions = [WKAlertAction]()
         
         if VPS.state != VPSState.running {
-            let action = WKAlertAction(title: "Start", style: .Default, handler: { () -> Void in
+            let action = WKAlertAction(title: "Start", style: .default, handler: { () -> Void in
                 self.dataController.startVPSWithName(VPS.name!, completionBlock: completionBlock)
             })
             actions.append(action)
         }
         
         if VPS.state != VPSState.stopped {
-            let stopAction = WKAlertAction(title: "Stop", style: .Destructive, handler: { () -> Void in
+            let stopAction = WKAlertAction(title: "Stop", style: .destructive, handler: { () -> Void in
                 self.dataController.stopVPSWithName(VPS.name!, completionBlock: completionBlock)
             })
             actions.append(stopAction)
             
-            let rebootAction = WKAlertAction(title: "Reboot", style: .Default, handler: { () -> Void in
+            let rebootAction = WKAlertAction(title: "Reboot", style: .default, handler: { () -> Void in
                 self.dataController.rebootVPSWithName(VPS.name!, completionBlock: completionBlock)
             })
             actions.append(rebootAction)
         }
         
-        presentAlertControllerWithTitle(VPS.displayName, message: nil, preferredStyle: .ActionSheet, actions: actions)
+        presentAlert(withTitle: VPS.displayName, message: nil, preferredStyle: .actionSheet, actions: actions)
     }
     
     
     // MARK: - Lifecycle
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         // Configure interface objects here.
         configureTable()
